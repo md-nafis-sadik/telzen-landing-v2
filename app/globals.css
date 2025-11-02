@@ -61,50 +61,50 @@
   --color-white: var(--white);
 
   /* black */
-  --black: var(--black);
+  --color-black: var(--black);
 
   /* natural */
-  --natural-100: var(--natural-100);
-  --natural-200: var(--natural-200);
-  --natural-300: var(--natural-300);
-  --natural-400: var(--natural-400);
-  --natural-500: var(--natural-500);
-  --natural-950: var(--natural-950);
+  --color-natural-100: var(--natural-100);
+  --color-natural-200: var(--natural-200);
+  --color-natural-300: var(--natural-300);
+  --color-natural-400: var(--natural-400);
+  --color-natural-500: var(--natural-500);
+  --color-natural-950: var(--natural-950);
 
   /* blue  */
-  --navy-blue: var(--navy-blue);
-  --blue-900: var(--blue-900);
-  --blue-800: var(--blue-800);
-  --blue-700: var(--blue-700);
-  --blue-600: var(--blue-600);
+  --color-navy-blue: var(--navy-blue);
+  --color-blue-900: var(--blue-900);
+  --color-blue-800: var(--blue-800);
+  --color-blue-700: var(--blue-700);
+  --color-blue-600: var(--blue-600);
 
   /* primary */
-  --primary-black: var(--primary-black);
-  --primary-950: var(--primary-950);
-  --primary-800: var(--primary-800);
-  --primary-700: var(--primary-700);
-  --primary-500: var(--primary-500);
-  --blue-50: var(--blue-50);
+  --color-primary-black: var(--primary-black);
+  --color-primary-950: var(--primary-950);
+  --color-primary-800: var(--primary-800);
+  --color-primary-700: var(--primary-700);
+  --color-primary-500: var(--primary-500);
+  --color-blue-50: var(--blue-50);
 
   /* red */
-  --red: var(--red);
-  --red-900: var(--red-900);
-  --red-800: var(--red-800);
-  --red-700: var(--red-700);
+  --color-red: var(--red);
+  --color-red-900: var(--red-900);
+  --color-red-800: var(--red-800);
+  --color-red-700: var(--red-700);
 
   /* secondary */
-  --secondary-200: var(--secondary-200);
-  --secondary-300: var(--secondary-300);
-  --secondary-400: var(--secondary-400);
-  --secondary-500: var(--secondary-500);
+  --color-secondary-200: var(--secondary-200);
+  --color-secondary-300: var(--secondary-300);
+  --color-secondary-400: var(--secondary-400);
+  --color-secondary-500: var(--secondary-500);
 
   /* text */
-  --text-50: var(--text-50);
-  --text-100: var(--text-100);
-  --text-200: var(--text-200);
-  --text-500: var(--text-500);
-  --text-700: var(--text-700);
-  --text-950: var(--text-950);
+  --color-text-50: var(--text-50);
+  --color-text-100: var(--text-100);
+  --color-text-200: var(--text-200);
+  --color-text-500: var(--text-500);
+  --color-text-700: var(--text-700);
+  --color-text-950: var(--text-950);
   /* fonts  */
   --font-inter: var(--font-inter-tight);
   --font-barlow: var(--font-barlow-condensed);
@@ -123,6 +123,17 @@
 
 .containerX {
   @apply w-full max-w-[120rem] mx-auto px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-32 duration-200;
+}
+
+.title {
+  @apply text-5xl md:text-6xl lg:text-8xl 2xl:text-[7.50rem] font-barlow font-black uppercase leading-[100%];
+}
+
+.btn {
+  @apply cursor-pointer transition-transform duration-150 ease-in-out;
+  &:active {
+    @apply scale-95;
+  }
 }
 
 html {

@@ -5,13 +5,13 @@ import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter_Tight({
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "900"],
   subsets: ["latin"],
   variable: "--font-inter-tight",
 });
 
 const barlow = Barlow_Condensed({
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "900"],
   subsets: ["latin"],
   variable: "--font-barlow-condensed",
 });
