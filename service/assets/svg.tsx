@@ -29,3 +29,19 @@ export const MinusIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const ArrowDownIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M8.12498 9.00002L12.005 12.88L15.885 9.00002C16.275 8.61002 16.905 8.61002 17.295 9.00002C17.685 9.39002 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.39002 6.70498 9.00002C7.09498 8.62002 7.73498 8.61002 8.12498 9.00002Z"
+      fill="currentColor"
+    />
+  </svg>
+);

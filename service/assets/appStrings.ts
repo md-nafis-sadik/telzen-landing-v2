@@ -73,4 +73,6 @@ export const appStrings = {
     "290737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
   pleaseCheckOurPrice:
     "*Please check our app for latest price list.",
+  whySimly:
+    "Here is why Simly is your go-to eSim provider",
 };

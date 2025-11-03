@@ -131,33 +131,63 @@ export const destinations: IDestination[] = [
 export const faqData = [
   {
     id: 1,
-    question: "What is Telzen?",
-    answer:
-      "Telzen is a next-generation telecom app powered by eSIM technology. It lets you connect instantly without needing a physical SIM card — offering seamless mobile data and global connectivity from your phone.",
+    question: appStrings.whatIsTelzen,
+    answer: appStrings.whatIsTelzenDesc,
   },
   {
     id: 2,
-    question: "How does Telzen work?",
-    answer:
-      "Telzen uses eSIM technology to digitally activate mobile networks. You can browse available plans, choose your preferred carrier, and connect instantly — all within the app.",
+    question: appStrings.telzenWork,
+    answer: appStrings.telzenWorkDesc,
   },
+
   {
     id: 3,
-    question: "What is an eSIM?",
-    answer:
-      "An eSIM (embedded SIM) is a digital SIM that allows you to activate a mobile plan without inserting a physical SIM card. It’s secure, flexible, and built into most modern smartphones.",
+    question: appStrings.whatIsESim,
+    answer: appStrings.whatIsESimDesc,
   },
+
   {
     id: 4,
-    question: "Which devices support Telzen?",
-    answer:
-      "Telzen works on all eSIM-compatible devices, including most recent iPhone, Samsung Galaxy, Google Pixel, and other flagship Android models.",
+    question: appStrings.supportTelzen,
+    answer: appStrings.supportTelzenDesc,
   },
+
   {
     id: 5,
-    question: "Can I keep my existing number?",
-    answer:
-      "Yes. Depending on your region and carrier, you can easily port your current mobile number to Telzen without changing it.",
+    question: appStrings.existingNumber,
+    answer: appStrings.existingNumberDesc,
+  },
+];
+
+export const whyChooseList = [
+  {
+    id: 1,
+    question: appStrings.oneESimAllTrips,
+    answer: appStrings.useOneEsimDesc,
+  },
+
+  {
+    id: 2,
+    question: appStrings.trustedByTravelers,
+    answer: appStrings.joinGlobalTravelersDesc,
+  },
+
+  {
+    id: 3,
+    question: appStrings.directInAppEsim,
+    answer: appStrings.installActivateESimDesc,
+  },
+
+  {
+    id: 4,
+    question: appStrings.supportTransparent,
+    answer: appStrings.enjoySupportTransparentDesc,
+  },
+
+  {
+    id: 5,
+    question: appStrings.seamlessConnectivity,
+    answer: appStrings.switchPlansDesc,
   },
 ];
 
