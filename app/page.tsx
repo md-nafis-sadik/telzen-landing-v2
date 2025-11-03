@@ -2,6 +2,7 @@ import Destination from "@/components/home/Destination";
 import Hero from "@/components/home/Hero";
 import HowItWork from "@/components/home/HowItWork";
 import Nationwide from "@/components/home/Nationwide";
+import Refer from "@/components/home/Refer";
 import WhyChoose from "@/components/home/WhyChoose";
 import Faq from "@/components/shared/Faq";
 
@@ -13,6 +14,7 @@ function page() {
       <HowItWork />
       <WhyChoose />
       <Nationwide />
+      <Refer />
       <Faq />
     </main>
   );
