@@ -42,4 +42,11 @@ interface IFaqItem {
   answer: string;
 }
 
-export type { ICountry, IFaqItem, IProps, IRoute ,IDestination};
+interface IWorkStep {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export type { ICountry, IDestination, IFaqItem, IProps, IRoute, IWorkStep };

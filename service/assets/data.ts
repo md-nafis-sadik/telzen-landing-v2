@@ -1,4 +1,5 @@
-import { ICountry, IDestination } from "../config";
+import { ICountry, IDestination, IWorkStep } from "../config";
+import { appStrings } from "./appStrings";
 import { images } from "./images";
 
 export const countries: ICountry[] = [
@@ -157,5 +158,32 @@ export const faqData = [
     question: "Can I keep my existing number?",
     answer:
       "Yes. Depending on your region and carrier, you can easily port your current mobile number to Telzen without changing it.",
+  },
+];
+
+export const workSteps: IWorkStep[] = [
+  {
+    id: 1,
+    title: appStrings.selectDestination,
+    description: appStrings.easilyChooseFromOverDesc,
+    icon: images.destination,
+  },
+  {
+    id: 2,
+    title: appStrings.pickPlan,
+    description: appStrings.chooseTheDataPackageDesc,
+    icon: images.plan,
+  },
+  {
+    id: 3,
+    title: appStrings.installESim,
+    description: appStrings.activateYourESimDesc,
+    icon: images.esim,
+  },
+  {
+    id: 4,
+    title: appStrings.stayConnected,
+    description: appStrings.enjoyUninterruptedDataDesc,
+    icon: images.connected,
   },
 ];
