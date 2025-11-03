@@ -45,3 +45,19 @@ export const ArrowDownIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const QuoteIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M0 22.8572H8.57142L2.8571 34.2857H11.4285L17.1428 22.8572V5.71436H0V22.8572ZM22.8572 5.71436V22.8572H31.4286L25.7143 34.2857H34.2857L40 22.8572V5.71436H22.8572Z"
+      fill="currentColor"
+    />
+  </svg>
+);

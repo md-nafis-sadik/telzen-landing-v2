@@ -10,7 +10,8 @@ function Hero() {
           <div className="text-center md:text-left">
             <h1 className="title text-black whitespace-nowrap">
               {appStrings.stayOnline} <br />
-              <span className="text-primary-700">{appStrings.anywhere}</span>🌎
+              <span className="text-primary-700">{appStrings.anywhere}</span>
+              🌎
             </h1>
             <p className="text-xl md:text-2xl lg:text-3xs text-text-700 mt-4 duration-200">
               {appStrings.downloadAppActivateSimDesc}

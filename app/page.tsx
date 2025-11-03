@@ -1,3 +1,4 @@
+import CustomerSaid from "@/components/home/CustomerSaid";
 import Destination from "@/components/home/Destination";
 import Download from "@/components/home/Download";
 import Hero from "@/components/home/Hero";
@@ -16,6 +17,7 @@ function page() {
       <WhyChoose />
       <Nationwide />
       <Refer />
+      <CustomerSaid />
       <Download />
       <Faq />
     </main>
