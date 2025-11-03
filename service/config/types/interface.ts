@@ -31,10 +31,15 @@ interface ICountry {
   language_code?: string;
 }
 
+interface IDestination extends ICountry {
+  description?: string;
+  color?: string;
+}
+
 interface IFaqItem {
   id: number;
   question: string;
   answer: string;
 }
 
-export type { ICountry, IProps, IRoute ,IFaqItem};
+export type { ICountry, IFaqItem, IProps, IRoute ,IDestination};

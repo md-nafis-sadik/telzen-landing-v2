@@ -1,6 +1,5 @@
 "use client";
-import { appStrings, cn, MinusIcon, PlusIcon } from "@/service";
-import { faqData } from "@/service/assets/data";
+import { appStrings, cn, faqData, MinusIcon, PlusIcon } from "@/service";
 import { useRef, useState } from "react";
 
 function Faq() {

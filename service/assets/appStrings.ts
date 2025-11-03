@@ -71,4 +71,6 @@ export const appStrings = {
     "Yes. Depending on your region and carrier, you can easily port your current mobile number to Telzen without changing it.",
   copyRightDesc:
     "290737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
+  pleaseCheckOurPrice:
+    "*Please check our app for latest price list.",
 };
