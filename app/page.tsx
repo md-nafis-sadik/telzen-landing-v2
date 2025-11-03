@@ -1,4 +1,5 @@
 import Destination from "@/components/home/Destination";
+import Download from "@/components/home/Download";
 import Hero from "@/components/home/Hero";
 import HowItWork from "@/components/home/HowItWork";
 import Nationwide from "@/components/home/Nationwide";
@@ -15,6 +16,7 @@ function page() {
       <WhyChoose />
       <Nationwide />
       <Refer />
+      <Download />
       <Faq />
     </main>
   );

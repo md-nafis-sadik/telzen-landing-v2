@@ -30,6 +30,7 @@ export const appStrings = {
   existingNumber: "Can I keep my existing number?",
   netroSystemsLimited: "Netro Systems Limited",
   kloudAppLLC: "Kloud Apps LLC",
+  telzen: "Telzen",
 
   //   description
   downloadAppActivateSimDesc: "Download the App & Activate Your eSIM Now.",
@@ -57,8 +58,8 @@ export const appStrings = {
     "As a frequent business traveler, reliable connectivity is a must, and Simly delivers. Setting up the eSlM was quick, and I could stay connected during back-to-back trips in multiple countries.",
   bagpackingTravelerDesc:
     "Simly made my backpacking trip across Europe so much easier. I stayed connected in every country without having to switch SIM cards. The app was super easy to use, and I loved being able to top up anytime on the go!",
-  telzenAppDesc:
-    "You can get Telzen on Google Play and the App Store or by clicking bellow.",
+  youCanGetDesc: "You can get",
+  onGooglePlayDesc: "on Google Play and the App Store or by clicking bellow.",
   whatIsTelzenDesc:
     "Telzen is a next-generation telecom app powered by eSIM technology. It lets you connect instantly without needing a physical SIM card — offering seamless mobile data and global connectivity from your phone.",
   telzenWorkDesc:
@@ -71,8 +72,6 @@ export const appStrings = {
     "Yes. Depending on your region and carrier, you can easily port your current mobile number to Telzen without changing it.",
   copyRightDesc:
     "290737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
-  pleaseCheckOurPrice:
-    "*Please check our app for latest price list.",
-  whySimly:
-    "Here is why Simly is your go-to eSim provider",
+  pleaseCheckOurPrice: "*Please check our app for latest price list.",
+  whySimly: "Here is why Simly is your go-to eSim provider",
 };
