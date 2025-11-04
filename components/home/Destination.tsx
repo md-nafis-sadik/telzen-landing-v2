@@ -1,5 +1,6 @@
 import { appStrings, destinations } from "@/service";
 import Image from "next/image";
+import BlurText from "../animation/BlurText";
 import EmblaCarousel from "../shared/EmblaCarousel";
 
 function Destination() {
@@ -11,11 +12,18 @@ function Destination() {
       <div className="w-full">
         <div className="containerX">
           <div className="w-full max-w-[728px] mx-auto text-center">
-            <h2 className="title text-center tracking-[-2px] text-primary-500">
-              {appStrings.findPopularDestination}
+            <h2 className="title text-center text-primary-500 overflow-hidden">
+              <BlurText
+                text={appStrings.findPopularDestination}
+                translateY={[50, 0]}
+                className="tracking-[-2px]"
+              />
             </h2>
             <p className="text-lg md:text-2xl lg:text-3xs text-text-200 mt-4 md:mt-6">
-              {appStrings.discoverOurMostPopularDesc}
+              <BlurText
+                delay={50}
+                text={appStrings.discoverOurMostPopularDesc}
+              />
             </p>
           </div>
         </div>
@@ -50,7 +58,7 @@ function Destination() {
           </div>
         </EmblaCarousel>
         <p className="px-6 text-lg text-text-500 text-center">
-          {appStrings.pleaseCheckOurPrice}
+          <BlurText delay={50} text={appStrings.pleaseCheckOurPrice} />
         </p>
       </div>
     </section>
