@@ -2,12 +2,14 @@
 import { appStrings, images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
+import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
+import InfiniteBlurCard from "../animation/InfiniteBlurCard";
 
 function Hero() {
   return (
-    <section className="py-16 lg:py-6 lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
-      <div className="containerX">
+    <section className="lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
+      <div className="containerX py-16 lg:py-6">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-7">
           <div className="text-center md:text-left">
             <div className="title text-black whitespace-nowrap">
@@ -42,55 +44,87 @@ function Hero() {
               className="text-2xl text-text-700 font-semibold mt-8"
             ></BlurText>
             <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 flex-wrap">
-              <Link href={routes.home.path} className="w-32 sm:w-40 h-14">
-                <Image
-                  src={images.appStore}
-                  alt="app store"
-                  width={150}
-                  height={50}
-                  className="w-full h-full duration-200"
-                />
-              </Link>
-              <a
-                href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
-                target="_blank"
-                rel="noopener noreferrer"
+              <BlurCard
+                scale={[0.8, 1]}
+                delay={100}
                 className="w-32 sm:w-40 h-14"
               >
-                <Image
-                  src={images.googlePlay}
-                  alt="app store"
-                  width={150}
-                  height={50}
-                  className="w-full h-full duration-200"
-                />
-              </a>
+                <Link href={routes.home.path} className="w-full h-full">
+                  <Image
+                    src={images.appStore}
+                    alt="app store"
+                    width={150}
+                    height={50}
+                    className="w-full h-full duration-200"
+                  />
+                </Link>
+              </BlurCard>
+              <BlurCard
+                scale={[0.8, 1]}
+                delay={300}
+                className="w-32 sm:w-40 h-14"
+              >
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={images.googlePlay}
+                    alt="app store"
+                    width={150}
+                    height={50}
+                    className="w-full h-full duration-200"
+                  />
+                </a>
+              </BlurCard>
             </div>
           </div>
           <div className="relative max-w-96 mx-auto md:max-w-none">
-            <Image
-              src={images.heroBg}
-              alt="hero background"
-              width={500}
-              height={500}
-              className="w-full"
-            />
-
-            <Image
-              src={images.heroMobile1}
-              alt="hero background"
-              width={500}
-              height={500}
-              className="w-1/2 absolute top-0 left-0"
-            />
-
-            <Image
-              src={images.heroMobile2}
-              alt="hero background"
-              width={500}
-              height={500}
-              className="w-3/4 absolute -bottom-4 right-0"
-            />
+            <BlurCard>
+              <Image
+                src={images.heroBg}
+                alt="hero background"
+                width={500}
+                height={500}
+                className="w-full"
+              />
+            </BlurCard>
+            <InfiniteBlurCard
+              yoyoAnimate={{ x: [5, -5, 5], y: [5, -5, 5] }}
+              yoyoTransition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: "mirror",
+              }}
+              className="w-1/2 !absolute top-0 left-0"
+            >
+              <Image
+                src={images.heroMobile1}
+                alt="hero background"
+                width={500}
+                height={500}
+                className="w-full"
+              />
+            </InfiniteBlurCard>
+            <InfiniteBlurCard
+              yoyoAnimate={{ x: [5, -5, 5], y: [-5, 5, -5] }}
+              yoyoTransition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: "mirror",
+              }}
+              className="w-3/4 !absolute -bottom-4 right-0"
+            >
+              <Image
+                src={images.heroMobile2}
+                alt="hero background"
+                width={500}
+                height={500}
+                className="w-full"
+              />
+            </InfiniteBlurCard>
           </div>
         </div>
       </div>
