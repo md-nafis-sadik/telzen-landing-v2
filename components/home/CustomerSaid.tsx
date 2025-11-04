@@ -31,7 +31,7 @@ function CustomerSaid() {
                 </div>
                 <div className="flex gap-2.5">
                   <Image
-                    src={item?.user?.image_url || images.user1}
+                    src={item?.user?.image_url || images.avatar}
                     alt="user"
                     className="size-10 rounded-full"
                     width={100}

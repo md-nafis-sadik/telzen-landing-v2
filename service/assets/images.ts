@@ -21,4 +21,5 @@ export const images = {
   appStore: "/images/app-store.png",
   googlePlay: "/images/google-play.png",
   world: "/images/world.png",
+  avatar: "/images/avatar.png",
 };
