@@ -142,7 +142,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 3rem; /*48px*/
+  scroll-padding-top: 0; /*48px*/
 }
 
 body {

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function HowItWork() {
   return (
-    <section className="py-10 md:py-16 lg:py-20 bg-red-900">
+    <section className="py-10 md:py-16 lg:py-6 bg-red-900 lg:min-h-screen flex items-center justify-center">
       <div className="containerX">
         <h2 className="title text-center tracking-[-2px] text-red-700">
           {appStrings.howItWorks}

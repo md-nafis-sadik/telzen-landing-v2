@@ -21,20 +21,20 @@ function Header() {
           <ClientNavigation>
             <ul className="flex flex-col sm:flex-row sm:items-center gap-6">
               <li>
-                <Link
+                <a
                   className="text-base text-text-700 hover:text-primary-800"
-                  href={routes.buyPlans.path}
+                  href="#destinations"
                 >
                   {routes.buyPlans.name}
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   className="text-base text-text-700 hover:text-primary-800"
-                  href={routes.contactUs.path}
+                  href="mailto:info@telzen.digital"
                 >
                   {routes.contactUs.name}
-                </Link>
+                </a>
               </li>
               <li>
                 <SelectLanguage />

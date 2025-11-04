@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <section className="py-16">
+    <section className="py-16 lg:py-6 lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
       <div className="containerX">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-7">
           <div className="text-center md:text-left">
@@ -38,7 +38,11 @@ function Hero() {
                   className="w-32 sm:w-full h-full duration-200"
                 />
               </Link>
-              <Link href={routes.home.path}>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image
                   src={images.googlePlay}
                   alt="app store"
@@ -46,7 +50,7 @@ function Hero() {
                   height={50}
                   className="w-32 sm:w-full h-full duration-200"
                 />
-              </Link>
+              </a>
             </div>
           </div>
           <div className="relative max-w-96 mx-auto md:max-w-none">
