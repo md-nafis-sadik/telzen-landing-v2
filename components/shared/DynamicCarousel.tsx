@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/service";
 import { EmblaCarouselType, EmblaEventType } from "embla-carousel";
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -13,13 +14,17 @@ const numberWithinRange = (number: number, min: number, max: number): number =>
 function DynamicCarousel({
   className,
   options = {},
+  playOnInit = false,
   children,
 }: {
   className?: string;
   children?: React.ReactNode;
+  playOnInit?: boolean;
   options?: Record<string, any>;
 }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
+    Autoplay({ playOnInit: playOnInit, delay: 3000 }),
+  ]);
   const tweenFactor = useRef(0);
   const tweenNodes = useRef<HTMLElement[]>([]);
 

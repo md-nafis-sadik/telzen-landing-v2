@@ -32,6 +32,7 @@ interface ICountry {
 }
 
 interface IDestination extends ICountry {
+  id?: number;
   description?: string;
   color?: string;
 }

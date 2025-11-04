@@ -1,5 +1,6 @@
 import { appStrings, workSteps } from "@/service";
 import Image from "next/image";
+import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
 function HowItWork() {
@@ -14,10 +15,12 @@ function HowItWork() {
           />
         </h2>
         <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12 lg:mt-16">
-          {workSteps.map((step) => (
-            <div
+          {workSteps.map((step, index) => (
+            <BlurCard
               key={step?.id}
               className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6"
+              translateX={[-50, 0]}
+              delay={index * 100}
             >
               <Image
                 src={step?.icon}
@@ -42,7 +45,7 @@ function HowItWork() {
               <p className="text-lg md:text-xl lg:text-2xl mt-2 lg:mt-4">
                 <BlurText delay={100} text={step?.description} />
               </p> */}
-            </div>
+            </BlurCard>
           ))}
         </div>
       </div>

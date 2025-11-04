@@ -1,6 +1,7 @@
 import { appStrings, images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
+import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
 function Download() {
@@ -48,21 +49,24 @@ function Download() {
           </div>
           <div className="max-w-max mx-auto lg:mx-0 lg:ml-auto">
             <div className="max-w-[400px] xl:w-[480px] relative">
-              <Image
-                src={images.downloadBg}
-                alt="download background"
-                width={500}
-                height={260}
-                className="w-full rounded-xl"
-              />
-
-              <Image
-                src={images.handMobile}
-                alt="download background"
-                width={500}
-                height={260}
-                className="w-full max-w-2/3 absolute bottom-0 left-1/2 transform -translate-x-1/2"
-              />
+              <BlurCard>
+                <Image
+                  src={images.downloadBg}
+                  alt="download background"
+                  width={500}
+                  height={260}
+                  className="w-full rounded-xl"
+                />
+              </BlurCard>
+              <BlurCard scale={[0.8, 1]} delay={500}>
+                <Image
+                  src={images.handMobile}
+                  alt="download background"
+                  width={500}
+                  height={260}
+                  className="w-full max-w-2/3 absolute bottom-0 left-1/2 transform -translate-x-1/2"
+                />
+              </BlurCard>
             </div>
           </div>
         </div>

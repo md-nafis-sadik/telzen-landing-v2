@@ -28,14 +28,15 @@ function Destination() {
           </div>
         </div>
         <EmblaCarousel
-          className="my-7 md:my-10 emblaPadding"
-          options={{ align: "start", containScroll: "trimSnaps" }}
+          className="my-7 md:my-10"
+          options={{ containScroll: "trimSnaps", loop: true }}
+          playOnInit={true}
         >
           <div className="flex">
-            {destinations.map((destination, index) => (
+            {destinations.map((destination) => (
               <div
-                key={index}
-                className="w-56 min-w-56 md:w-[282px] md:min-w-[282px] h-64 md:h-[300px] p-6 rounded-3xl text-white ml-4 first:ml-0"
+                key={destination?.id}
+                className="w-56 min-w-56 md:w-[282px] md:min-w-[282px] h-64 md:h-[300px] p-6 rounded-3xl text-white mx-2 select-none"
                 style={{
                   backgroundColor: destination?.color,
                 }}

@@ -1,5 +1,6 @@
 import { appStrings, images } from "@/service";
 import Image from "next/image";
+import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
 function Refer() {
@@ -20,7 +21,11 @@ function Refer() {
               <BlurText text={appStrings.inviteYourFriendDesc} delay={60} />
             </p>
           </div>
-          <div className="w-full lg:max-w-[730px] flex justify-end items-end">
+          <BlurCard
+            translateX={[100, 0]}
+            scale={[1.2, 1]}
+            className="w-full lg:max-w-[730px] flex justify-end items-end"
+          >
             <Image
               src={images.peoples}
               alt="peoples"
@@ -28,7 +33,7 @@ function Refer() {
               height={400}
               className="w-full"
             />
-          </div>
+          </BlurCard>
         </div>
       </div>
     </section>

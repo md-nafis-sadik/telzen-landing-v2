@@ -1,6 +1,7 @@
 "use client";
 import { appStrings, cn, faqData, MinusIcon, PlusIcon } from "@/service";
 import { useRef, useState } from "react";
+import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
 function Faq() {
@@ -22,7 +23,9 @@ function Faq() {
           </h2>
           <div className="flex flex-col gap-6 sm:gap-8 mt-8 md:mt-12 lg:mt-16">
             {faqData.map((item, index) => (
-              <div
+              <BlurCard
+                translateY={[50, 0]}
+                delay={index * 100}
                 className={cn(
                   " rounded-2xl overflow-hidden",
                   submenuOpen[`question${item.id}`]
@@ -30,7 +33,7 @@ function Faq() {
                     : "bg-transparent"
                 )}
                 key={index}
-                ref={(el) => {
+                ref={(el: any) => {
                   refs.current[`question${item.id}`] = el;
                 }}
               >
@@ -61,7 +64,7 @@ function Faq() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </BlurCard>
             ))}
           </div>
         </div>

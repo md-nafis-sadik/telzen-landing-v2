@@ -16,6 +16,7 @@ function CustomerSaid() {
           loop: true,
           align: "center",
         }}
+        playOnInit={true}
       >
         <div className="flex">
           {testimonials?.map((item, index) => (

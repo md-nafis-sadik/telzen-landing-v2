@@ -1,22 +1,26 @@
 "use client";
 import { cn } from "@/service";
+import Autoplay from "embla-carousel-autoplay";
 import ClassNames from "embla-carousel-class-names";
 import useEmblaCarousel from "embla-carousel-react";
 
 function EmblaCarousel({
   className,
   options = {},
-  dependencies = [],
+  plugin = [],
+  playOnInit = false,
   children,
 }: {
   className?: string;
   children?: React.ReactNode;
   options?: Record<string, any>;
-  dependencies?: any[];
+  playOnInit?: boolean;
+  plugin?: any[];
 }) {
   const [emblaRef] = useEmblaCarousel(options, [
     ClassNames({ snapped: "is-snapped" }),
-    ...dependencies,
+    Autoplay({ playOnInit: playOnInit, delay: 3000 }),
+    ...plugin,
   ]);
   return (
     <div className={cn("relative overflow-hidden", className)} ref={emblaRef}>

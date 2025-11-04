@@ -47,6 +47,7 @@ export const countries: ICountry[] = [
 
 export const destinations: IDestination[] = [
   {
+    id: 1,
     name: "USA",
     full_name: "United States of America",
     code: "US",
@@ -57,6 +58,7 @@ export const destinations: IDestination[] = [
     color: "#00C896",
   },
   {
+    id: 2,
     name: "Japan",
     full_name: "Japan",
     code: "JP",
@@ -67,6 +69,7 @@ export const destinations: IDestination[] = [
     color: "#006752",
   },
   {
+    id: 3,
     name: "UK",
     full_name: "United Kingdom",
     code: "GB",
@@ -77,6 +80,7 @@ export const destinations: IDestination[] = [
     color: "#FFB94A",
   },
   {
+    id: 4,
     name: "Germany",
     full_name: "Germany",
     code: "DE",
@@ -87,6 +91,7 @@ export const destinations: IDestination[] = [
     color: "#00C896",
   },
   {
+    id: 5,
     name: "Turkey",
     full_name: "Turkey",
     code: "TR",
@@ -97,6 +102,7 @@ export const destinations: IDestination[] = [
     color: "#FFB94A",
   },
   {
+    id: 6,
     name: "UK",
     full_name: "United Kingdom",
     code: "GB",
@@ -107,6 +113,7 @@ export const destinations: IDestination[] = [
     color: "#FFB94A",
   },
   {
+    id: 7,
     name: "Germany",
     full_name: "Germany",
     code: "DE",
@@ -117,6 +124,7 @@ export const destinations: IDestination[] = [
     color: "#00C896",
   },
   {
+    id: 8,
     name: "Turkey",
     full_name: "Turkey",
     code: "TR",

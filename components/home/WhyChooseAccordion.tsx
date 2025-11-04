@@ -1,6 +1,7 @@
 "use client";
 import { ArrowDownIcon, cn, whyChooseList } from "@/service";
 import { useRef, useState } from "react";
+import BlurCard from "../animation/BlurCard";
 
 interface IAccordion {
   id: number | string;
@@ -19,17 +20,19 @@ export default function WhyChooseAccordion() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 lg:gap-8">
-      {whyChooseList.map((item: IAccordion) => (
-        <div
+    <div className="w-full flex flex-col gap-4 lg:gap-8 overflow-hidden">
+      {whyChooseList.map((item: IAccordion, index: number) => (
+        <BlurCard
           key={item.id}
+          translateY={[50, 0]}
+          delay={index * 100}
           className={cn(
             "rounded-2xl overflow-hidden border border-natural-400",
             submenuOpen[`question${item.id}`]
               ? "bg-white-300"
               : "bg-transparent"
           )}
-          ref={(el) => {
+          ref={(el: any) => {
             refs.current[`question${item.id}`] = el;
           }}
         >
@@ -64,7 +67,7 @@ export default function WhyChooseAccordion() {
               </p>
             </div>
           </div>
-        </div>
+        </BlurCard>
       ))}
     </div>
   );
