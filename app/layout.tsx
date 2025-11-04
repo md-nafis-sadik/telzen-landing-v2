@@ -46,6 +46,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Telzen - eSIM for Everyone, Everywhere",
+    description:
+      "Experience seamless global connectivity with Telzen's eSIM solutions. Stay connected wherever you go with our easy-to-use, reliable, and affordable eSIM plans designed for travelers worldwide.",
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default function RootLayout({
