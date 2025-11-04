@@ -1,4 +1,4 @@
-import { ICountry, IDestination, IWorkStep } from "../config";
+import { ICountry, IDestination, ITestimonial, IWorkStep } from "../config";
 import { appStrings } from "./appStrings";
 import { images } from "./images";
 
@@ -156,6 +156,97 @@ export const faqData = [
     id: 5,
     question: appStrings.existingNumber,
     answer: appStrings.existingNumberDesc,
+  },
+];
+
+export const testimonials: ITestimonial[] = [
+  {
+    id: 1,
+    quote:
+      "Telzen made buying data so simple! I can now top up my internet anytime, anywhere — and the reward points are a great bonus!",
+    user: {
+      name: "Sarah M.",
+      address: "United Kingdom",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 2,
+    quote:
+      "I love how smooth and fast the Telzen app works. The reward system really keeps me coming back!",
+    user: {
+      name: "Adebayo K.",
+      address: "Nigeria",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 3,
+    quote:
+      "Finally, an app that lets me manage data plans globally! Easy to use and very convenient.",
+    user: {
+      name: "Rave Lost.",
+      address: "Germany",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 4,
+    quote:
+      "Telzen’s interface is clean and user-friendly. I bought my first package in less than a minute — impressive!",
+    user: {
+      name: "Maria L.",
+      address: "Philippines",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 5,
+    quote:
+      "Great experience! The points system actually helps me save money on my next data purchase.",
+    user: {
+      name: "Ahmed Z.",
+      address: "UAE",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 6,
+    quote:
+      "Reliable and fast. I travel often, and Telzen helps me stay connected no matter which country I’m in.",
+    user: {
+      name: "Lucas T.",
+      address: "Brazil",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 7,
+    quote:
+      "Telzen has changed the way I buy data. It’s transparent, rewarding, and works perfectly!",
+    user: {
+      name: "Emma D.",
+      address: "Canada",
+      designation: "",
+      image_url: "",
+    },
+  },
+  {
+    id: 8,
+    quote:
+      "Highly recommended! Excellent app design, smooth transactions, and great support team.",
+    user: {
+      name: "Sokha C.",
+      address: "Cambodia",
+      designation: "",
+      image_url: "",
+    },
   },
 ];
 

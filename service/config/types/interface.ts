@@ -49,4 +49,25 @@ interface IWorkStep {
   icon: string;
 }
 
-export type { ICountry, IDestination, IFaqItem, IProps, IRoute, IWorkStep };
+interface IUser {
+  name?: string;
+  designation?: string;
+  image_url?: string;
+  address?: string;
+}
+
+interface ITestimonial {
+  id: number;
+  quote: string;
+  user: IUser;
+}
+
+export type {
+  ICountry,
+  IDestination,
+  IFaqItem,
+  IProps,
+  IRoute,
+  ITestimonial,
+  IWorkStep,
+};
