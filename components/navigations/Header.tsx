@@ -1,6 +1,7 @@
 import { appStrings, images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
+import ClientNavigation from "./ClientNavigation";
 import SelectLanguage from "./SelectLanguage";
 
 function Header() {
@@ -17,8 +18,8 @@ function Header() {
               className="w-7xl"
             />
           </Link>
-          <div>
-            <ul className="flex items-center gap-6">
+          <ClientNavigation>
+            <ul className="flex flex-col sm:flex-row sm:items-center gap-6">
               <li>
                 <Link
                   className="text-base text-text-700 hover:text-primary-800"
@@ -38,16 +39,22 @@ function Header() {
               <li>
                 <SelectLanguage />
               </li>
-              <li>
+              <li className="hidden sm:block">
                 <button
                   type="button"
-                  className="btn px-4 py-2 rounded-full text-base font-semibold text-white bg-primary-700 leading-[20px]"
+                  className="btn w-full px-4 py-3 sm:py-2 rounded-full text-base font-semibold text-white bg-primary-700 leading-[20px]"
                 >
                   {appStrings.download}
                 </button>
               </li>
             </ul>
-          </div>
+            <button
+              type="button"
+              className="sm:hidden btn w-full px-4 py-3 sm:py-2 rounded-full text-base font-semibold text-white bg-primary-700 leading-[20px]"
+            >
+              {appStrings.download}
+            </button>
+          </ClientNavigation>
         </nav>
       </div>
     </header>

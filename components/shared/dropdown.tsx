@@ -21,6 +21,7 @@ interface DropdownProps {
 }
 
 interface DropdownItemProps {
+  className?: string;
   children: ReactNode;
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
@@ -166,12 +167,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
 };
 
 export const DropdownItem: React.FC<DropdownItemProps> = ({
+  className,
   children,
   onClick,
 }) => {
   return (
     <div
-      className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors"
+      className={cn(
+        "px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors",
+        className
+      )}
       onClick={onClick}
     >
       {children}

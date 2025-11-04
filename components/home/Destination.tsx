@@ -35,7 +35,7 @@ function Destination() {
                 height={100}
                 className="size-12 object-fill"
               />
-              <h3 className="text-2xl md:text-3xl lg:text-5xl font-barlow font-bold md:font-black uppercase">
+              <h3 className="text-2xl md:text-3xl lg:text-5xl font-barlow font-bold md:font-black uppercase mt-3">
                 {destination.name}
               </h3>
               <p className="text-lg md:text-xl lg:text-2xl mt-1">

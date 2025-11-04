@@ -40,7 +40,7 @@ function Download() {
             </div>
           </div>
           <div className="max-w-max mx-auto lg:mx-0 lg:ml-auto">
-            <div className="w-[400px] xl:w-[480px] relative">
+            <div className="max-w-[400px] xl:w-[480px] relative">
               <Image
                 src={images.downloadBg}
                 alt="download background"

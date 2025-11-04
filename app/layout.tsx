@@ -16,8 +16,36 @@ const barlow = Barlow_Condensed({
   variable: "--font-barlow-condensed",
 });
 
+// telzen is for esim service over the world
 export const metadata: Metadata = {
-  title: "Telzen",
+  title: "Telzen - eSIM for Everyone, Everywhere",
+  description:
+    "Experience seamless global connectivity with Telzen's eSIM solutions. Stay connected wherever you go with our easy-to-use, reliable, and affordable eSIM plans designed for travelers worldwide.",
+  keywords:
+    "eSIM, global connectivity, travel eSIM, Telzen, mobile data, international SIM, eSIM plans, travel technology, digital SIM, worldwide coverage",
+  authors: [{ name: "Telzen", url: "https://telzen.com" }],
+  creator: "Telzen",
+  publisher: "Telzen",
+  applicationName: "Telzen",
+  metadataBase: new URL("https://telzen.com"),
+  themeColor: "#000000",
+  openGraph: {
+    title: "Telzen - eSIM for Everyone, Everywhere",
+    description:
+      "Experience seamless global connectivity with Telzen's eSIM solutions. Stay connected wherever you go with our easy-to-use, reliable, and affordable eSIM plans designed for travelers worldwide.",
+    url: new URL("https://telzen.com"),
+    siteName: "Telzen",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Telzen eSIM - Seamless Global Connectivity",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

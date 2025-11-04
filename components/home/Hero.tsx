@@ -8,11 +8,19 @@ function Hero() {
       <div className="containerX">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-7">
           <div className="text-center md:text-left">
-            <h1 className="title text-black whitespace-nowrap">
-              {appStrings.stayOnline} <br />
-              <span className="text-primary-700">{appStrings.anywhere}</span>
-              🌎
-            </h1>
+            <div className="title text-black whitespace-nowrap">
+              {appStrings.stayOnline}
+              <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap">
+                <span className="text-primary-700">{appStrings.anywhere}</span>
+                <Image
+                  src={images?.world}
+                  alt="world"
+                  className="size-10 md:size-16 lg:size-24"
+                  width={150}
+                  height={150}
+                />
+              </div>
+            </div>
             <p className="text-xl md:text-2xl lg:text-3xs text-text-700 mt-4 duration-200">
               {appStrings.downloadAppActivateSimDesc}
             </p>
