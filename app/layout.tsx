@@ -1,5 +1,6 @@
 import Footer from "@/components/navigations/Footer";
 import Header from "@/components/navigations/Header";
+import LenisLayout from "@/components/shared/LenisLayout";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import "./globals.css";
@@ -64,7 +65,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${barlow.variable} antialiased`}>
         <Header />
-        {children}
+        <LenisLayout>{children}</LenisLayout>
         <Footer />
       </body>
     </html>
