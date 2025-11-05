@@ -61,6 +61,7 @@ interface ITestimonial {
   id: number;
   quote: string;
   user: IUser;
+  rating: number;
 }
 
 export type {

@@ -2,6 +2,7 @@ import { appStrings, images, QuoteIcon, testimonials } from "@/service";
 import Image from "next/image";
 import BlurText from "../animation/BlurText";
 import DynamicCarousel from "../shared/DynamicCarousel";
+import Rating from "../shared/Rating";
 
 function CustomerSaid() {
   return (
@@ -24,13 +25,24 @@ function CustomerSaid() {
               key={index}
               className="flex-[0_0_70%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 select-none"
             >
-              <div className="embla-slide-inner border border-natural-500 p-6 rounded-3xl transition-colors duration-200 h-full flex flex-col justify-between gap-4 lg:gap-6">
+              <div className="embla-slide-inner border border-natural-500 p-6 rounded-3xl transition-colors duration-200 h-full flex flex-col justify-between gap-3">
                 <div>
                   <p className="text-lg md:text-xl lg:text-2xl line-clamp-5">
                     {item?.quote}
                   </p>
                   <QuoteIcon className="size-7 lg:size-10 text-natural-400 ml-auto" />
+                  <div className="flex items-center gap-1">
+                    <Rating
+                      rating={item?.rating}
+                      wrapperClass="gap-1"
+                      className="rating size-8"
+                    />
+                    <span className="text-sm sm:text-base font-bold">
+                      {item?.rating}
+                    </span>
+                  </div>
                 </div>
+
                 <div className="flex gap-2.5">
                   <Image
                     src={item?.user?.image_url || images.avatar}

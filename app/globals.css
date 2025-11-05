@@ -43,6 +43,7 @@
   --secondary-300: #ffc44d;
   --secondary-400: #ffda44;
   --secondary-500: #ff9d00;
+  --secondary-600: #ff9d00;
 
   /* text */
   --text-50: #fafafa;
@@ -97,6 +98,7 @@
   --color-secondary-300: var(--secondary-300);
   --color-secondary-400: var(--secondary-400);
   --color-secondary-500: var(--secondary-500);
+  --color-secondary-600: var(--secondary-600);
 
   /* text */
   --color-text-50: var(--text-50);
@@ -170,4 +172,8 @@ body {
 
 .embla-slide-inner.active svg {
   color: var(--text-950);
+}
+
+.embla-slide-inner.active .rating {
+  color: var(--secondary-600);
 }
