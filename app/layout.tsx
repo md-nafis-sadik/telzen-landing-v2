@@ -1,6 +1,7 @@
 import Footer from "@/components/navigations/Footer";
 import Header from "@/components/navigations/Header";
 import LenisLayout from "@/components/shared/LenisLayout";
+import Loader from "@/components/shared/Loader";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import "./globals.css";
@@ -67,6 +68,7 @@ export default function RootLayout({
         <Header />
         <LenisLayout>{children}</LenisLayout>
         <Footer />
+        <Loader />
       </body>
     </html>
   );

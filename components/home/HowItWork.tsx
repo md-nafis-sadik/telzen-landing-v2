@@ -18,7 +18,7 @@ function HowItWork() {
           {workSteps.map((step, index) => (
             <BlurCard
               key={step?.id}
-              className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-105 duration-300"
+              className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-[1.015] duration-300"
               translateX={[-50, 0]}
               delay={index * 100}
             >
