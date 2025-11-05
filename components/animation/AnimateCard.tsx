@@ -28,6 +28,7 @@ function AnimateCard({
       }}
       whileInView={{
         ...rest,
+        opacity: 1,
       }}
       viewport={{ once: true }}
       className={cn(className, "relative")}

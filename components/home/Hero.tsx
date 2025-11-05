@@ -87,22 +87,31 @@ function Hero() {
               className="w-full"
               priority
             />
-            <Image
-              src={images.heroMobile1}
-              alt="hero background"
-              width={500}
-              height={500}
+            <AnimateCard
+              scale={[0.95, 1]}
               className="w-1/2 !absolute top-0 left-0 z-10"
-              priority
-            />
-            <Image
-              src={images.heroMobile2}
-              alt="hero background"
-              width={500}
-              height={500}
+            >
+              <Image
+                src={images.heroMobile1}
+                alt="hero background"
+                width={500}
+                height={500}
+                className="w-full z-10"
+              />
+            </AnimateCard>
+            <AnimateCard
+              scale={[0.95, 1]}
+              delay={500}
               className="w-3/4 !absolute -bottom-4 right-0 z-40"
-              priority
-            />
+            >
+              <Image
+                src={images.heroMobile2}
+                alt="hero background"
+                width={500}
+                height={500}
+                className="w-full  z-10"
+              />
+            </AnimateCard>
           </div>
         </div>
       </div>
