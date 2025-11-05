@@ -2,7 +2,7 @@
 import { cn } from "@/service";
 import { motion } from "motion/react";
 
-function BlurCard({
+function AnimateCard({
   text = "",
   delay = 200,
   className = "",
@@ -17,10 +17,10 @@ function BlurCard({
 }) {
   return (
     <motion.div
+      initial={{ opacity: 0 }}
       animate={{
         ...rest,
         opacity: [0, 1],
-        // filter: ["blur(10px)", "blur(0px)"],
       }}
       transition={{
         duration: 0.5,
@@ -39,4 +39,4 @@ function BlurCard({
   );
 }
 
-export default BlurCard;
+export default AnimateCard;

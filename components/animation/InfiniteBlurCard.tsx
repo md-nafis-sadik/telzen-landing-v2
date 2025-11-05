@@ -19,24 +19,29 @@ function InfiniteBlurCard({
   delay = 200,
   duration = 0.5,
   yoyoAnimate = { scale: [1, 1.05, 1] },
-  yoyoTransition = { duration: 1, repeat: Infinity, repeatType: "mirror" },
+  yoyoTransition = {
+    duration: 1,
+    repeat: Infinity,
+    repeatType: "mirror",
+  },
   ...rest
 }: Props) {
   const [startYoyo, setStartYoyo] = useState(false);
 
   return (
     <motion.div
-      animate={{
-        opacity: [0, 1],
-        filter: ["blur(10px)", "blur(0px)"],
+      initial={{
+        opacity: 0,
+        scale: 0.95,
       }}
-      transition={{ duration, delay: delay / 1000 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: duration, delay: delay / 1000 }}
       onAnimationComplete={() => setStartYoyo(true)}
       className={cn(className, "relative")}
       {...rest}
     >
       {startYoyo ? (
-        <motion.div animate={yoyoAnimate} transition={yoyoTransition}>
+        <motion.div animate={yoyoAnimate} transition={{ ...yoyoTransition }}>
           {children}
         </motion.div>
       ) : (

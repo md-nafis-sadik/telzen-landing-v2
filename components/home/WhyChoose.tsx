@@ -26,8 +26,12 @@ function WhyChoose() {
                 className="tracking-[-2px]"
               />
             </h2>
-            <p className="text-2xl text-text-700">
-              <BlurText text={appStrings.whySimly} delay={50} />
+            <p className="text-2xl text-text-700 overflow-hidden">
+              <BlurText
+                text={appStrings.whySimly}
+                translateY={[30, 0]}
+                delay={50}
+              />
             </p>
           </div>
           <WhyChooseAccordion />

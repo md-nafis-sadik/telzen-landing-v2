@@ -1,6 +1,7 @@
 "use client";
 import { appStrings, images } from "@/service";
 import Image from "next/image";
+import AnimateCard from "../animation/AnimateCard";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 import InfiniteBlurCard from "../animation/InfiniteBlurCard";
@@ -86,7 +87,7 @@ function Hero() {
             </div>
           </div>
           <div className="relative max-w-96 mx-auto md:max-w-none min-h-[380px]">
-            <BlurCard>
+            <AnimateCard scale={[0.94, 1]}>
               <Image
                 src={images.heroBg}
                 alt="hero background"
@@ -94,7 +95,7 @@ function Hero() {
                 height={500}
                 className="w-full"
               />
-            </BlurCard>
+            </AnimateCard>
             <InfiniteBlurCard
               yoyoAnimate={{ x: [5, -5, 5], y: [5, -5, 5] }}
               yoyoTransition={{
@@ -102,14 +103,15 @@ function Hero() {
                 repeat: Infinity,
                 repeatType: "mirror",
               }}
-              className="w-1/2 !absolute top-0 left-0"
+              delay={500}
+              className="w-1/2 !absolute top-0 left-0 z-10"
             >
               <Image
                 src={images.heroMobile1}
                 alt="hero background"
                 width={500}
                 height={500}
-                className="w-full"
+                className="w-full z-10"
               />
             </InfiniteBlurCard>
             <InfiniteBlurCard
@@ -119,14 +121,15 @@ function Hero() {
                 repeat: Infinity,
                 repeatType: "mirror",
               }}
-              className="w-3/4 !absolute -bottom-4 right-0"
+              delay={500}
+              className="w-3/4 !absolute -bottom-4 right-0 z-40"
             >
               <Image
                 src={images.heroMobile2}
                 alt="hero background"
                 width={500}
                 height={500}
-                className="w-full"
+                className="w-full  z-10"
               />
             </InfiniteBlurCard>
           </div>

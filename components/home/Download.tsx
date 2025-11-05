@@ -1,6 +1,5 @@
-import { appStrings, images, routes } from "@/service";
+import { appStrings, images } from "@/service";
 import Image from "next/image";
-import Link from "next/link";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
@@ -19,37 +18,72 @@ function Download() {
               />
             </h2>
             <p className="text-lg md:text-xl lg:text-2xl text-text-700 mt-3 md:mt-6">
-              <BlurText text={appStrings.youCanGetDesc} />{" "}
               <BlurText
+                translateX={[30, 0]}
+                delay={50}
+                text={appStrings.youCanGetDesc}
+              />{" "}
+              <BlurText
+                translateX={[30, 0]}
+                delay={50}
                 text={appStrings.telzen}
                 className="text-text-950 font-semibold"
               />{" "}
-              <BlurText text={appStrings.onGooglePlayDesc} delay={40} />
+              <BlurText
+                translateX={[30, 0]}
+                delay={50}
+                text={appStrings.onGooglePlayDesc}
+              />
             </p>
             <div className="flex justify-center lg:justify-start gap-3 md:gap-6 mt-4 flex-wrap">
-              <Link href={routes.home.path}>
-                <Image
-                  src={images.appStore}
-                  alt="app store"
-                  width={150}
-                  height={50}
-                  className="w-32 sm:w-full h-full duration-200"
-                />
-              </Link>
-              <Link href={routes.home.path}>
-                <Image
-                  src={images.googlePlay}
-                  alt="app store"
-                  width={150}
-                  height={50}
-                  className="w-32 sm:w-full h-full duration-200"
-                />
-              </Link>
+              <BlurCard
+                scale={[0.8, 1]}
+                delay={100}
+                className="w-32 sm:w-40 h-14"
+              >
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={images.appStore}
+                    alt="app store"
+                    width={150}
+                    height={50}
+                    className="w-full h-full duration-200"
+                  />
+                </a>
+              </BlurCard>
+              <BlurCard
+                scale={[0.8, 1]}
+                delay={300}
+                className="w-32 sm:w-40 h-14"
+              >
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={images.googlePlay}
+                    alt="app store"
+                    width={150}
+                    height={50}
+                    className="w-full h-full duration-200"
+                  />
+                </a>
+              </BlurCard>
             </div>
           </div>
           <div className="max-w-max mx-auto lg:mx-0 lg:ml-auto">
             <div className="max-w-[400px] xl:w-[480px] relative">
-              <BlurCard>
+              <BlurCard
+                filter={["blur(20px)", "blur(0px)"]}
+                className="min-h-[280px]"
+              >
                 <Image
                   src={images.downloadBg}
                   alt="download background"

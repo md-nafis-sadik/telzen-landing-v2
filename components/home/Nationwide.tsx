@@ -24,7 +24,11 @@ function Nationwide() {
           />
         </h2>
         <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-100 max-w-[712px] mx-auto">
-          <BlurText text={appStrings.globalConnectivityDesc} delay={100} />
+          <BlurText
+            translateX={[30, 0]}
+            delay={50}
+            text={appStrings.globalConnectivityDesc}
+          />
         </p>
       </div>
     </section>

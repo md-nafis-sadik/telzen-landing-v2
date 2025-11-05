@@ -17,8 +17,12 @@ function Refer() {
                 delay={100}
               />
             </h2>
-            <p className="text-lg md:text-xl lg:text-2xl text-black mt-3 md:mt-6">
-              <BlurText text={appStrings.inviteYourFriendDesc} delay={60} />
+            <p className="text-lg md:text-xl lg:text-2xl text-black mt-3 md:mt-6 overflow-hidden">
+              <BlurText
+                translateY={[30, 0]}
+                delay={50}
+                text={appStrings.inviteYourFriendDesc}
+              />
             </p>
           </div>
           <BlurCard

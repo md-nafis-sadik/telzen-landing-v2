@@ -19,9 +19,10 @@ function Destination() {
                 className="tracking-[-2px]"
               />
             </h2>
-            <p className="text-lg md:text-2xl lg:text-3xs text-text-200 mt-4 md:mt-6">
+            <p className="text-lg md:text-2xl lg:text-3xs text-text-200 mt-4 md:mt-6 overflow-hidden">
               <BlurText
                 delay={50}
+                translateX={[-30, 0]}
                 text={appStrings.discoverOurMostPopularDesc}
               />
             </p>
@@ -59,7 +60,11 @@ function Destination() {
           </div>
         </EmblaCarousel>
         <p className="px-6 text-lg text-text-500 text-center">
-          <BlurText delay={50} text={appStrings.pleaseCheckOurPrice} />
+          <BlurText
+            translateX={[-30, 0]}
+            delay={50}
+            text={appStrings.pleaseCheckOurPrice}
+          />
         </p>
       </div>
     </section>

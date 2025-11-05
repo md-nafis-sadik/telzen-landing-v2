@@ -17,7 +17,7 @@ function BlurText({
       animate={{
         ...rest,
         opacity: [0, 1],
-        filter: ["blur(10px)", "blur(0px)"],
+        // filter: ["blur(10px)", "blur(0px)"],
       }}
       transition={{
         duration: 0.5,
@@ -26,7 +26,7 @@ function BlurText({
       whileInView={{
         ...rest,
         opacity: [0, 1],
-        filter: ["blur(10px)", "blur(0px)"],
+        // filter: ["blur(10px)", "blur(0px)"],
       }}
       viewport={{ once: true }}
       className={cn(className, "inline-block")}
