@@ -8,7 +8,7 @@ import Refer from "@/components/home/Refer";
 import WhyChoose from "@/components/home/WhyChoose";
 import Faq from "@/components/shared/Faq";
 
-function page() {
+function Home() {
   return (
     <main className="font-inter bg-white">
       <Hero />
@@ -24,4 +24,4 @@ function page() {
   );
 }
 
-export default page;
+export default Home;
