@@ -1,4 +1,4 @@
-import { appStrings, images, routes } from "@/service";
+import { images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
 import ClientNavigation from "./ClientNavigation";
@@ -39,21 +39,21 @@ function Header() {
               <li>
                 <SelectLanguage />
               </li>
-              <li className="hidden sm:block">
+              {/* <li className="hidden sm:block">
                 <button
                   type="button"
                   className="btn w-full px-4 py-3 sm:py-2 rounded-full text-base font-semibold text-white bg-primary-700 leading-[20px]"
                 >
                   {appStrings.download}
                 </button>
-              </li>
+              </li> */}
             </ul>
-            <button
+            {/* <button
               type="button"
               className="sm:hidden btn w-full px-4 py-3 sm:py-2 rounded-full text-base font-semibold text-white bg-primary-700 leading-[20px]"
             >
               {appStrings.download}
-            </button>
+            </button> */}
           </ClientNavigation>
         </nav>
       </div>

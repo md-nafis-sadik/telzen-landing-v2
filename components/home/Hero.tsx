@@ -1,7 +1,6 @@
 "use client";
-import { appStrings, images, routes } from "@/service";
+import { appStrings, images } from "@/service";
 import Image from "next/image";
-import Link from "next/link";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 import InfiniteBlurCard from "../animation/InfiniteBlurCard";
@@ -49,7 +48,12 @@ function Hero() {
                 delay={100}
                 className="w-32 sm:w-40 h-14"
               >
-                <Link href={routes.home.path} className="w-full h-full">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full h-full"
+                >
                   <Image
                     src={images.appStore}
                     alt="app store"
@@ -57,7 +61,7 @@ function Hero() {
                     height={50}
                     className="w-full h-full duration-200"
                   />
-                </Link>
+                </a>
               </BlurCard>
               <BlurCard
                 scale={[0.8, 1]}
@@ -81,7 +85,7 @@ function Hero() {
               </BlurCard>
             </div>
           </div>
-          <div className="relative max-w-96 mx-auto md:max-w-none">
+          <div className="relative max-w-96 mx-auto md:max-w-none min-h-[380px]">
             <BlurCard>
               <Image
                 src={images.heroBg}
