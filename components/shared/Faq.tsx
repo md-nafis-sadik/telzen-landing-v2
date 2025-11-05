@@ -23,45 +23,46 @@ function Faq() {
           </h2>
           <div className="flex flex-col gap-6 sm:gap-8 mt-8 md:mt-12 lg:mt-16">
             {faqData.map((item, index) => (
-              <BlurCard
-                translateY={[50, 0]}
-                delay={index * 100}
-                className={cn(
-                  " rounded-2xl overflow-hidden",
-                  submenuOpen[`question${item.id}`]
-                    ? "bg-white-300"
-                    : "bg-transparent"
-                )}
-                key={index}
-                ref={(el: any) => {
-                  refs.current[`question${item.id}`] = el;
-                }}
-              >
-                <button
-                  className="py-4 w-full flex items-center justify-between gap-6 pb-2.5 cursor-pointer"
-                  onClick={() => handleDropdown(`question${item.id}`)}
-                >
-                  <span className="truncate text-base sm:text-lg md:text-2xl lg:text-3xl font-barlow font-black uppercase">
-                    {item?.question}
-                  </span>
-                  {submenuOpen[`question${item.id}`] ? (
-                    <MinusIcon className="shrink-0 duration-300" />
-                  ) : (
-                    <PlusIcon className="shrink-0 duration-300" />
-                  )}
-                </button>
+              <BlurCard translateY={[50, 0]} delay={index * 100} key={index}>
                 <div
-                  className="transition-all duration-500 ease-in-out"
-                  style={{
-                    maxHeight: submenuOpen[`question${item.id}`]
-                      ? `${refs.current[`question${item.id}`]?.scrollHeight}px`
-                      : "0",
+                  ref={(el: any) => {
+                    refs.current[`question${item.id}`] = el;
                   }}
+                  className={cn(
+                    "border-b overflow-hidden border-transparent hover:border-red duration-300",
+                    submenuOpen[`question${item.id}`]
+                      ? "bg-white-300"
+                      : "bg-transparent"
+                  )}
                 >
-                  <div className="pt-1 overflow-hidden">
-                    <p className=" text-base sm:text-lg text-black-600 leading-[140%] ">
-                      {item?.answer}
-                    </p>
+                  <button
+                    className="py-4 w-full flex items-center justify-between gap-6 pb-2.5 cursor-pointer"
+                    onClick={() => handleDropdown(`question${item.id}`)}
+                  >
+                    <span className="truncate text-base sm:text-lg md:text-2xl lg:text-3xl font-barlow font-black uppercase">
+                      {item?.question}
+                    </span>
+                    {submenuOpen[`question${item.id}`] ? (
+                      <MinusIcon className="shrink-0 duration-300" />
+                    ) : (
+                      <PlusIcon className="shrink-0 duration-300" />
+                    )}
+                  </button>
+                  <div
+                    className="transition-all duration-500 ease-in-out"
+                    style={{
+                      maxHeight: submenuOpen[`question${item.id}`]
+                        ? `${
+                            refs.current[`question${item.id}`]?.scrollHeight
+                          }px`
+                        : "0",
+                    }}
+                  >
+                    <div className="pt-1 pb-2 overflow-hidden">
+                      <p className=" text-base sm:text-lg text-black-600 leading-[140%] ">
+                        {item?.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </BlurCard>

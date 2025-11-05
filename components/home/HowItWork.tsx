@@ -5,7 +5,7 @@ import BlurText from "../animation/BlurText";
 
 function HowItWork() {
   return (
-    <section className="py-10 md:py-16 lg:py-6 bg-red-900 lg:min-h-screen flex items-center justify-center">
+    <section className="pt-10 pb-4 md:pt-16 md:pb-10 lg:pt-6 bg-red-900 lg:min-h-screen flex items-center justify-center">
       <div className="containerX">
         <h2 className="title text-center text-red-700 overflow-hidden">
           <BlurText
@@ -14,11 +14,11 @@ function HowItWork() {
             className="tracking-[-2px]"
           />
         </h2>
-        <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12 lg:mt-16">
+        <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12 lg:mt-16 pb-6">
           {workSteps.map((step, index) => (
             <BlurCard
               key={step?.id}
-              className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6"
+              className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-105 duration-300"
               translateX={[-50, 0]}
               delay={index * 100}
             >
