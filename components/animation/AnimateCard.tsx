@@ -20,7 +20,7 @@ function AnimateCard({
       initial={{ opacity: 0 }}
       animate={{
         ...rest,
-        opacity: [0, 1],
+        opacity: 1,
       }}
       transition={{
         duration: 0.5,
@@ -28,8 +28,6 @@ function AnimateCard({
       }}
       whileInView={{
         ...rest,
-        opacity: [0, 1],
-        // filter: ["blur(10px)", "blur(0px)"],
       }}
       viewport={{ once: true }}
       className={cn(className, "relative")}

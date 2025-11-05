@@ -2,6 +2,7 @@
 import { cn, images } from "@/service";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import InfiniteBlurCard from "../animation/InfiniteBlurCard";
 
 function Loader() {
   const [loading, setLoading] = useState(true);
@@ -22,24 +23,30 @@ function Loader() {
   }, []);
 
   return (
-    <div
-      className={cn(
-        "w-full h-screen overflow-hidden flex flex-col gap-6 items-center justify-center bg-white z-[999] fixed top-0 left-0",
-        loading
-          ? "visible opacity-100"
-          : "invisible opacity-0 pointer-events-none"
-      )}
-    >
-      <Image
-        src={images.logo}
-        alt="logo"
-        width={300}
-        height={300}
-        className="w-40"
-        priority
-      />
-      <h2 className="text-2xl text-text-950 font-barlow">Loading...</h2>
-    </div>
+    loading && (
+      <div
+        className={cn(
+          "w-full h-screen overflow-hidden flex flex-col gap-6 items-center justify-center bg-white z-[999] fixed top-0 left-0"
+        )}
+      >
+        <InfiniteBlurCard
+          yoyoTransition={{
+            duration: 0.7,
+            repeat: Infinity,
+            repeatType: "mirror",
+          }}
+        >
+          <Image
+            src={images.logo}
+            alt="logo"
+            width={300}
+            height={300}
+            className="w-48"
+            priority
+          />
+        </InfiniteBlurCard>
+      </div>
+    )
   );
 }
 

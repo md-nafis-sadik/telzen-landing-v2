@@ -30,7 +30,6 @@ export const metadata: Metadata = {
   publisher: "Telzen",
   applicationName: "Telzen",
   metadataBase: new URL("https://telzen.com"),
-  themeColor: "#000000",
   openGraph: {
     title: "Telzen - eSIM for Everyone, Everywhere",
     description:
