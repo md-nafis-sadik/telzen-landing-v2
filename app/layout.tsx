@@ -4,6 +4,7 @@ import LenisLayout from "@/components/shared/LenisLayout";
 import Loader from "@/components/shared/Loader";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter_Tight({
@@ -68,6 +69,27 @@ export default function RootLayout({
         <LenisLayout>{children}</LenisLayout>
         <Footer />
         <Loader />
+        <Script
+          id="visitor-tracking"
+          async
+          defer
+          src="https://app.visitortracking.com/assets/js/tracer.js"
+        ></Script>
+        <Script
+          id="visitor-tracking-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              function init_tracer() {
+                var tracer = new Tracer({ 
+                  websiteId : "4663d38b-5708-42a2-8b78-b89cc8fe0b1d", 
+                  async : true,
+                  debug : false 
+                });
+              }
+              window.onload = init_tracer;
+            `,
+          }}
+        />
       </body>
     </html>
   );
