@@ -1,5 +1,5 @@
 "use client";
-import { appStrings, images } from "@/service";
+import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
 import AnimateCard from "../animation/AnimateCard";
 import BlurText from "../animation/BlurText";
@@ -47,7 +47,7 @@ function Hero() {
             </p>
             <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 flex-wrap">
               <a
-                href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                href={envConfig.playAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-32 sm:w-40 h-14"
@@ -62,7 +62,7 @@ function Hero() {
                 />
               </a>
               <a
-                href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                href={envConfig.googleAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-32 sm:w-40 h-14"

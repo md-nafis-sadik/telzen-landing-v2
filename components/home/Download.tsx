@@ -1,4 +1,4 @@
-import { appStrings, images } from "@/service";
+import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
@@ -42,7 +42,7 @@ function Download() {
                 className="w-32 sm:w-40 h-14"
               >
                 <a
-                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  href={envConfig.playAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full h-full"
@@ -62,7 +62,7 @@ function Download() {
                 className="w-32 sm:w-40 h-14"
               >
                 <a
-                  href="https://play.google.com/store/apps/details?id=com.netro.telzenapp&pcampaignid=web_share"
+                  href={envConfig.googleAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full h-full"
