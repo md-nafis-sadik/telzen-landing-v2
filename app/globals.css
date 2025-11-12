@@ -132,7 +132,7 @@
 }
 
 .title {
-  @apply text-5xl md:text-6xl lg:text-8xl 2xl:text-[7.50rem] font-barlow font-bold sm:font-black uppercase leading-[100%];
+  @apply text-5xl md:text-6xl lg:text-8xl 2xl:text-[7.50rem] font-barlow font-black uppercase leading-[100%];
 }
 
 .btn {

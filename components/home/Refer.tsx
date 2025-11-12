@@ -13,7 +13,7 @@ function Refer() {
               <BlurText
                 text={appStrings.referFriend}
                 translateX={[-50, 0]}
-                className="tracking-[-2px]"
+                className="md:tracking-[-2px]"
                 delay={100}
               />
             </h2>

@@ -16,7 +16,7 @@ function Destination() {
               <BlurText
                 text={appStrings.findPopularDestination}
                 translateY={[50, 0]}
-                className="tracking-[-2px]"
+                className="md:tracking-[-2px]"
               />
             </h2>
             <p className="text-lg md:text-2xl lg:text-3xs text-text-200 mt-4 md:mt-6 overflow-hidden">

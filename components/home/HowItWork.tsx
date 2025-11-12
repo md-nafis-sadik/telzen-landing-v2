@@ -11,7 +11,7 @@ function HowItWork() {
           <BlurText
             text={appStrings.howItWorks}
             translateY={[50, 0]}
-            className="tracking-[-2px]"
+            className="md:tracking-[-2px]"
           />
         </h2>
         <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12 lg:mt-16 pb-6">

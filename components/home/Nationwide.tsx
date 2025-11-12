@@ -20,7 +20,7 @@ function Nationwide() {
           <BlurText
             text={appStrings.nationwideCoverage}
             translateY={[50, 0]}
-            className="tracking-[-2px]"
+            className="md:tracking-[-2px]"
           />
         </h2>
         <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-100 max-w-[712px] mx-auto">
