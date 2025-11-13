@@ -22,7 +22,7 @@ function ClientNavigation({
       </button>
       <div
         className={cn(
-          "fixed top-0 left-0 h-screen w-full bg-black/20 sm:relative sm:top-auto sm:left-auto sm:h-auto z-40 duration-300 sm:bg-transparent sm:pointer-events-auto sm:opacity-100",
+          "fixed top-0 left-0 h-screen w-full bg-black/20 sm:relative sm:top-auto sm:left-auto sm:h-auto z-[999] duration-300 sm:bg-transparent sm:pointer-events-auto sm:opacity-100",
           showMenu
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none delay-300"
