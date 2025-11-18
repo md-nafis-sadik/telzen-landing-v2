@@ -19,12 +19,12 @@ function Hero() {
                 <div className="overflow-hidden">
                   <BlurText
                     text={appStrings.anywhere}
-                    className="text-primary-700"
+                    // className="text-primary-700"
                     translateX={[-50, 0]}
                     delay={400}
                   />
                 </div>
-                <AnimateCard scale={[0.9, 1]} delay={600}>
+                {/* <AnimateCard scale={[0.9, 1]} delay={600}>
                   <Image
                     src={images?.world}
                     alt="world"
@@ -33,14 +33,29 @@ function Hero() {
                     height={150}
                     priority
                   />
-                </AnimateCard>
+                </AnimateCard> */}
               </div>
             </div>
-            <div className="mt-4 min-h-10 overflow-hidden">
+            <div>
+              <div className="w-full max-w-[360px] my-4 lg:my-8">
+                <div className="flex items-center border border-[#8C8C8C] rounded-full overflow-hidden h-13 bg-white">
+                  <input
+                    type="text"
+                    placeholder="Your destination"
+                    className="flex-1 pl-6 text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
+                  />
+
+                  <button className="bg-[#00CD8E] text-white text-sm lg:text-base font-medium px-5 py-[7px] h-max rounded-full m-2">
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+            {/* <div className="mt-4 min-h-10 overflow-hidden">
               <p className="text-xl md:text-2xl lg:text-3xs text-text-700">
                 {appStrings.downloadAppActivateSimDesc}
               </p>
-            </div>
+            </div> */}
 
             <p className="text-2xl text-text-700 font-semibold mt-8">
               {appStrings.downloadNow}

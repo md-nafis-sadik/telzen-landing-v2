@@ -35,4 +35,12 @@ export const images = {
   spain: "/images/spain.png",
   emma: "/images/emma.png",
   lucas: "/images/lucas.png",
+  globeAirplane: "/images/globeAirplane-travel.webp",
+  palmTree: "/images/palm-tree.webp",
+  easterIsland: "/images/easter-island.webp",
+  pyramidGiza: "/images/pyramid-giza.webp",
+  coinGame: "/images/coin-game.webp",
+  googleLogo: "/images/google-logo.webp",
+  successful: "/images/successful.webp",
+  newZealand: "/images/new-zealand.webp",
 };

@@ -7,6 +7,7 @@ export const appStrings = {
   stayOnline: "Stay Online",
   anywhere: "Anywhere",
   findPopularDestination: "Find Popular Destination",
+  destinations: "Destinations",
   howItWorks: "How It works",
   selectDestination: "Select Destination",
   pickPlan: "Pick a Plan",
@@ -31,11 +32,13 @@ export const appStrings = {
   netroSystemsLimited: "Netro Systems Limited",
   kloudAppLLC: "Kloud Apps LLC",
   telzen: "Telzen",
+  recomended: "Recommended",
+  headerButtonText: "Login/SignUp",
 
   //   description
   downloadAppActivateSimDesc: "Download the App & Activate Your eSIM Now.",
   discoverOurMostPopularDesc:
-    "Discover our most popular destinations, with 200,000+ happy customers!",
+    "Discover our most popular destinations over 200+ countries.",
   easilyChooseFromOverDesc: "Easily choose from over 180 countries.",
   chooseTheDataPackageDesc: "Choose the data package that best suits",
   activateYourESimDesc: "Activate your eSIM",
@@ -74,4 +77,5 @@ export const appStrings = {
     "290737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
   pleaseCheckOurPrice: "*Please check our app for latest price list.",
   whySimly: "Here is why Simly is your go-to eSim provider",
+  basedOnPublicDemand: "Based on public demand and most visited countries.",
 };

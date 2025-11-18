@@ -4,6 +4,7 @@ import Download from "@/components/home/Download";
 import Hero from "@/components/home/Hero";
 import HowItWork from "@/components/home/HowItWork";
 import Nationwide from "@/components/home/Nationwide";
+import RecomendedDestinations from "@/components/home/RecomendedDestinations";
 import Refer from "@/components/home/Refer";
 import WhyChoose from "@/components/home/WhyChoose";
 import Faq from "@/components/shared/Faq";
@@ -13,6 +14,7 @@ function Home() {
     <main className="font-inter bg-white">
       <Hero />
       <Destination />
+      <RecomendedDestinations />
       <HowItWork />
       <WhyChoose />
       <Nationwide />

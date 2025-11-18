@@ -10,6 +10,7 @@
   --black: #000;
 
   /* natural */
+  --natural-50: #fafafa;
   --natural-100: #cecece;
   --natural-200: #eeeeee;
   --natural-300: #cfcfcf;
@@ -133,6 +134,10 @@
 
 .title {
   @apply text-5xl md:text-6xl lg:text-8xl 2xl:text-[7.50rem] font-barlow font-black uppercase leading-[100%];
+}
+
+.backTitle {
+  @apply text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl font-barlow font-black uppercase leading-[88%];
 }
 
 .btn {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ClientNavigation from "./ClientNavigation";
 import SelectLanguage from "./SelectLanguage";
+import { AuthButton } from "../auth";
 
 function Header() {
   return (
@@ -36,8 +37,11 @@ function Header() {
                   {routes.contactUs.name}
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <SelectLanguage />
+              </li> */}
+              <li>
+                <AuthButton />
               </li>
               {/* <li className="hidden sm:block">
                 <button

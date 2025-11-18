@@ -2,6 +2,8 @@ import Footer from "@/components/navigations/Footer";
 import Header from "@/components/navigations/Header";
 import LenisLayout from "@/components/shared/LenisLayout";
 import Loader from "@/components/shared/Loader";
+import { ReduxProvider } from "@/components/providers";
+import { AuthModal } from "@/components/auth";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import Script from "next/script";
@@ -65,31 +67,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${barlow.variable} antialiased`}>
-        <Header />
-        <LenisLayout>{children}</LenisLayout>
-        <Footer />
-        <Loader />
-        <Script
-          id="visitor-tracking"
-          async
-          defer
-          src="https://app.visitortracking.com/assets/js/tracer.js"
-        ></Script>
-        <Script
-          id="visitor-tracking-init"
-          dangerouslySetInnerHTML={{
-            __html: `
-              function init_tracer() {
-                var tracer = new Tracer({ 
-                  websiteId : "4663d38b-5708-42a2-8b78-b89cc8fe0b1d", 
-                  async : true,
-                  debug : false 
-                });
-              }
-              window.onload = init_tracer;
-            `,
-          }}
-        />
+        <ReduxProvider>
+          <Header />
+          <LenisLayout>{children}</LenisLayout>
+          <Footer />
+          <Loader />
+          <AuthModal />
+          <Script
+            id="visitor-tracking"
+            async
+            defer
+            src="https://app.visitortracking.com/assets/js/tracer.js"
+          ></Script>
+          <Script
+            id="visitor-tracking-init"
+            dangerouslySetInnerHTML={{
+              __html: `
+                function init_tracer() {
+                  var tracer = new Tracer({ 
+                    websiteId : "4663d38b-5708-42a2-8b78-b89cc8fe0b1d", 
+                    async : true,
+                    debug : false 
+                  });
+                }
+                window.onload = init_tracer;
+              `,
+            }}
+          />
+        </ReduxProvider>
       </body>
     </html>
   );
