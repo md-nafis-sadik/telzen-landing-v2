@@ -1,6 +1,7 @@
 import { appStrings, ArrowRightSvg, images } from "@/service";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
+import DestinationCard from "../shared/DestinationCard";
 
 function RecomendedDestinations() {
   const items = Array.from({ length: 4 }, (_, i) => i);
@@ -28,43 +29,9 @@ function RecomendedDestinations() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-max mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
             {items.map((item, index) => (
-              <div
-                key={index}
-                className="relative rounded-[12.698px] w-[250.794px] h-[300px] overflow-hidden cursor-pointer"
-                style={{
-                  backgroundImage: `url(${images?.newZealand})`,
-                  backgroundPosition: "-12.584px -58.73px",
-                  backgroundSize: "111.347% 119.577%",
-                  backgroundRepeat: "no-repeat",
-                  backgroundColor: "lightgray",
-                }}
-              >
-                <div
-                  className="absolute bottom-0 w-full rounded-b-[12.698px]"
-                  style={{
-                    height: "177.778px",
-                    background:
-                      "linear-gradient(0deg, #042855 0%, rgba(4, 40, 85, 0) 100%)",
-                  }}
-                ></div>
-
-                <div
-                  className={`
-                  sticker absolute bottom-2 left-1/2 -translate-x-1/2 
-                  w-[95%] max-w-[238px] rounded-[9px] px-3 sm:px-[12.7px] pt-1 pb-2
-                  ${index % 2 === 0 ? "bg-primary-700" : "bg-secondary-200"}
-                `}
-                >
-                  <div className="text-2xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-tight">
-                    New Zealand
-                  </div>
-                  <div className="text-base sm:text-lg text-[#FAFAFA]">
-                    Start from $9.99
-                  </div>
-                </div>
-              </div>
+              <DestinationCard key={index} index={index} />
             ))}
           </div>
           <div>

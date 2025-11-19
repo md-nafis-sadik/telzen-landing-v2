@@ -2,6 +2,9 @@ export const appStrings = {
   // titles
   buyPlans: "Buy Plans",
   contactUs: "Contact Us",
+  aboutUs: "About Us",
+  ourMission: "Our Mission",
+  ourVision: "Our Vision",
   download: "Download",
   downloadNow: "Download Now!",
   stayOnline: "Stay Online",
@@ -78,4 +81,9 @@ export const appStrings = {
   pleaseCheckOurPrice: "*Please check our app for latest price list.",
   whySimly: "Here is why Simly is your go-to eSim provider",
   basedOnPublicDemand: "Based on public demand and most visited countries.",
+  about1: "Telzen is a next-generation eSIM brand created by Kloud Apps LLC, built to deliver seamless, borderless connectivity for modern travelers and global citizens. Founded with a strong focus on mass adoption and affordability, Telzen ensures that anyone can stay connected anywhere in the world—without the complexity of traditional mobile plans.",
+  about2: "Beyond connectivity, Telzen is designed with purpose. Our commitment extends to reducing carbon emissions through digital-first technology, creating an intuitive user experience, and rewarding our customers through Telzen Points. With innovative features such as built-in VPN for secure browsing, Gift eSIM options, and a customer-centric platform, we aim to redefine how people experience mobile data on the go.",
+  about3: "Telzen is more than an eSIM—it&’s a smarter, greener, more convenient way to connect.",
+  ourMissionDesc: "Our mission is to make global connectivity effortless, affordable, and accessible for everyone. We aim to empower travelers and digital nomads with secure, reliable eSIM solutions while contributing to a more sustainable future through digital innovation. By delivering exceptional user experience, rewarding loyalty, and introducing value-driven features, Telzen strives to simplify communication and enhance the way people explore the world.",
+  ourVisionDesc: "Our vision is to become the world’s most trusted and customer-centric eSIM brand—leading the shift toward greener, more flexible mobile connectivity. Telzen aspires to create a global ecosystem where users enjoy seamless digital experiences, innovative features, and meaningful rewards, all while contributing to a reduced environmental footprint and a more connected future.",
 };

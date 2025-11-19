@@ -31,6 +31,7 @@
   --primary-800: #50a99a;
   --primary-700: #00c896;
   --primary-500: #00ff95;
+  --primary-100: #9FE2D1;
   --blue-50: #d0fff7;
 
   /* red */
@@ -39,7 +40,11 @@
   --red-800: #d80027;
   --red-700: #ff7c58;
 
+
+  --brick-600: #db5d4c;
+
   /* secondary */
+  --secondary-100: #ffebc6;
   --secondary-200: #ffb94a;
   --secondary-300: #ffc44d;
   --secondary-400: #ffda44;
@@ -66,6 +71,7 @@
   --color-black: var(--black);
 
   /* natural */
+  --color-natural-50: var(--natural-50);
   --color-natural-100: var(--natural-100);
   --color-natural-200: var(--natural-200);
   --color-natural-300: var(--natural-300);
@@ -86,6 +92,7 @@
   --color-primary-800: var(--primary-800);
   --color-primary-700: var(--primary-700);
   --color-primary-500: var(--primary-500);
+  --color-primary-100: var(--primary-100);
   --color-blue-50: var(--blue-50);
 
   /* red */
@@ -94,7 +101,11 @@
   --color-red-800: var(--red-800);
   --color-red-700: var(--red-700);
 
+
+  --color-brick-600: var(--brick-600);
+
   /* secondary */
+  --color-secondary-100: var(--secondary-100);
   --color-secondary-200: var(--secondary-200);
   --color-secondary-300: var(--secondary-300);
   --color-secondary-400: var(--secondary-400);

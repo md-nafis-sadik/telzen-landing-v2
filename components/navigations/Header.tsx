@@ -7,7 +7,7 @@ import { AuthButton } from "../auth";
 
 function Header() {
   return (
-    <header className="font-inter py-4">
+    <header className="font-inter py-4 sticky top-0 bg-white/30 z-50 backdrop-blur-md">
       <div className="containerX">
         <nav className="flex items-center justify-between gap-4">
           <Link href={routes.home.path}>

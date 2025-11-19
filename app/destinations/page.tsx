@@ -4,7 +4,6 @@ function Destinations() {
   return (
     <main className="font-inter bg-white">
       <AllDestinations />
-
     </main>
   );
 }

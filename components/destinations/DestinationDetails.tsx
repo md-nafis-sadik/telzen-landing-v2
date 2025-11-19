@@ -4,6 +4,8 @@ import {
   ArrowRightSvg,
   destinations,
   images,
+  SmileGreenSvg,
+  StarPointSvg,
 } from "@/service";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
@@ -13,8 +15,8 @@ function DestinationDetails() {
   const items = Array.from({ length: 15 }, (_, i) => i);
   return (
     <section
-      className="py-10 md:py-16 lg:py-20 bg-white lg:min-h-screen flex items-center"
-      id="destinations"
+      className="py-10 md:py-16 lg:py-20 bg-white lg:min-h-screen flex"
+      id="destinationDetails"
     >
       <div className="w-full">
         <div className="containerX">
@@ -24,7 +26,7 @@ function DestinationDetails() {
               <BlurText text="United States of America" translateY={[50, 0]} />
             </h2>
           </div>
-          <div className="flex gap-8">
+          <div className="flex flex-col md:flex-row gap-8">
             <div className="flex h-full">
               <Image
                 src={images?.newZealand}
@@ -52,8 +54,26 @@ function DestinationDetails() {
                 {destinations.map((destination, index) => (
                   <div
                     key={index}
-                    className="flex flex-col gap-4 cursor-pointer bg-natural-100 p-4 rounded-2xl w-full h-[140px]"
-                  ></div>
+                    className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full"
+                  >
+                    <div className="flex flex-col w-full gap-3">
+                      <span>
+                        <SmileGreenSvg className="w-6 md:w-7 lg:w-8 h-6 md:h-7 lg:h-8" />
+                      </span>
+                      <div className="flex flex-col gap-1">
+                        <div className="text-lg md:text-xl lg:text-2xl">1 GB • 7 Days </div>
+                        <div className="flex items-center gap-1">
+                          <span>
+                            <StarPointSvg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" />
+                          </span>
+                          <span className="text-natural-500 text-sm md:text-base">50 Points</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end justify-end">
+                      <div className="text-xl md:text-2xl lg:text-3xl justify-end">$8.99</div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>

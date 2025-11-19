@@ -43,4 +43,6 @@ export const images = {
   googleLogo: "/images/google-logo.webp",
   successful: "/images/successful.webp",
   newZealand: "/images/new-zealand.webp",
+  starFish: "/images/starfish.webp",
+  christTheRedeemer: "/images/christ-the-redeemer.webp",
 };

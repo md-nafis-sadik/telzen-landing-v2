@@ -31,7 +31,7 @@ function ClientNavigation({
       >
         <div
           className={cn(
-            "h-full flex flex-col justify-between w-full max-w-96 sm:max-w-none bg-white relative z-50 duration-300  sm:translate-x-0 p-6 pt-14 sm:p-0",
+            "h-full flex flex-col justify-between w-full max-w-96 sm:max-w-none relative z-50 duration-300  sm:translate-x-0 p-6 pt-14 sm:p-0",
             showMenu ? "translate-x-0 delay-300" : "-translate-x-full"
           )}
           onClick={(e) => e.stopPropagation()}

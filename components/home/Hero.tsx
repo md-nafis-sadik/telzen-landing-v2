@@ -3,6 +3,7 @@ import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
 import AnimateCard from "../animation/AnimateCard";
 import BlurText from "../animation/BlurText";
+import SearchInput from "../shared/SearchInput";
 
 function Hero() {
   return (
@@ -38,17 +39,7 @@ function Hero() {
             </div>
             <div>
               <div className="w-full max-w-[360px] my-4 lg:my-8">
-                <div className="flex items-center border border-[#8C8C8C] rounded-full overflow-hidden h-13 bg-white">
-                  <input
-                    type="text"
-                    placeholder="Your destination"
-                    className="flex-1 pl-6 text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
-                  />
-
-                  <button className="bg-[#00CD8E] text-white text-sm lg:text-base font-medium px-5 py-[7px] h-max rounded-full m-2">
-                    Search
-                  </button>
-                </div>
+                <SearchInput />
               </div>
             </div>
             {/* <div className="mt-4 min-h-10 overflow-hidden">

@@ -49,7 +49,7 @@ const LoginStep: React.FC = () => {
           <Swiper
             modules={[Autoplay]}
             autoplay={{
-              delay: 3000,
+              delay: 1200,
               disableOnInteraction: false,
             }}
             loop={true}
