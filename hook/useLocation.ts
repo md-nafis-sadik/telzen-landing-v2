@@ -43,6 +43,8 @@ export const useLocation = (): UseLocationReturn => {
   }, []);
 
   const getStoredLocation = (): LocationData | null => {
+    if (typeof window === 'undefined') return null;
+    
     try {
       const stored = localStorage.getItem(LOCATION_STORAGE_KEY);
       if (stored) {
@@ -65,6 +67,8 @@ export const useLocation = (): UseLocationReturn => {
   };
 
   const saveLocationToStorage = (locationData: LocationData): void => {
+    if (typeof window === 'undefined') return;
+    
     try {
       localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(locationData));
     } catch (err) {
@@ -173,7 +177,9 @@ export const useLocation = (): UseLocationReturn => {
   const clearLocation = (): void => {
     setLocation(null);
     setError(null);
-    localStorage.removeItem(LOCATION_STORAGE_KEY);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(LOCATION_STORAGE_KEY);
+    }
   };
 
   return {
@@ -187,6 +193,8 @@ export const useLocation = (): UseLocationReturn => {
 
 // Utility function to get location from localStorage without the hook
 export const getStoredLocationData = (): LocationData | null => {
+  if (typeof window === 'undefined') return null;
+  
   try {
     const stored = localStorage.getItem(LOCATION_STORAGE_KEY);
     if (stored) {
@@ -202,7 +210,9 @@ export const getStoredLocationData = (): LocationData | null => {
     }
   } catch (err) {
     console.error('Error reading location from localStorage:', err);
-    localStorage.removeItem(LOCATION_STORAGE_KEY);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(LOCATION_STORAGE_KEY);
+    }
   }
   return null;
 };

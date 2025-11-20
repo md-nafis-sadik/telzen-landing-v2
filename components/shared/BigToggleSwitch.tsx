@@ -37,7 +37,7 @@ function BigToggleSwitch({
     >
       {/* Animated Background Slider */}
       <motion.div
-        className={`absolute top-0 bottom-0 left-0 rounded-full ${primaryColor || "bg-primary-700"} z-0`}
+        className={`absolute top-0 bottom-0 left-0 rounded-full ${primaryColor || "bg-primary-700 shadow-md"} z-0`}
         initial={false}
         animate={{
           x: isCountriesActive ? 0 : '100%',
@@ -53,14 +53,14 @@ function BigToggleSwitch({
       {/* Countries Button */}
       <motion.button
         onClick={() => handleToggle('countries')}
-        className="rounded-full px-3 sm:px-4 md:px-6 py-2 h-full flex items-center z-10 relative w-1/2 justify-center"
+        className="rounded-full cursor-pointer px-3 sm:px-4 md:px-6 py-2 h-full flex items-center z-10 relative w-1/2 justify-center"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
         <motion.span
           className="whitespace-nowrap text-xs sm:text-sm md:text-base"
           animate={{
-            color: isCountriesActive ? '#FFFFFF' : '#6B7280'
+            color: isCountriesActive ? '#FFFFFF' : '#0A0A0A'
           }}
           transition={{ duration: 0.2 }}
         >
@@ -71,14 +71,14 @@ function BigToggleSwitch({
       {/* Regional Packs Button */}
       <motion.button
         onClick={() => handleToggle('regions')}
-        className="rounded-full px-3 sm:px-4 md:px-6 py-2 h-full flex items-center z-10 relative w-1/2 justify-center"
+        className="rounded-full cursor-pointer px-3 sm:px-4 md:px-6 py-2 h-full flex items-center z-10 relative w-1/2 justify-center"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
         <motion.span
           className="whitespace-nowrap text-xs sm:text-sm md:text-base"
           animate={{
-            color: !isCountriesActive ? '#FFFFFF' : '#6B7280'
+            color: !isCountriesActive ? '#FFFFFF' : '#0A0A0A'
           }}
           transition={{ duration: 0.2 }}
         >

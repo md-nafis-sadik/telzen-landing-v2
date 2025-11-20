@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'motion/react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useGetRegionsQuery, useGetCountriesQuery } from '@/store/modules/destination/destinationApi';
 import { setDestinationType, DestinationType } from '@/store/modules/destination/destinationSlice';
@@ -113,13 +114,20 @@ function Destination() {
 
           {/* See More Button */}
           {!isLoading && currentData.length > 0 && (
-            <div>
+            <div className="flex justify-center mt-6 lg:mt-10">
               <Link
                 href="/destinations"
-                className="flex justify-center items-center text-text-50 gap-2 mt-6 lg:mt-10"
+                className="group flex items-center gap-1 text-text-50"
               >
-                <span>See more</span>
-                <ArrowRightSvg />
+                <motion.span
+                  initial={{ x: 0 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="flex items-center gap-2"
+                >
+                  <span>See more</span>
+                  <ArrowRightSvg />
+                </motion.span>
               </Link>
             </div>
           )}

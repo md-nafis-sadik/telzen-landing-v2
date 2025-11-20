@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from 'motion/react';
 import useEmblaCarousel from "embla-carousel-react";
 import BlogCard from "./BlogCard";
 import Link from "next/link";
@@ -37,11 +38,19 @@ const OurBlog = ({ data }: any) => {
         </div>
 
         <div className="flex items-center justify-center w-full">
-          <Link className="mt-4 md:mt-8 flex gap-1" href="/blog">
-            <span>See More</span>
-            <span>
+          <Link 
+            className="mt-4 md:mt-8 flex items-center gap-2" 
+            href="/blog"
+          >
+            <motion.span
+              initial={{ x: 0 }}
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="flex items-center gap-1"
+            >
+              <span>See More</span>
               <ArrowRightBlackSvg />
-            </span>
+            </motion.span>
           </Link>
         </div>
       </div>

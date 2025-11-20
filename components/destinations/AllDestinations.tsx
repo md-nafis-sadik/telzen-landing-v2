@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   useGetRegionsQuery,
@@ -8,8 +8,6 @@ import {
 } from "@/store/modules/destination/destinationApi";
 import {
   setDestinationType,
-  setDestinationPageSearch,
-  resetDestinationPage,
   DestinationType,
 } from "@/store/modules/destination/destinationSlice";
 import { useSearchParams } from "next/navigation";
@@ -19,29 +17,30 @@ import SearchInput from "../shared/SearchInput";
 import BigToggleSwitch from "../shared/BigToggleSwitch";
 import DestinationCard from "../shared/DestinationCard";
 import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
+import EmptyState from "../shared/EmptyState";
 
 function AllDestinations() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const { activeType } = useAppSelector((state) => state.destination);
 
+  const itemsPerPage = 15;
+  const loadMoreCount = 5;
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("search") || ""
   );
-  const [allDestinations, setAllDestinations] = useState<any[]>([]);
-  const [hasMore, setHasMore] = useState(true);
   const [apiSearchQuery, setApiSearchQuery] = useState(
     searchParams.get("search") || ""
   );
-
-  const itemsPerPage = 15;
-  const loadMoreCount = 5;
+  const [allDestinations, setAllDestinations] = useState<any[]>([]);
 
   // API queries for both regions and countries
   const {
     data: regionsData,
     isLoading: regionsLoading,
+    isFetching: regionsFetching,
     error: regionsError,
   } = useGetRegionsQuery(
     {
@@ -57,6 +56,7 @@ function AllDestinations() {
   const {
     data: countriesData,
     isLoading: countriesLoading,
+    isFetching: countriesFetching,
     error: countriesError,
   } = useGetCountriesQuery(
     {
@@ -72,20 +72,11 @@ function AllDestinations() {
   // Determine current state based on active type
   const isLoading =
     activeType === "regions" ? regionsLoading : countriesLoading;
+  const isFetching =
+    activeType === "regions" ? regionsFetching : countriesFetching;
   const currentData = activeType === "regions" ? regionsData : countriesData;
   const hasError = activeType === "regions" ? regionsError : countriesError;
-
-  // Set search query from URL on mount
-  useEffect(() => {
-    const urlSearch = searchParams.get("search") || "";
-    setSearchQuery(urlSearch);
-    setApiSearchQuery(urlSearch);
-    dispatch(setDestinationPageSearch(urlSearch));
-    // Reset page and data when URL search changes
-    setCurrentPage(1);
-    setAllDestinations([]);
-    setHasMore(true);
-  }, [searchParams, dispatch]);
+  const hasMore = currentData?.meta?.has_next_page ?? false;
 
   // Update destinations when data changes
   useEffect(() => {
@@ -95,37 +86,13 @@ function AllDestinations() {
       } else {
         setAllDestinations((prev) => [...prev, ...currentData.data]);
       }
-      setHasMore(currentData.meta.has_next_page);
     }
   }, [currentData, currentPage]);
 
-  // Reset when toggle changes
-  useEffect(() => {
-    setCurrentPage(1);
-    setAllDestinations([]);
-    setHasMore(true);
-  }, [activeType]);
-
-  // Immediate search effect - always call API
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setCurrentPage(1);
-      setAllDestinations([]);
-      setHasMore(true);
-      setApiSearchQuery(searchQuery);
-      dispatch(setDestinationPageSearch(searchQuery));
-    }, 500); // 500ms delay
-
-    return () => clearTimeout(timeoutId);
-  }, [searchQuery, dispatch]);
-
   const handleToggle = (type: DestinationType) => {
     dispatch(setDestinationType(type));
-    dispatch(resetDestinationPage());
-    // Reset local state when toggling
     setCurrentPage(1);
     setAllDestinations([]);
-    setHasMore(true);
   };
 
   const handleSearchChange = (value: string) => {
@@ -133,16 +100,13 @@ function AllDestinations() {
   };
 
   const handleSearch = () => {
-    // Reset page and data when performing new search
     setCurrentPage(1);
     setAllDestinations([]);
-    setHasMore(true);
     setApiSearchQuery(searchQuery);
-    dispatch(setDestinationPageSearch(searchQuery));
   };
 
   const handleLoadMore = () => {
-    if (hasMore && !isLoading) {
+    if (hasMore && !isFetching) {
       setCurrentPage((prev) => prev + 1);
     }
   };
@@ -194,7 +158,7 @@ function AllDestinations() {
               </div>
 
               {/* Load More Loading */}
-              {isLoading && currentPage > 1 && (
+              {isFetching && currentPage > 1 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 w-full mx-auto">
                   {Array.from({ length: loadMoreCount }).map((_, index) => (
                     <DestinationCardSkeleton
@@ -206,7 +170,7 @@ function AllDestinations() {
               )}
 
               {/* Load More Button */}
-              {hasMore && !isLoading && (
+              {hasMore && !isFetching && (
                 <div className="flex justify-center items-center">
                   <button
                     onClick={handleLoadMore}
@@ -222,12 +186,11 @@ function AllDestinations() {
 
           {/* Empty State */}
           {!isLoading && !hasError && allDestinations.length === 0 && (
-            <div className="text-center text-text-700 py-8">
-              <p>
-                No destinations found
-                {searchQuery ? ` for "${searchQuery}"` : ""}.
-              </p>
-            </div>
+            <EmptyState 
+              searchQuery={apiSearchQuery}
+              title="No Destinations Found"
+              description="We couldn't find any destinations. Please try again later."
+            />
           )}
         </div>
       </div>
