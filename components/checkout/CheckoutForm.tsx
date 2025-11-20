@@ -20,7 +20,7 @@ function CheckoutForm() {
               // value={email}
               // onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
               required
             />
           </div>
@@ -37,7 +37,7 @@ function CheckoutForm() {
               // value={email}
               // onChange={(e) => setEmail(e.target.value)}
               placeholder="0000 0000 0000 0000"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
               required
             />
           </div>
@@ -55,7 +55,7 @@ function CheckoutForm() {
                 // value={email}
                 // onChange={(e) => setEmail(e.target.value)}
                 placeholder="MM/YY"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
                 required
               />
             </div>
@@ -72,7 +72,7 @@ function CheckoutForm() {
                 // value={email}
                 // onChange={(e) => setEmail(e.target.value)}
                 placeholder="000"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
                 required
               />
             </div>

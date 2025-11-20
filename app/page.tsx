@@ -7,6 +7,7 @@ import Nationwide from "@/components/home/Nationwide";
 import RecomendedDestinations from "@/components/home/RecomendedDestinations";
 import Refer from "@/components/home/Refer";
 import WhyChoose from "@/components/home/WhyChoose";
+import BlogHomeClient from "@/components/blog/BlogHomeClient";
 import Faq from "@/components/shared/Faq";
 
 function Home() {
@@ -22,6 +23,7 @@ function Home() {
       <CustomerSaid />
       <Download />
       <Faq />
+      <BlogHomeClient />
     </main>
   );
 }

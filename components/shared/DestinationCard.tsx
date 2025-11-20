@@ -1,16 +1,7 @@
 import { cn, images } from "@/service";
+import { Region, Country } from "@/store/modules/destination/destinationApi";
 
-function DestinationCard({
-  buttonText = "Click Me",
-  className = "",
-  index = 0,
-  destinationImage,
-  destinationName,
-  destinationPriceSymbol,
-  destinationPrice,
-  onClick,
-  ...props
-}: {
+interface DestinationCardProps {
   buttonText?: string;
   className?: string;
   index?: number;
@@ -19,13 +10,37 @@ function DestinationCard({
   destinationPriceSymbol?: string;
   destinationPrice?: string;
   onClick?: () => void;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  data?: Region | Country;
+}
+
+function DestinationCard({
+  buttonText = "Click Me",
+  className = "",
+  index = 0,
+  destinationImage,
+  destinationName,
+  destinationPriceSymbol = "$",
+  destinationPrice,
+  onClick,
+  data,
+  ...props
+}: DestinationCardProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  
+  // Use data from API if available, otherwise fallback to props
+  const displayImage = data?.image || destinationImage || images?.newZealand;
+  const displayName = data?.name || destinationName || "New Zealand";
+  const displayPrice = data?.start_from || destinationPrice || 0;
+  
+  // Format price to show properly
+  const formattedPrice = typeof displayPrice === 'number' 
+    ? displayPrice.toFixed(2) 
+    : displayPrice;
   return (
     <div
       key={index}
       className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer"
       style={{
-        backgroundImage: `url(${destinationImage || images?.newZealand})`,
+        backgroundImage: `url(${displayImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -48,11 +63,10 @@ function DestinationCard({
                     `}
       >
         <div className="text-2xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-tight">
-          {destinationName || "New Zealand"}
+          {displayName}
         </div>
         <div className="text-base sm:text-lg text-[#FAFAFA]">
-          Start from {destinationPriceSymbol || "$"}
-          {destinationPrice || 0}
+          Start from {destinationPriceSymbol}{formattedPrice}
         </div>
       </div>
     </div>

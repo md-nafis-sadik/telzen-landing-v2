@@ -31,7 +31,7 @@
   --primary-800: #50a99a;
   --primary-700: #00c896;
   --primary-500: #00ff95;
-  --primary-100: #9FE2D1;
+  --primary-100: #9fe2d1;
   --blue-50: #d0fff7;
 
   /* red */
@@ -39,7 +39,6 @@
   --red-900: #a02838;
   --red-800: #d80027;
   --red-700: #ff7c58;
-
 
   --brick-600: #db5d4c;
 
@@ -101,7 +100,6 @@
   --color-red-800: var(--red-800);
   --color-red-700: var(--red-700);
 
-
   --color-brick-600: var(--brick-600);
 
   /* secondary */
@@ -156,6 +154,14 @@
   &:active {
     @apply scale-95;
   }
+}
+
+.absolute_center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+.transition_common {
+  @apply transition-all duration-300 ease-in-out;
 }
 
 html {

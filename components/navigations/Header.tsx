@@ -24,7 +24,7 @@ function Header() {
               <li>
                 <a
                   className="text-base text-text-700 hover:text-primary-800"
-                  href="#destinations"
+                  href="/destinations"
                 >
                   {routes.buyPlans.name}
                 </a>
@@ -32,7 +32,7 @@ function Header() {
               <li>
                 <a
                   className="text-base text-text-700 hover:text-primary-800"
-                  href="mailto:info@telzen.digital"
+                  href="/contact"
                 >
                   {routes.contactUs.name}
                 </a>

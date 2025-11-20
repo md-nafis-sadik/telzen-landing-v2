@@ -1,8 +1,14 @@
+import TermsAndConditions from "@/app/terms-and-conditions/page";
+
 export const appStrings = {
   // titles
   buyPlans: "Buy Plans",
   contactUs: "Contact Us",
   aboutUs: "About Us",
+  culture: "Culture",
+  blogs: "Blogs",
+  termsAndConditions: "Terms and Conditions",
+  privacyPolicy: "Privacy Policy",
   ourMission: "Our Mission",
   ourVision: "Our Vision",
   download: "Download",
@@ -86,4 +92,5 @@ export const appStrings = {
   about3: "Telzen is more than an eSIM—it&’s a smarter, greener, more convenient way to connect.",
   ourMissionDesc: "Our mission is to make global connectivity effortless, affordable, and accessible for everyone. We aim to empower travelers and digital nomads with secure, reliable eSIM solutions while contributing to a more sustainable future through digital innovation. By delivering exceptional user experience, rewarding loyalty, and introducing value-driven features, Telzen strives to simplify communication and enhance the way people explore the world.",
   ourVisionDesc: "Our vision is to become the world’s most trusted and customer-centric eSIM brand—leading the shift toward greener, more flexible mobile connectivity. Telzen aspires to create a global ecosystem where users enjoy seamless digital experiences, innovative features, and meaningful rewards, all while contributing to a reduced environmental footprint and a more connected future.",
+  cultureDesc: "At Telzen, our culture is built around trust, ownership, and genuine collaboration. We keep the environment open, respectful, and people-first—where everyone, regardless of role, has a real voice. Teams are encouraged to take full ownership of their work without micromanagement, and leaders act more like mentors than supervisors. We move fast and think big, but we don’t glorify burnout; we value balance, transparency, and honest communication. With flexible work options, diverse perspectives, and a shared commitment to meaningful work—from reducing carbon emissions to reshaping global connectivity—we stay grounded in our mission. Day-to-day, our culture is shaped by simple, human moments: casual lunch hangouts, shoutouts for good work, celebrating wins together, learning from failures, and supporting each other’s growth. It’s a place where ambition stays humble, ideas flow freely, and people genuinely enjoy building something impactful as a team.",
 };

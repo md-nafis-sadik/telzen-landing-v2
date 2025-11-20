@@ -5,7 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setAuthModalStep, setAuthModalEmail } from "@/store/modules/ui/uiSlice";
+import {
+  setAuthModalStep,
+  setAuthModalEmail,
+} from "@/store/modules/ui/uiSlice";
 import { useSigninMutation } from "@/store/modules/auth/authApi";
 import { getDeviceId } from "@/service/helpers/device.utils";
 import Image from "next/image";
@@ -49,7 +52,7 @@ const LoginStep: React.FC = () => {
           <Swiper
             modules={[Autoplay]}
             autoplay={{
-              delay: 1200,
+              delay: 3000,
               disableOnInteraction: false,
             }}
             loop={true}
@@ -137,7 +140,7 @@ const LoginStep: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
             required
           />
         </div>

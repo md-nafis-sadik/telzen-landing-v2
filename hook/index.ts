@@ -1,0 +1,1 @@
+export { useLocation, getStoredLocationData } from './useLocation';

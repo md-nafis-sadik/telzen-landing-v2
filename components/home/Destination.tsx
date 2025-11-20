@@ -1,13 +1,53 @@
-import { appStrings, ArrowRightSvg, destinations, images } from "@/service";
-import Image from "next/image";
+"use client";
+
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useGetRegionsQuery, useGetCountriesQuery } from '@/store/modules/destination/destinationApi';
+import { setDestinationType, DestinationType } from '@/store/modules/destination/destinationSlice';
+import { appStrings, ArrowRightSvg } from "@/service";
 import BlurText from "../animation/BlurText";
-import EmblaCarousel from "../shared/EmblaCarousel";
 import Link from "next/link";
 import BigToggleSwitch from "../shared/BigToggleSwitch";
 import DestinationCard from "../shared/DestinationCard";
+import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
 
 function Destination() {
-  const items = Array.from({ length: 8 }, (_, i) => i);
+  const dispatch = useAppDispatch();
+  const { activeType } = useAppSelector((state) => state.destination);
+
+  // API queries
+  const { 
+    data: regionsData, 
+    isLoading: regionsLoading,
+    error: regionsError 
+  } = useGetRegionsQuery({ 
+    page: 1, 
+    limit: 8 
+  }, {
+    skip: activeType !== 'regions'
+  });
+
+  const { 
+    data: countriesData, 
+    isLoading: countriesLoading,
+    error: countriesError 
+  } = useGetCountriesQuery({ 
+    page: 1, 
+    limit: 8 
+  }, {
+    skip: activeType !== 'countries'
+  });
+
+  const handleToggle = (type: DestinationType) => {
+    dispatch(setDestinationType(type));
+  };
+
+  // Determine what data to show based on active type
+  const isLoading = activeType === 'regions' ? regionsLoading : countriesLoading;
+  const currentData = activeType === 'regions' 
+    ? regionsData?.data || [] 
+    : countriesData?.data || [];
+  const hasError = activeType === 'regions' ? regionsError : countriesError;
   return (
     <section
       className="py-10 md:py-16 lg:py-20 bg-primary-black lg:min-h-screen flex items-center"
@@ -31,24 +71,58 @@ function Destination() {
               />
             </p>
             <div className="w-full flex justify-center mt-6">
-            <BigToggleSwitch/>
+              <BigToggleSwitch onToggle={handleToggle} />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
-            {items.map((item, index) => (
-              <DestinationCard key={index} index={index} />
-            ))}
-          </div>
-          <div>
-            <Link
-              href="/destinations"
-              className="flex justify-center items-center text-text-50 gap-2 mt-6 lg:mt-10"
-            >
-              <span>See more</span>
-              <ArrowRightSvg />
-            </Link>
-          </div>
+          {/* Error State */}
+          {hasError && (
+            <div className="text-center text-text-200 py-8">
+              <p>Failed to load destinations. Please try again later.</p>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <DestinationCardSkeleton key={index} index={index} />
+              ))}
+            </div>
+          )}
+
+          {/* Data State */}
+          {!isLoading && !hasError && currentData.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+              {currentData.map((item, index) => (
+                <DestinationCard 
+                  key={item._id} 
+                  index={index} 
+                  data={item}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!isLoading && !hasError && currentData.length === 0 && (
+            <div className="text-center text-text-200 py-8">
+              <p>No {activeType} found.</p>
+            </div>
+          )}
+
+          {/* See More Button */}
+          {!isLoading && currentData.length > 0 && (
+            <div>
+              <Link
+                href="/destinations"
+                className="flex justify-center items-center text-text-50 gap-2 mt-6 lg:mt-10"
+              >
+                <span>See more</span>
+                <ArrowRightSvg />
+              </Link>
+            </div>
+          )}
         </div>
         {/* <EmblaCarousel
           className="my-7 md:my-10"

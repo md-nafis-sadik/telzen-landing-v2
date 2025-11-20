@@ -2,6 +2,7 @@ import Footer from "@/components/navigations/Footer";
 import Header from "@/components/navigations/Header";
 import LenisLayout from "@/components/shared/LenisLayout";
 import Loader from "@/components/shared/Loader";
+import LocationTracker from "@/components/shared/LocationTracker";
 import { ReduxProvider } from "@/components/providers";
 import { AuthModal } from "@/components/auth";
 import type { Metadata } from "next";
@@ -73,6 +74,7 @@ export default function RootLayout({
           <Footer />
           <Loader />
           <AuthModal />
+          <LocationTracker />
           <Script
             id="visitor-tracking"
             async

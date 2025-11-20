@@ -1,4 +1,7 @@
 "use client";
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
 import AnimateCard from "../animation/AnimateCard";
@@ -6,6 +9,20 @@ import BlurText from "../animation/BlurText";
 import SearchInput from "../shared/SearchInput";
 
 function Hero() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      router.push(`/destinations?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push('/destinations');
+    }
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
   return (
     <section className="lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
       <div className="containerX py-16 lg:py-6">
@@ -39,7 +56,12 @@ function Hero() {
             </div>
             <div>
               <div className="w-full max-w-[360px] my-4 lg:my-8">
-                <SearchInput />
+                <SearchInput 
+                  placeholder="Search destinations..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onSearch={handleSearch}
+                />
               </div>
             </div>
             {/* <div className="mt-4 min-h-10 overflow-hidden">

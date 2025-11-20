@@ -346,3 +346,36 @@ export const workSteps: IWorkStep[] = [
     icon: images.connected,
   },
 ];
+
+export const aboutViewData = [
+  {
+    image: images.officeImage2,
+    title: "Office Image 1",
+    description: "Office Image 1",
+  },
+  {
+    image: images.officeImage4,
+    title: "Office Image 2",
+    description: "Office Image 2",
+  },
+  {
+    image: images.officeImage5,
+    title: "Office Image 3",
+    description: "Office Image 3",
+  },
+  {
+    image: images.officeImage2,
+    title: "Office Image 4",
+    description: "Office Image 4",
+  },
+  {
+    image: images.officeImage4,
+    title: "Office Image 5",
+    description: "Office Image 5",
+  },
+  {
+    image: images.officeImage5,
+    title: "Office Image 6",
+    description: "Office Image 6",
+  },
+];

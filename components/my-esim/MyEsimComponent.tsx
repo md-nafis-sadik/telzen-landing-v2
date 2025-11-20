@@ -39,10 +39,10 @@ function MyEsimComponent() {
                   width={384}
                   height={185}
                   priority
-                  className="rounded-l-xl object-cover object-bottom"
+                  className="rounded-l-xl object-cover"
                 />
               </div>
-              <div className="flex lg:hidden w-full h-[200px] relative">
+              <div className="flex lg:hidden w-full h-[200px] md:h-[320px] relative">
                 <Image
                   src={images?.newZealand}
                   alt="world"

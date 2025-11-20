@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setAuthModalStep, setAuthModalEmail } from "@/store/modules/ui/uiSlice";
+import {
+  setAuthModalStep,
+  setAuthModalEmail,
+} from "@/store/modules/ui/uiSlice";
 import { useSignupMutation } from "@/store/modules/auth/authApi";
 import { getDeviceId } from "@/service/helpers/device.utils";
 import Image from "next/image";
@@ -85,11 +88,9 @@ const RegisterStep: React.FC = () => {
             type="text"
             id="name"
             value={formData.name}
-            onChange={(e) =>
-              setFormData({ ...formData, name: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder="Enter your name"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
             required
           />
         </div>
@@ -109,7 +110,7 @@ const RegisterStep: React.FC = () => {
               setFormData({ ...formData, email: e.target.value })
             }
             placeholder="Enter your email"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
             required
           />
         </div>
@@ -153,11 +154,17 @@ const RegisterStep: React.FC = () => {
           />
           <label htmlFor="terms" className="text-sm text-gray-600">
             By creating an account, you agree to our{" "}
-            <a href="#" className="text-primary-700 cursor-pointer hover:text-primary-800">
+            <a
+              href="#"
+              className="text-primary-700 cursor-pointer hover:text-primary-800"
+            >
               Terms & Conditions
             </a>{" "}
             and{" "}
-            <a href="#" className="text-primary-700 cursor-pointer hover:text-primary-800">
+            <a
+              href="#"
+              className="text-primary-700 cursor-pointer hover:text-primary-800"
+            >
               Privacy Policy
             </a>
           </label>
