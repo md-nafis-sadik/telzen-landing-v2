@@ -3,80 +3,28 @@
 import {
   ArrowLeftBlackSvg,
   images,
-  SmileGreenSvg,
   StarPointSvg,
-  BoltrGreenSvg,
-  MobileWithStarsSvg,
+  appStrings,
 } from "@/service";
 import BlurText from "../animation/BlurText";
 import Image from "next/image";
-import { useSearchParams, useRouter, useParams } from "next/navigation";
-import { useGetPackagesQuery } from "@/store/modules/destination/destinationApi";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Button from "../shared/Button";
 import PackageCardSkeleton from "../shared/PackageCardSkeleton";
+import { useDestinationDetails } from "@/hook";
 
 function DestinationDetails() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const params = useParams();
-
-  const countryId = searchParams.get("country_id");
-  const regionId = searchParams.get("region_id");
-  const countryName = searchParams.get("country_name") || "Country";
-  const regionName = searchParams.get("region_name");
-
-  const [packageIcons] = useState([
-    SmileGreenSvg,
-    BoltrGreenSvg,
-    MobileWithStarsSvg,
-  ]);
-
-  // Determine if this is a regional or country package
-  const isRegional = !!regionId;
-  const displayName = isRegional ? regionName : countryName;
-
   const {
-    data: packagesData,
+    displayName,
+    packagesData,
     isLoading,
     error,
-  } = useGetPackagesQuery({
-    country_id: countryId || undefined,
-    region_id: regionId || undefined,
-    page: 1,
-    limit: 10,
-  });
-
-  const handlePackageClick = (packageId: string) => {
-    const params = new URLSearchParams({ package_id: packageId });
-    
-    if (countryId) {
-      params.append('country_id', countryId);
-    }
-    
-    if (regionId) {
-      params.append('region_id', regionId);
-    }
-    
-    router.push(`/checkout?${params.toString()}`);
-  };
-
-  const handleBackClick = () => {
-    router.back();
-  };
-
-  // Helper function to format data size
-  const formatDataSize = (sizeInMB: number) => {
-    if (sizeInMB >= 1024) {
-      return `${(sizeInMB / 1024).toFixed(0)} GB`;
-    }
-    return `${sizeInMB} MB`;
-  };
-
-  // Helper function to get random icon
-  const getRandomIcon = (index: number) => {
-    const IconComponent = packageIcons[index % packageIcons.length];
-    return IconComponent;
-  };
+    handlePackageClick,
+    handleBackClick,
+    formatDataSize,
+    getRandomIcon,
+  } = useDestinationDetails();
 
   return (
     <section
@@ -179,14 +127,14 @@ function DestinationDetails() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4-8-4m16 0v10l-8 4-8-4V7" />
                           </svg>
                         </div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Packages Available</h3>
-                        <p className="text-gray-500 mb-6">We don&apos;t have any packages for this destination yet. Check out our other popular destinations!</p>
-                        <button 
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{appStrings.noPackagesAvailable}</h3>
+                        <p className="text-gray-500 mb-6">{appStrings.noPackagesMessage}</p>
+                        <Button
+                          variant="primary"
                           onClick={() => router.push('/destinations')}
-                          className="inline-flex items-center px-4 py-2 bg-primary-700 text-white rounded-full hover:bg-primary-800 transition-colors"
                         >
-                          Browse All Destinations
-                        </button>
+                          {appStrings.browseAllDestinations}
+                        </Button>
                       </div>
                     </div>
                   </div>

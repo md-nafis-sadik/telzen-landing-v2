@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { closeEsimSuccessModal } from "@/store/modules/ui/uiSlice";
 import Image from "next/image";
-import { CloseIcon, images } from "@/service";
+import { CloseIcon, images, appStrings } from "@/service";
+import Button from "../shared/Button";
 
 function EsimSuccessModal() {
   const dispatch = useAppDispatch();
@@ -78,17 +79,22 @@ function EsimSuccessModal() {
           Your eSIM has been removed.
         </motion.p>
 
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleHome}
-          className="w-full px-4 py-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed mb-3 font-semibold text-sm md:text-base"
         >
-          Home
-        </motion.button>
+          <Button
+            variant="primary"
+            size="md"
+            fullWidth
+            onClick={handleHome}
+            animate
+            className="mb-3"
+          >
+            Home
+          </Button>
+        </motion.div>
       </motion.div>
     </div>
   );

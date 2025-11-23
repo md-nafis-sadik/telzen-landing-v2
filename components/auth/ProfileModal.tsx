@@ -8,11 +8,11 @@ import {
   useUpdateProfileMutation,
 } from "@/store/modules/auth/authApi";
 import { closeProfileModal } from "@/store/modules/ui/uiSlice";
-import { CloseIcon, countriesData as countries } from "@/service";
-import Image from "next/image";
+import { CloseIcon, countriesData as countries, appStrings } from "@/service";
 import { toast } from 'react-toastify';
 import SelectDropdown, { SelectOption } from "../shared/SelectDropdown";
 import { getCountryCode, getStoredLocationData } from "@/hook/useLocation";
+import Button from "../shared/Button";
 
 function ProfileModal() {
   const dispatch = useAppDispatch();
@@ -161,10 +161,10 @@ function ProfileModal() {
             {/* Header */}
             <div className="text-center mb-6">
               <h2 className="text-4xl md:text-[56px] font-extrabold text-text-950 font-barlow">
-                MY PROFILE
+                {appStrings.myProfile}
               </h2>
               <p className="text-text-700 text-sm lg:text-base">
-                Welcome to Telzen eSIM. Affordable eSIM around the world.
+                {appStrings.profileWelcome}
               </p>
             </div>
 
@@ -177,13 +177,13 @@ function ProfileModal() {
                 {/* Name Field */}
                 <div>
                   <label className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2">
-                    Your Name
+                    {appStrings.yourName}
                   </label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder="Enter your name"
+                    placeholder={appStrings.startTypingName}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
                   />
                 </div>
@@ -191,20 +191,20 @@ function ProfileModal() {
                 {/* Email Field */}
                 <div>
                   <label className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2">
-                    Your Email
+                    {appStrings.yourEmail}
                   </label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    placeholder="Enter your email"
+                    placeholder={appStrings.enterYourEmail}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
                   />
                 </div>
 
                 {/* Country Field */}
                 <SelectDropdown
-                  label="Country"
+                  label={appStrings.country}
                   options={countryOptions}
                   value={formData.country.code}
                   onChange={handleCountryChange}
@@ -214,15 +214,18 @@ function ProfileModal() {
                 />
 
                 {/* Save Button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <Button
+                  variant="primary"
+                  size="md"
+                  fullWidth
                   onClick={handleSave}
-                  disabled={updateLoading}
-                  className="w-full px-4 py-3 mt-6 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm md:text-base"
+                  isLoading={updateLoading}
+                  loadingText={appStrings.saving}
+                  animate
+                  className="mt-6"
                 >
-                  {updateLoading ? "Saving..." : "Save"}
-                </motion.button>
+                  {appStrings.save}
+                </Button>
               </div>
             )}
           </motion.div>

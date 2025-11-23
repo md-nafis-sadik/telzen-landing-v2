@@ -2,7 +2,8 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-import { images } from "@/service";
+import { images, appStrings } from "@/service";
+import Button from "../shared/Button";
 
 function CheckoutSuccessful() {
   return (
@@ -47,28 +48,36 @@ function CheckoutSuccessful() {
       </motion.p>
 
       <div className="flex gap-3 lg:gap-6">
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          // onClick={handleExploreHomepage}
-          className="w-full px-4 py-2 h-13 bg-black text-white rounded-full cursor-pointer hover:bg-natural-950 transition disabled:opacity-50 disabled:cursor-not-allowed mb-3 font-semibold text-sm md:text-base"
         >
-          Homepage
-        </motion.button>
-        <motion.button
+          <Button
+            variant="secondary"
+            size="md"
+            fullWidth
+            animate
+            className="mb-3 bg-black text-white hover:bg-natural-950 border-black"
+          >
+            {appStrings.homepage}
+          </Button>
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          // onClick={handleExploreHomepage}
-          className="w-full px-4 py-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed mb-3 font-semibold text-sm md:text-base"
         >
-          My eSIM
-        </motion.button>
+          <Button
+            variant="primary"
+            size="md"
+            fullWidth
+            animate
+            className="mb-3"
+          >
+            {appStrings.myEsim}
+          </Button>
+        </motion.div>
       </div>
     </div>
   );

@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/modules/auth/authSlice";
 import { closeLogoutModal } from "@/store/modules/ui/uiSlice";
 import Image from "next/image";
-import { CloseIcon, images } from "@/service";
+import { CloseIcon, images, appStrings } from "@/service";
+import Button from "../shared/Button";
 
 function LogoutModal() {
   const dispatch = useAppDispatch();
@@ -60,30 +61,30 @@ function LogoutModal() {
 
             {/* Content */}
             <h2 className="text-4xl md:text-[48px] font-extrabold text-black font-barlow mb-4 uppercase">
-              TAKING A BREAK?
+              {appStrings.takingBreak}
             </h2>
             <p className="text-text-700 mb-8 text-sm">
-              Rather than you can stay here, we do not bite!
+              {appStrings.logoutMessage}
             </p>
 
             {/* Buttons */}
             <div className="flex gap-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <Button
+                variant="secondary"
                 onClick={handleLogout}
-                className="flex-1 px-4 py-3 cursor-pointer border border-natural-500 text-black rounded-full font-semibold hover:bg-gray-50 transition-colors"
+                animate
+                className="flex-1"
               >
-                Log Out
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                {appStrings.logOut}
+              </Button>
+              <Button
+                variant="primary"
                 onClick={handleClose}
-                className="flex-1 px-4 py-3 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 font-semibold"
+                animate
+                className="flex-1"
               >
-                Cancel
-              </motion.button>
+                {appStrings.cancel}
+              </Button>
             </div>
           </motion.div>
         </motion.div>

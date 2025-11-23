@@ -2,39 +2,14 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  closeRemoveEsimModal,
-  openEsimSuccessModal,
-} from "@/store/modules/ui/uiSlice";
-import { useDeleteEsimMutation } from "@/store/modules/destination/destinationApi";
-import { CloseIcon, images } from "@/service";
+import { CloseIcon, images, appStrings } from "@/service";
 import Image from "next/image";
-import { toast } from 'react-toastify';
+import { useRemoveEsim } from "@/hook";
+import Button from "../shared/Button";
 
 function RemoveEsimModal() {
-  const dispatch = useAppDispatch();
-  const { removeEsimModal } = useAppSelector((state) => state.ui);
-  const { isOpen: isRemoveEsimModalOpen, selectedEsimId } = removeEsimModal;
-  const [deleteEsim, { isLoading }] = useDeleteEsimMutation();
-
-  const handleClose = () => {
-    dispatch(closeRemoveEsimModal());
-  };
-
-  const handleRemove = async () => {
-    if (selectedEsimId) {
-      try {
-        await deleteEsim({ esim_id: selectedEsimId }).unwrap();
-        handleClose();
-        dispatch(openEsimSuccessModal());
-      } catch (error: any) {
-        console.error("Failed to remove eSIM:", error);
-        const errorMessage = error?.data?.message || 'Failed to remove eSIM. Please try again.';
-        toast.error(errorMessage);
-      }
-    }
-  };
+  const { isRemoveEsimModalOpen, isLoading, handleClose, handleRemove } =
+    useRemoveEsim();
 
   if (!isRemoveEsimModalOpen) return null;
 
@@ -70,35 +45,35 @@ function RemoveEsimModal() {
 
         {/* Title */}
         <h2 className="text-4xl md:text-[48px] font-extrabold text-black font-barlow mb-1 uppercase text-center">
-          REMOVING ESIM?
+          {appStrings.removingEsim}
         </h2>
 
         {/* Description */}
         <p className="text-text-700 text-center mb-6 text-sm md:text-[17px] leading-6">
-          Removing an eSIM will lose access to this connection. Make sure to
-          your decision.
+          {appStrings.removeEsimMessage}
         </p>
 
         {/* Buttons */}
         <div className="flex gap-3">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <Button
+            variant="secondary"
             onClick={handleClose}
-            className="flex-1 px-4 py-3 cursor-pointer border border-natural-500 text-black rounded-full font-semibold hover:bg-gray-50 transition-colors"
+            animate
+            className="flex-1"
           >
-            Cancel
-          </motion.button>
+            {appStrings.cancel}
+          </Button>
 
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <Button
+            variant="primary"
             onClick={handleRemove}
-            disabled={isLoading}
-            className="flex-1 px-4 py-3 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 font-semibold"
+            isLoading={isLoading}
+            loadingText={appStrings.removing}
+            animate
+            className="flex-1"
           >
-            {isLoading ? "Removing..." : "Remove"}
-          </motion.button>
+            {appStrings.remove}
+          </Button>
         </div>
       </motion.div>
     </div>

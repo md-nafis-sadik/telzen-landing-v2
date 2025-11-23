@@ -9,16 +9,11 @@ import {
   openProfileModal,
   openLogoutModal,
 } from "@/store/modules/ui/uiSlice";
-import Button from "../shared/Button";
 import UserDropdown from "../shared/UserDropdown";
 
 const AuthButton: React.FC = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isAuthenticated, auth } = useAppSelector((state) => state.auth);
-
-  // Debug auth state
-  console.log("AuthButton - isAuthenticated:", isAuthenticated, "auth:", auth);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const handleLoginClick = () => {
     dispatch(openAuthModal({ step: "login" }));

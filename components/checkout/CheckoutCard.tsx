@@ -4,11 +4,14 @@ import {
   images,
   RectanglesIconSvg,
   WorldIconSvg,
+  appStrings,
 } from "@/service";
 import Image from "next/image";
 import { useState } from "react";
 import { Package, useLazyValidateCouponQuery } from "@/store/modules/destination/destinationApi";
 import { toast } from "react-toastify";
+import Input from "../shared/Input";
+import Button from "../shared/Button";
 
 interface CheckoutCardProps {
   packageData?: Package;
@@ -188,32 +191,36 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
           <div>
             {appliedCoupon ? (
               <div className="text-text-400 font-medium text-sm">
-                Coupon Applied!
+                {appStrings.couponApplied}
               </div>
             ) : showCouponInput ? (
               <div className="flex gap-2">
-                <input
+                <Input
                   type="text"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  placeholder="Enter Coupon Code"
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all text-sm"
+                  placeholder={appStrings.enterCouponCode}
+                  className="flex-1 text-sm"
                 />
-                <button
+                <Button
+                  variant="primary"
                   onClick={handleApplyCoupon}
-                  disabled={couponLoading || !couponCode.trim()}
-                  className="px-4 py-2 bg-primary-700 text-white hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm whitespace-nowrap rounded-full"
+                  disabled={!couponCode.trim()}
+                  isLoading={couponLoading}
+                  loadingText={appStrings.applying}
+                  className="text-sm whitespace-nowrap"
                 >
-                  {couponLoading ? "Applying..." : "Apply Coupon"}
-                </button>
+                  {appStrings.applyCouponBtn}
+                </Button>
               </div>
             ) : (
-              <button
+              <Button
+                variant="link"
                 onClick={() => setShowCouponInput(true)}
-                className="text-primary-700 font-semibold underline cursor-pointer"
+                className="underline"
               >
-                Apply Coupon
-              </button>
+                {appStrings.applyCoupon}
+              </Button>
             )}
           </div>
         </div>

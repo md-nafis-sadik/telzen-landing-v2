@@ -3,67 +3,14 @@
 import { appStrings, images } from "@/service";
 import Image from "next/image";
 import BlurText from "../animation/BlurText";
-import { useState } from "react";
-import { useCreateContactSupportMutation } from "@/store/modules/destination/destinationApi";
-import { toast } from "react-toastify";
+import { useContactForm } from "@/hook";
+import Button from "../shared/Button";
+import Input from "../shared/Input";
+import Textarea from "../shared/Textarea";
 
 function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  
-  const [createContactSupport, { isLoading }] = useCreateContactSupportMutation();
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
-    try {
-      const contactData = {
-        email: formData.email.trim(),
-        subject: formData.subject.trim() || `Message from ${formData.name.trim()}`,
-        message: `Name: ${formData.name.trim()}\n\n${formData.message.trim()}`,
-      };
-
-      const result = await createContactSupport(contactData).unwrap();
-      
-      if (result.success) {
-        toast.success("Your message has been sent successfully! We'll get back to you soon.");
-        // Reset form
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      } else {
-        toast.error(result.message || "Failed to send message. Please try again.");
-      }
-    } catch (error: any) {
-      console.error("Contact form error:", error);
-      const errorMessage = error?.data?.message || "Failed to send message. Please try again.";
-      toast.error(errorMessage);
-    }
-  };
+  const { formData, isLoading, handleInputChange, handleSubmit } =
+    useContactForm();
 
   return (
     <section className="pt-10 md:pt-16 lg:pt-20 pb-10 md:pb-20 lg:pb-28 min-h-screen bg-white">
@@ -90,86 +37,61 @@ function ContactForm() {
           <div className="w-full flex flex-col justify-center bg-natural-50 rounded-3xl px-6 py-8">
             <div>
               {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-                  >
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder="Enter your name"
-                    className="w-full px-4 py-3 border border-natural-400 bg-white rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                    required
-                  />
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <Input
+                  type="text"
+                  id="name"
+                  label={appStrings.yourName}
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder={appStrings.startTypingName}
+                  required
+                />
                 
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-                  >
-                    Your Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 border border-natural-400 bg-white rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                    required
-                  />
-                </div>
+                <Input
+                  type="email"
+                  id="email"
+                  label={appStrings.yourEmail}
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  placeholder={appStrings.startTypingEmail}
+                  className="border-natural-400 bg-white"
+                  required
+                />
                 
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-                  >
-                    Subject (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    value={formData.subject}
-                    onChange={(e) => handleInputChange("subject", e.target.value)}
-                    placeholder="Enter subject"
-                    className="w-full px-4 py-3 border border-natural-400 bg-white rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                  />
-                </div>
-                
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    value={formData.message}
-                    onChange={(e) => handleInputChange("message", e.target.value)}
-                    placeholder="Start typing your message here"
-                    className="w-full px-4 py-3 border border-natural-400 bg-white rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                    required
-                  />
-                </div>
+                <Input
+                  type="text"
+                  id="subject"
+                  label={appStrings.subjectOptional}
+                  value={formData.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  placeholder={appStrings.enterSubject}
+                  className="border-natural-400 bg-white"
+                />
+
+                <Textarea
+                  id="message"
+                  label={appStrings.message}
+                  rows={6}
+                  value={formData.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  placeholder={appStrings.startTypingMessage}
+                  className="border-natural-400 bg-white"
+                  required
+                />
 
                 <div>
-                  <button
+                  <Button
                     type="submit"
-                    disabled={isLoading}
-                    className="w-full px-4 py-2 mt-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm md:text-base"
+                    variant="primary"
+                    size="md"
+                    fullWidth
+                    isLoading={isLoading}
+                    loadingText={appStrings.sendingMessage}
+                    className="mt-2"
                   >
-                    {isLoading ? "Sending..." : "Submit"}
-                  </button>
+                    {appStrings.submit}
+                  </Button>
                 </div>
               </form>
             </div>

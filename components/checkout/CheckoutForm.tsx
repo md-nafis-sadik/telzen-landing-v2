@@ -1,5 +1,7 @@
-import { images } from "@/service";
+import { images, appStrings } from "@/service";
 import Image from "next/image";
+import Button from "../shared/Button";
+import Input from "../shared/Input";
 
 function CheckoutForm() {
   return (
@@ -7,85 +9,47 @@ function CheckoutForm() {
       <div>
         {/* Form */}
         <form className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-            >
-              Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              // value={email}
-              // onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-            >
-              Card Number
-            </label>
-            <input
-              type="number"
-              id="card-number"
-              // value={email}
-              // onChange={(e) => setEmail(e.target.value)}
-              placeholder="0000 0000 0000 0000"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-              required
-            />
-          </div>
+          <Input
+            type="email"
+            id="email"
+            label={appStrings.yourEmail}
+            placeholder={appStrings.enterYourEmail}
+            required
+          />
+          <Input
+            type="number"
+            id="card-number"
+            label={appStrings.cardNumber}
+            placeholder="0000 0000 0000 0000"
+            required
+          />
           <div className="grid gridcols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-              >
-                Expiration Date
-              </label>
-              <input
-                type="email"
-                id="email"
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
-                placeholder="MM/YY"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2"
-              >
-                CVC
-              </label>
-              <input
-                type="email"
-                id="email"
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
-                placeholder="000"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
-                required
-              />
-            </div>
+            <Input
+              type="text"
+              id="expiry"
+              label={appStrings.expirationDate}
+              placeholder="MM/YY"
+              required
+            />
+            <Input
+              type="text"
+              id="cvc"
+              label={appStrings.cvc}
+              placeholder="000"
+              required
+            />
           </div>
 
           <div>
-            <button
+            <Button
               type="submit"
-              // disabled={loading}
-              className="w-full px-4 py-2 mt-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm md:text-base"
+              variant="primary"
+              size="md"
+              fullWidth
+              className="mt-2"
             >
-              Continue
-            </button>
+              {appStrings.continue}
+            </Button>
           </div>
 
           <button
@@ -96,7 +60,7 @@ function CheckoutForm() {
             <div className="relative w-5 md:w-6 h-5 md:h-6">
               <Image
                 src={images?.googleLogo}
-                alt="world"
+                alt="google"
                 fill
                 className="object-contain"
                 priority
@@ -108,13 +72,12 @@ function CheckoutForm() {
         <div className="text-sm md:text-base text-text-950 tracking-tight mt-7">
           Your input data is always safe and we never store your any sensitive
           data. You can also check our
-          <button
-            type="button"
-            // onClick={() => dispatch(setAuthModalStep("register"))}
-            className="cursor-pointer hover:text-primary-800 transition-colors font-bold underline ml-1"
+          <Button
+            variant="link"
+            className="underline ml-1 text-sm md:text-base"
           >
             Terms of Use & Privacy Policy
-          </button>
+          </Button>
         </div>
       </div>
     </div>

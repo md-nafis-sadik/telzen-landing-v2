@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { closeAuthModal } from "@/store/modules/ui/uiSlice";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { images } from "@/service";
+import { images, appStrings } from "@/service";
+import Button from "../shared/Button";
 
 const SuccessStep: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -55,17 +56,22 @@ const SuccessStep: React.FC = () => {
         Your account has been created.
       </motion.p>
 
-      <motion.button
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={handleExploreHomepage}
-        className="w-full px-4 py-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed mb-3 font-semibold text-sm md:text-base"
       >
-        Explore Homepage
-      </motion.button>
+        <Button
+          variant="primary"
+          size="md"
+          fullWidth
+          onClick={handleExploreHomepage}
+          animate
+          className="mb-3"
+        >
+          Explore Homepage
+        </Button>
+      </motion.div>
     </div>
   );
 };

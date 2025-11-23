@@ -1,16 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  useGetRegionsQuery,
-  useGetCountriesQuery,
-} from "@/store/modules/destination/destinationApi";
-import {
-  setDestinationType,
-  DestinationType,
-} from "@/store/modules/destination/destinationSlice";
-import { useSearchParams } from "next/navigation";
+import React from "react";
 import { appStrings, ArrowRightSvg } from "@/service";
 import HeaderPrev from "../shared/HeaderPrev";
 import SearchInput from "../shared/SearchInput";
@@ -18,98 +8,27 @@ import BigToggleSwitch from "../shared/BigToggleSwitch";
 import DestinationCard from "../shared/DestinationCard";
 import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
 import EmptyState from "../shared/EmptyState";
+import { useAllDestinations } from "@/hook";
+import Button from "../shared/Button";
 
 function AllDestinations() {
-  const dispatch = useAppDispatch();
-  const searchParams = useSearchParams();
-  const { activeType } = useAppSelector((state) => state.destination);
-
-  const itemsPerPage = 15;
-  const loadMoreCount = 5;
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
-  const [apiSearchQuery, setApiSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
-  const [allDestinations, setAllDestinations] = useState<any[]>([]);
-
-  // API queries for both regions and countries
   const {
-    data: regionsData,
-    isLoading: regionsLoading,
-    isFetching: regionsFetching,
-    error: regionsError,
-  } = useGetRegionsQuery(
-    {
-      page: currentPage,
-      limit: currentPage === 1 ? itemsPerPage : loadMoreCount,
-      search: apiSearchQuery,
-    },
-    {
-      skip: activeType !== "regions",
-    }
-  );
-
-  const {
-    data: countriesData,
-    isLoading: countriesLoading,
-    isFetching: countriesFetching,
-    error: countriesError,
-  } = useGetCountriesQuery(
-    {
-      page: currentPage,
-      limit: currentPage === 1 ? itemsPerPage : loadMoreCount,
-      search: apiSearchQuery,
-    },
-    {
-      skip: activeType !== "countries",
-    }
-  );
-
-  // Determine current state based on active type
-  const isLoading =
-    activeType === "regions" ? regionsLoading : countriesLoading;
-  const isFetching =
-    activeType === "regions" ? regionsFetching : countriesFetching;
-  const currentData = activeType === "regions" ? regionsData : countriesData;
-  const hasError = activeType === "regions" ? regionsError : countriesError;
-  const hasMore = currentData?.meta?.has_next_page ?? false;
-
-  // Update destinations when data changes
-  useEffect(() => {
-    if (currentData?.data) {
-      if (currentPage === 1) {
-        setAllDestinations(currentData.data);
-      } else {
-        setAllDestinations((prev) => [...prev, ...currentData.data]);
-      }
-    }
-  }, [currentData, currentPage]);
-
-  const handleToggle = (type: DestinationType) => {
-    dispatch(setDestinationType(type));
-    setCurrentPage(1);
-    setAllDestinations([]);
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchQuery(value);
-  };
-
-  const handleSearch = () => {
-    setCurrentPage(1);
-    setAllDestinations([]);
-    setApiSearchQuery(searchQuery);
-  };
-
-  const handleLoadMore = () => {
-    if (hasMore && !isFetching) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
+    activeType,
+    searchQuery,
+    apiSearchQuery,
+    allDestinations,
+    isLoading,
+    isFetching,
+    hasError,
+    hasMore,
+    currentPage,
+    itemsPerPage,
+    loadMoreCount,
+    handleToggle,
+    handleSearchChange,
+    handleSearch,
+    handleLoadMore,
+  } = useAllDestinations();
 
   return (
     <section
@@ -177,13 +96,14 @@ function AllDestinations() {
               {/* Load More Button */}
               {hasMore && !isFetching && (
                 <div className="flex justify-center items-center">
-                  <button
+                  <Button
+                    variant="link"
                     onClick={handleLoadMore}
-                    className="flex justify-center items-center text-primary-700 tracking-wide font-medium gap-2 mt-6 lg:mt-10 cursor-pointer w-max hover:text-primary-800 transition-colors"
+                    rightIcon={<ArrowRightSvg />}
+                    className="mt-6 lg:mt-10"
                   >
-                    <span>Load More</span>
-                    <ArrowRightSvg />
-                  </button>
+                    {appStrings.loadMore}
+                  </Button>
                 </div>
               )}
             </>

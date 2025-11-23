@@ -2,67 +2,17 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  useGetRegionsQuery,
-  useGetCountriesQuery,
-} from "@/store/modules/destination/destinationApi";
-import {
-  setDestinationType,
-  DestinationType,
-} from "@/store/modules/destination/destinationSlice";
 import { appStrings, ArrowRightSvg } from "@/service";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
 import BigToggleSwitch from "../shared/BigToggleSwitch";
 import DestinationCard from "../shared/DestinationCard";
 import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
+import { useDestination } from "@/hook";
 
 function Destination() {
-  const dispatch = useAppDispatch();
-  const { activeType } = useAppSelector((state) => state.destination);
-
-  // API queries
-  const {
-    data: regionsData,
-    isLoading: regionsLoading,
-    error: regionsError,
-  } = useGetRegionsQuery(
-    {
-      page: 1,
-      limit: 8,
-    },
-    {
-      skip: activeType !== "regions",
-    }
-  );
-
-  const {
-    data: countriesData,
-    isLoading: countriesLoading,
-    error: countriesError,
-  } = useGetCountriesQuery(
-    {
-      page: 1,
-      limit: 8,
-    },
-    {
-      skip: activeType !== "countries",
-    }
-  );
-
-  const handleToggle = (type: DestinationType) => {
-    dispatch(setDestinationType(type));
-  };
-
-  // Determine what data to show based on active type
-  const isLoading =
-    activeType === "regions" ? regionsLoading : countriesLoading;
-  const currentData =
-    activeType === "regions"
-      ? regionsData?.data || []
-      : countriesData?.data || [];
-  const hasError = activeType === "regions" ? regionsError : countriesError;
+  const { activeType, isLoading, currentData, hasError, handleToggle } =
+    useDestination();
   return (
     <section
       className="py-10 md:py-16 lg:py-20 bg-primary-black lg:min-h-screen flex items-center"

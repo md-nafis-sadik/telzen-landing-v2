@@ -1,97 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setAuthModalStep } from "@/store/modules/ui/uiSlice";
-import {
-  useOtpVerifyMutation,
-  useResendOtpMutation,
-} from "@/store/modules/auth/authApi";
-import { toast } from 'react-toastify';
+import React from "react";
+import { useOtpVerification } from "@/hook";
+import Button from "../shared/Button";
+import { appStrings } from "@/service";
 
 const OtpStep: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.auth);
-  const { authModal } = useAppSelector((state) => state.ui);
-  const email = authModal.email;
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const [countdown, setCountdown] = useState(59);
-  const [otpVerify] = useOtpVerifyMutation();
-  const [resendOtp] = useResendOtpMutation();
-
-  // Countdown timer
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
-
-  const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) return;
-
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-
-    // Auto-focus next input
-    if (value && index < 3) {
-      const nextInput = document.querySelector(
-        `input[name="otp-${index + 1}"]`
-      ) as HTMLInputElement;
-      if (nextInput) nextInput.focus();
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      const prevInput = document.querySelector(
-        `input[name="otp-${index - 1}"]`
-      ) as HTMLInputElement;
-      if (prevInput) prevInput.focus();
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const otpString = otp.join("");
-    if (otpString.length !== 4) {
-      return;
-    }
-
-    try {
-      const result = await otpVerify({
-        email: email,
-        otp: otpString,
-        type: "signin",
-      }).unwrap();
-
-      // Navigate to success step
-      dispatch(setAuthModalStep("success"));
-    } catch (error: any) {
-      console.log("OTP verification error:", error);
-      const errorMessage = error?.data?.message || 'OTP verification failed. Please try again.';
-      toast.error(errorMessage);
-    }
-  };
-
-  const handleResendOtp = async () => {
-    try {
-      await resendOtp({ email: email }).unwrap();
-      setCountdown(59); // Reset countdown
-      toast.success('OTP has been resent to your email.');
-    } catch (error: any) {
-      console.log("Resend OTP error:", error);
-      const errorMessage = error?.data?.message || 'Failed to resend OTP. Please try again.';
-      toast.error(errorMessage);
-    }
-  };
-
-  const maskedEmail = email.replace(
-    /(.{4})(.*)(@.*)/,
-    (match, start, middle, end) => start + "*".repeat(middle.length) + end
-  );
+  const {
+    otp,
+    countdown,
+    loading,
+    maskedEmail,
+    handleOtpChange,
+    handleKeyDown,
+    handleSubmit,
+    handleResendOtp,
+  } = useOtpVerification();
 
 
 
@@ -133,24 +57,28 @@ const OtpStep: React.FC = () => {
           </span>
         </div>
 
-        <button
+        <Button
           type="submit"
-          disabled={loading || otp.join("").length !== 4}
-          className="w-full px-4 py-2 h-13 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed mb-3 font-medium text-sm md:text-base"
+          variant="primary"
+          size="md"
+          fullWidth
+          disabled={otp.join("").length !== 4}
+          isLoading={loading}
+          loadingText={appStrings.verifying}
+          className="mb-3"
         >
-          {loading ? "Verifying..." : "Verify and Login"}
-        </button>
+          {appStrings.verifyBtn}
+        </Button>
 
         <div className="text-center text-sm md:text-base text-text-950 tracking-tight">
-          Didn&apos;t receive an OTP?{" "}
-          <button
-            type="button"
+          {appStrings.didntReceiveOtp}{" "}
+          <Button
+            variant="link"
             onClick={handleResendOtp}
-            disabled={countdown > 0 || loading}
-            className="text-primary-700 cursor-pointer hover:text-primary-800 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={countdown > 0}
           >
-            Resend Code
-          </button>
+            {appStrings.resendCode}
+          </Button>
         </div>
       </form>
     </div>
