@@ -9,6 +9,7 @@ interface LocationData {
   timestamp: number;
   city?: string;
   country?: string;
+  countryCode?: string;
   region?: string;
   timezone?: string;
 }
@@ -85,12 +86,20 @@ export const useLocation = (): UseLocationReturn => {
       
       if (response.ok) {
         const data = await response.json();
-        return {
+        const locationDetails = {
           city: data.city || data.locality,
           country: data.countryName,
+          countryCode: data.countryCode,
           region: data.principalSubdivision,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         };
+        
+        // Also save country code separately for easy access
+        if (data.countryCode) {
+          localStorage.setItem('telzen_country_code', data.countryCode);
+        }
+        
+        return locationDetails;
       }
     } catch (err) {
       console.warn('Could not fetch location details:', err);
@@ -179,6 +188,7 @@ export const useLocation = (): UseLocationReturn => {
     setError(null);
     if (typeof window !== 'undefined') {
       localStorage.removeItem(LOCATION_STORAGE_KEY);
+      localStorage.removeItem('telzen_country_code');
     }
   };
 
@@ -206,13 +216,29 @@ export const getStoredLocationData = (): LocationData | null => {
         return locationData;
       } else {
         localStorage.removeItem(LOCATION_STORAGE_KEY);
+        localStorage.removeItem('telzen_country_code');
       }
     }
   } catch (err) {
     console.error('Error reading location from localStorage:', err);
     if (typeof window !== 'undefined') {
       localStorage.removeItem(LOCATION_STORAGE_KEY);
+      localStorage.removeItem('telzen_country_code');
     }
   }
   return null;
+};
+
+// Utility function to get country code from various sources
+export const getCountryCode = (): string => {
+  if (typeof window === 'undefined') return 'BD'; // Default fallback
+  
+  // First, try to get from stored location
+  const storedCountryCode = localStorage.getItem('telzen_country_code');
+  if (storedCountryCode) {
+    return storedCountryCode;
+  }
+  
+  // If no stored country code, return default
+  return 'BD'; // Default to Bangladesh
 };

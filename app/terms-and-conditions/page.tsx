@@ -1,5 +1,17 @@
 import BlurText from "@/components/animation/BlurText";
 import { appStrings } from "@/service";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions - Service Agreement | Telzen",
+  description: "Review Telzen's terms and conditions for using our eSIM services. Understand your rights and obligations when using our platform.",
+  keywords: "terms and conditions, service agreement, user agreement, Telzen terms, eSIM terms, legal terms",
+  openGraph: {
+    title: "Terms and Conditions - Service Agreement | Telzen",
+    description: "Review Telzen's terms and conditions for using our eSIM services. Understand your rights and obligations when using our platform.",
+    url: "/terms-and-conditions",
+  },
+};
 
 function TermsAndConditions() {
   return (

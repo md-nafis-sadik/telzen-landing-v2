@@ -1,0 +1,235 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/store/modules/auth/authApi";
+import { closeProfileModal } from "@/store/modules/ui/uiSlice";
+import { CloseIcon, countriesData as countries } from "@/service";
+import Image from "next/image";
+import { toast } from 'react-toastify';
+import SelectDropdown, { SelectOption } from "../shared/SelectDropdown";
+import { getCountryCode, getStoredLocationData } from "@/hook/useLocation";
+
+function ProfileModal() {
+  const dispatch = useAppDispatch();
+  const { auth } = useAppSelector((state) => state.auth);
+  const { profileModal } = useAppSelector((state) => state.ui);
+  const isOpen = profileModal.isOpen;
+
+  const handleClose = () => {
+    dispatch(closeProfileModal());
+  };
+
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery(
+    undefined,
+    {
+      skip: !auth.token || !isOpen,
+    }
+  );
+
+  const [updateProfile, { isLoading: updateLoading }] =
+    useUpdateProfileMutation();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    country: {
+      code: "",
+      name: "",
+    },
+  });
+
+  const profile = profileData?.data;
+
+  useEffect(() => {
+    if (profile) {
+      // If profile has country, use it; otherwise, use location data
+      let countryData = profile.country || { code: "", name: "" };
+      
+      // If no country in profile, try to get from location
+      if (!countryData.code) {
+        const locationCountryCode = getCountryCode();
+        if (locationCountryCode) {
+          const foundCountry = countries.find(c => c.code === locationCountryCode);
+          if (foundCountry) {
+            countryData = {
+              code: foundCountry.code,
+              name: foundCountry.name,
+            };
+          }
+        }
+      }
+      
+      setFormData({
+        name: profile.name || "",
+        email: profile.email || "",
+        country: countryData,
+      });
+    } else {
+      // If no profile loaded yet, try to preselect from location
+      const locationCountryCode = getCountryCode();
+      if (locationCountryCode) {
+        const foundCountry = countries.find(c => c.code === locationCountryCode);
+        if (foundCountry) {
+          setFormData(prev => ({
+            ...prev,
+            country: {
+              code: foundCountry.code,
+              name: foundCountry.name,
+            },
+          }));
+        }
+      }
+    }
+  }, [profile]);
+
+  const handleInputChange = (field: string, value: string) => {
+    if (field === "country.name") {
+      setFormData((prev) => ({
+        ...prev,
+        country: { ...prev.country, name: value },
+      }));
+    } else if (field === "country.code") {
+      setFormData((prev) => ({
+        ...prev,
+        country: { ...prev.country, code: value },
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await updateProfile(formData).unwrap();
+      toast.success('Profile updated successfully!');
+      handleClose();
+    } catch (error: any) {
+      console.error("Failed to update profile:", error);
+      const errorMessage = error?.data?.message || 'Failed to update profile. Please try again.';
+      toast.error(errorMessage);
+    }
+  };
+
+  // Transform countries data for SelectDropdown
+  const countryOptions: SelectOption[] = countries.map((country) => ({
+    value: country.code,
+    label: country.name,
+    code: country.code,
+    flagCode: country.code,
+  }));
+
+  const handleCountryChange = (value: string, option: SelectOption) => {
+    setFormData((prev) => ({
+      ...prev,
+      country: {
+        code: value,
+        name: option.label,
+      },
+    }));
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-[#004534E5] opacity-90 flex items-center justify-center z-[10000] p-4"
+          onClick={(e) => e.target === e.currentTarget && handleClose()}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3, type: "spring", bounce: 0.3 }}
+            className="bg-white rounded-3xl p-6 w-full max-w-md relative shadow-xl"
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <CloseIcon className="w-5 h-5 text-gray-500 cursor-pointer" />
+            </button>
+
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h2 className="text-4xl md:text-[56px] font-extrabold text-text-950 font-barlow">
+                MY PROFILE
+              </h2>
+              <p className="text-text-700 text-sm lg:text-base">
+                Welcome to Telzen eSIM. Affordable eSIM around the world.
+              </p>
+            </div>
+
+            {profileLoading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-700"></div>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* Name Field */}
+                <div>
+                  <label className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    placeholder="Enter your name"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+                  />
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <label className="block text-left text-xs md:text-sm font-medium text-text-700 mb-2">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+                  />
+                </div>
+
+                {/* Country Field */}
+                <SelectDropdown
+                  label="Country"
+                  options={countryOptions}
+                  value={formData.country.code}
+                  onChange={handleCountryChange}
+                  placeholder="Select your country"
+                  showFlag={true}
+                  searchable={true}
+                />
+
+                {/* Save Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleSave}
+                  disabled={updateLoading}
+                  className="w-full px-4 py-3 mt-6 bg-primary-700 text-white rounded-full cursor-pointer hover:bg-primary-800 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm md:text-base"
+                >
+                  {updateLoading ? "Saving..." : "Save"}
+                </motion.button>
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export default ProfileModal;

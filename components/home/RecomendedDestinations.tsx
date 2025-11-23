@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useGetPopularCountriesQuery } from '@/store/modules/destination/destinationApi';
-import { LocationUtils } from '@/service/helpers/locationUtils';
+import { getCountryCode as getStoredCountryCode } from '@/hook/useLocation';
+import { useAppSelector } from '@/store/hooks';
 import { appStrings, ArrowRightSvg } from "@/service";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
@@ -10,40 +11,31 @@ import DestinationCard from "../shared/DestinationCard";
 import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
 
 function RecomendedDestinations() {
-  // Get user's country code from location or default to 'BD'
-  const userLocation = LocationUtils.getLocation();
+  const { isAuthenticated, auth } = useAppSelector((state) => state.auth);
   
-  // Map country names to country codes (expand as needed)
-  const getCountryCode = (countryName: string | null): string => {
-    if (!countryName) return 'BD';
+  const getApiCountryCode = (): string | undefined => {
+    if (isAuthenticated && auth.country?.code) {
+      return auth.country.code;
+    }
     
-    const countryMap: Record<string, string> = {
-      'Bangladesh': 'BD',
-      'United States': 'US',
-      'United Kingdom': 'GB',
-      'Canada': 'CA',
-      'Australia': 'AU',
-      'India': 'IN',
-      'Pakistan': 'PK',
-      'Malaysia': 'MY',
-      'Singapore': 'SG',
-      'Thailand': 'TH',
-      'Indonesia': 'ID',
-      'Philippines': 'PH',
-      // Add more countries as needed
-    };
-    
-    return countryMap[countryName] || 'BD';
+    const storedCode = getStoredCountryCode();
+    if (storedCode !== 'BD' || typeof window !== 'undefined' && localStorage.getItem('telzen_country_code')) {
+      return storedCode;
+    }
+
+    return undefined;
   };
   
-  const countryCode = getCountryCode(userLocation?.country);
-  
-  const { 
-    data: popularCountriesData, 
+  const countryCode = getApiCountryCode();
+
+  const {
+    data: popularCountriesData,
     isLoading,
-    error 
-  } = useGetPopularCountriesQuery({ country_code: countryCode });
-  
+    error,
+  } = useGetPopularCountriesQuery(
+    countryCode ? { country_code: countryCode } : {}
+  );
+
   const popularCountries = popularCountriesData?.data?.slice(0, 4) || [];
   return (
     <section
@@ -81,7 +73,9 @@ function RecomendedDestinations() {
           {/* Error State */}
           {error && (
             <div className="text-center text-text-700 py-8">
-              <p>Failed to load recommended destinations. Please try again later.</p>
+              <p>
+                Failed to load recommended destinations. Please try again later.
+              </p>
             </div>
           )}
 
@@ -89,10 +83,11 @@ function RecomendedDestinations() {
           {!isLoading && !error && popularCountries.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {popularCountries.map((item, index) => (
-                <DestinationCard 
-                  key={item._id} 
-                  index={index} 
+                <DestinationCard
+                  key={item._id}
+                  index={index}
                   data={item}
+                  isRegional={false}
                 />
               ))}
             </div>

@@ -4,11 +4,13 @@ import LenisLayout from "@/components/shared/LenisLayout";
 import Loader from "@/components/shared/Loader";
 import LocationTracker from "@/components/shared/LocationTracker";
 import { ReduxProvider } from "@/components/providers";
-import { AuthModal } from "@/components/auth";
+import { AuthModal, ProfileModal, LogoutModal, RemoveEsimModal, EsimSuccessModal } from "@/components/auth";
+import { ToastContainer } from 'react-toastify';
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter_Tight({
   weight: ["400", "500", "600", "700", "900"],
@@ -67,14 +69,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${barlow.variable} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${barlow.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <ReduxProvider>
           <Header />
           <LenisLayout>{children}</LenisLayout>
           <Footer />
           <Loader />
           <AuthModal />
+          <ProfileModal />
+          <LogoutModal />
+          <RemoveEsimModal />
+          <EsimSuccessModal />
           <LocationTracker />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            style={{ zIndex: 99999 }}
+          />
           <Script
             id="visitor-tracking"
             async

@@ -15,9 +15,13 @@ const dynamicBaseQuery = fetchBaseQuery({
 });
 
 // Create a custom base query that can handle different base URLs
-const baseQueryWithDynamicUrl = async (args: any, api: any, extraOptions: any) => {
+const baseQueryWithDynamicUrl = async (
+  args: any,
+  api: any,
+  extraOptions: any
+) => {
   let url = args.url;
-  
+
   // If a custom baseUrl is provided in args, use it
   if (args.baseUrl) {
     url = `${args.baseUrl}${args.url}`;
@@ -34,8 +38,11 @@ const baseQueryWithDynamicUrl = async (args: any, api: any, extraOptions: any) =
 
   const result = await dynamicBaseQuery(newArgs, api, extraOptions);
   const response = result?.error?.data as any;
-  
-  if (response?.error === "Invalid token" || response?.error === "Unauthorized") {
+
+  if (
+    response?.error === "Invalid token" ||
+    response?.error === "Unauthorized"
+  ) {
     // Clear all auth state and API cache when token is invalid
     api.dispatch(logout());
     api.dispatch(clearAuthState());
@@ -47,6 +54,6 @@ const baseQueryWithDynamicUrl = async (args: any, api: any, extraOptions: any) =
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithDynamicUrl,
-  tagTypes: ['Auth', 'Blog', 'Destination'],
+  tagTypes: ["Auth", "Blog", "Destination", "Package", "Esim"],
   endpoints: (builder) => ({}),
 });

@@ -4,38 +4,40 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { openAuthModal } from "@/store/modules/ui/uiSlice";
-import { logout } from "@/store/modules/auth/authSlice";
+import {
+  openAuthModal,
+  openProfileModal,
+  openLogoutModal,
+} from "@/store/modules/ui/uiSlice";
 import Button from "../shared/Button";
+import UserDropdown from "../shared/UserDropdown";
 
 const AuthButton: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { isAuthenticated, auth } = useAppSelector((state) => state.auth);
 
+  // Debug auth state
+  console.log("AuthButton - isAuthenticated:", isAuthenticated, "auth:", auth);
+
   const handleLoginClick = () => {
     dispatch(openAuthModal({ step: "login" }));
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleProfileClick = () => {
+    dispatch(openProfileModal());
+  };
+
+  const handleLogoutClick = () => {
+    dispatch(openLogoutModal());
   };
 
   if (isAuthenticated) {
     return (
-      <div className="flex items-center gap-4">
-        <span className="text-white text-sm">
-          Welcome, {auth.name || auth.email}
-        </span>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleLogout}
-          className="px-4 py-2 text-white border border-white rounded hover:bg-white hover:text-[#004534] transition-colors"
-        >
-          Logout
-        </motion.button>
-      </div>
+      <UserDropdown
+        onProfileClick={handleProfileClick}
+        onLogoutClick={handleLogoutClick}
+      />
     );
   }
 
@@ -49,11 +51,6 @@ const AuthButton: React.FC = () => {
       >
         Login/SignUp
       </motion.button>
-      {/* <Button
-        buttonText="SignUp"
-        className="font-semibold"
-        onClick={handleRegisterClick}
-      /> */}
     </div>
   );
 };

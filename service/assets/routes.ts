@@ -14,4 +14,12 @@ export const routes: IRoute = {
     name: appStrings.contactUs,
     path: "/contact-us",
   },
+  destinations: {
+    name: "Destinations",
+    path: "/destinations",
+  },
+  checkout: {
+    name: "Checkout",
+    path: "/checkout",
+  },
 };

@@ -20,6 +20,14 @@ interface IRoute {
     name: string;
     path: string;
   };
+  destinations: {
+    name: string;
+    path: string;
+  };
+  checkout: {
+    name: string;
+    path: string;
+  };
 }
 
 interface ICountry {

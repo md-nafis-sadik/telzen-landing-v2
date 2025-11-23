@@ -1,10 +1,16 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'motion/react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useGetRegionsQuery, useGetCountriesQuery } from '@/store/modules/destination/destinationApi';
-import { setDestinationType, DestinationType } from '@/store/modules/destination/destinationSlice';
+import React from "react";
+import { motion } from "motion/react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  useGetRegionsQuery,
+  useGetCountriesQuery,
+} from "@/store/modules/destination/destinationApi";
+import {
+  setDestinationType,
+  DestinationType,
+} from "@/store/modules/destination/destinationSlice";
 import { appStrings, ArrowRightSvg } from "@/service";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
@@ -17,38 +23,46 @@ function Destination() {
   const { activeType } = useAppSelector((state) => state.destination);
 
   // API queries
-  const { 
-    data: regionsData, 
+  const {
+    data: regionsData,
     isLoading: regionsLoading,
-    error: regionsError 
-  } = useGetRegionsQuery({ 
-    page: 1, 
-    limit: 8 
-  }, {
-    skip: activeType !== 'regions'
-  });
+    error: regionsError,
+  } = useGetRegionsQuery(
+    {
+      page: 1,
+      limit: 8,
+    },
+    {
+      skip: activeType !== "regions",
+    }
+  );
 
-  const { 
-    data: countriesData, 
+  const {
+    data: countriesData,
     isLoading: countriesLoading,
-    error: countriesError 
-  } = useGetCountriesQuery({ 
-    page: 1, 
-    limit: 8 
-  }, {
-    skip: activeType !== 'countries'
-  });
+    error: countriesError,
+  } = useGetCountriesQuery(
+    {
+      page: 1,
+      limit: 8,
+    },
+    {
+      skip: activeType !== "countries",
+    }
+  );
 
   const handleToggle = (type: DestinationType) => {
     dispatch(setDestinationType(type));
   };
 
   // Determine what data to show based on active type
-  const isLoading = activeType === 'regions' ? regionsLoading : countriesLoading;
-  const currentData = activeType === 'regions' 
-    ? regionsData?.data || [] 
-    : countriesData?.data || [];
-  const hasError = activeType === 'regions' ? regionsError : countriesError;
+  const isLoading =
+    activeType === "regions" ? regionsLoading : countriesLoading;
+  const currentData =
+    activeType === "regions"
+      ? regionsData?.data || []
+      : countriesData?.data || [];
+  const hasError = activeType === "regions" ? regionsError : countriesError;
   return (
     <section
       className="py-10 md:py-16 lg:py-20 bg-primary-black lg:min-h-screen flex items-center"
@@ -96,10 +110,11 @@ function Destination() {
           {!isLoading && !hasError && currentData.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {currentData.map((item, index) => (
-                <DestinationCard 
-                  key={item._id} 
-                  index={index} 
+                <DestinationCard
+                  key={item._id}
+                  index={index}
                   data={item}
+                  isRegional={activeType === "regions"}
                 />
               ))}
             </div>

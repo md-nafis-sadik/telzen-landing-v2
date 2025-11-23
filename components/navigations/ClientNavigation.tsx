@@ -15,7 +15,7 @@ function ClientNavigation({
     <div className={cn("flex items-center", className)}>
       <button
         type="button"
-        className="sm:hidden"
+        className="sm:hidden cursor-pointer"
         onClick={() => setShowMenu(true)}
       >
         <MenuIcon />

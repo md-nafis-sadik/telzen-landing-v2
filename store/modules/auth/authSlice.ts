@@ -11,12 +11,14 @@ export interface User {
   email?: string;
   country?: Country;
   token?: string;
+  image?: string;
   expireAt?: number;
 }
 
 interface AuthState {
   auth: User;
   isAuthenticated: boolean;
+  authInitialized: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -24,6 +26,7 @@ interface AuthState {
 const initialState: AuthState = {
   auth: {},
   isAuthenticated: false,
+  authInitialized: false,
   loading: false,
   error: null,
 };
@@ -57,7 +60,7 @@ const authSlice = createSlice({
       state.isAuthenticated = !!action.payload.token;
       state.loading = false;
       state.error = null;
-      
+
       // Save to localStorage
       const { data } = encryptValue(JSON.stringify(state.auth));
       localStorage.setItem("telzen_auth", data);
@@ -65,7 +68,7 @@ const authSlice = createSlice({
     initiateAuthData: (state, action: PayloadAction<User>) => {
       state.auth = { ...action.payload };
       state.isAuthenticated = !!action.payload.token;
-      
+
       // Save to localStorage
       const { data } = encryptValue(JSON.stringify(state.auth));
       localStorage.setItem("telzen_auth", data);
@@ -75,6 +78,10 @@ const authSlice = createSlice({
       if (action.payload.token) {
         state.isAuthenticated = true;
       }
+
+      // Save updated auth data to localStorage
+      const { data } = encryptValue(JSON.stringify(state.auth));
+      localStorage.setItem("telzen_auth", data);
     },
     logout: (state) => {
       state.auth = {};
@@ -97,7 +104,7 @@ const authSlice = createSlice({
         if (decryptedData) {
           try {
             const parsedAuth = JSON.parse(decryptedData);
-            
+
             // Check if token is still valid (not expired)
             const currentTime = Math.floor(Date.now() / 1000);
             if (parsedAuth.expireAt && parsedAuth.expireAt > currentTime) {
@@ -113,6 +120,7 @@ const authSlice = createSlice({
           }
         }
       }
+      state.authInitialized = true;
     },
   },
 });

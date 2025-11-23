@@ -2,6 +2,18 @@ import BlurText from "@/components/animation/BlurText";
 import BlogGalleryClient from "@/components/blog/BlogGalleryClient";
 import PageThumbnail from "@/components/shared/PageThumbnail";
 import { appStrings } from "@/service";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog - Travel Tips & eSIM Guides | Telzen",
+  description: "Discover travel tips, destination guides, and eSIM tutorials on the Telzen blog. Stay informed about global connectivity and travel technology trends.",
+  keywords: "travel blog, eSIM guides, destination tips, travel technology, connectivity guides, digital nomad tips, international travel",
+  openGraph: {
+    title: "Blog - Travel Tips & eSIM Guides | Telzen",
+    description: "Discover travel tips, destination guides, and eSIM tutorials on the Telzen blog. Stay informed about global connectivity and travel technology trends.",
+    url: "/blog",
+  },
+};
 
 const BlogPage = () => {
   return (

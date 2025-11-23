@@ -4,3 +4,7 @@ export { default as LoginStep } from "./LoginStep";
 export { default as RegisterStep } from "./RegisterStep";
 export { default as OtpStep } from "./OtpStep";
 export { default as SuccessStep } from "./SuccessStep";
+export { default as ProfileModal } from "./ProfileModal";
+export { default as LogoutModal } from "./LogoutModal";
+export { default as RemoveEsimModal } from "./RemoveEsimModal";
+export { default as EsimSuccessModal } from "./EsimSuccessModal";

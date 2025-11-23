@@ -1,8 +1,20 @@
 import CultureHero from "@/components/culture/CultureHero";
 import OfficeImage from "@/components/culture/OfficeImage";
 import ViewAbout from "@/components/culture/ViewAbout";
+import type { Metadata } from "next";
 
-function About() {
+export const metadata: Metadata = {
+  title: "Our Culture - Life at Telzen | Join Our Team",
+  description: "Discover Telzen's company culture, values, and work environment. Learn what makes our team passionate about connecting the world through eSIM technology.",
+  keywords: "Telzen culture, company culture, careers at Telzen, team values, work environment, eSIM innovation, tech company culture",
+  openGraph: {
+    title: "Our Culture - Life at Telzen | Join Our Team",
+    description: "Discover Telzen's company culture, values, and work environment. Learn what makes our team passionate about connecting the world through eSIM technology.",
+    url: "/culture",
+  },
+};
+
+function Culture() {
   return (
     <main className="font-inter bg-white">
       <CultureHero />
@@ -16,4 +28,4 @@ function About() {
   );
 }
 
-export default About;
+export default Culture;

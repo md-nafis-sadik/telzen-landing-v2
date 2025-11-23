@@ -10,6 +10,7 @@ import { useSignupMutation } from "@/store/modules/auth/authApi";
 import { getDeviceId } from "@/service/helpers/device.utils";
 import Image from "next/image";
 import { images } from "@/service";
+import { toast } from 'react-toastify';
 
 interface Country {
   code: string;
@@ -58,8 +59,10 @@ const RegisterStep: React.FC = () => {
 
       dispatch(setAuthModalEmail(formData.email.trim()));
       dispatch(setAuthModalStep("otp"));
-    } catch (error) {
+    } catch (error: any) {
       console.log("Registration error:", error);
+      const errorMessage = error?.data?.message || 'Registration failed. Please try again.';
+      toast.error(errorMessage);
     }
   };
 

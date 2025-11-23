@@ -7,6 +7,7 @@ import {
   useOtpVerifyMutation,
   useResendOtpMutation,
 } from "@/store/modules/auth/authApi";
+import { toast } from 'react-toastify';
 
 const OtpStep: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -60,15 +61,18 @@ const OtpStep: React.FC = () => {
     }
 
     try {
-      await otpVerify({
+      const result = await otpVerify({
         email: email,
         otp: otpString,
         type: "signin",
       }).unwrap();
 
+      // Navigate to success step
       dispatch(setAuthModalStep("success"));
-    } catch (error) {
+    } catch (error: any) {
       console.log("OTP verification error:", error);
+      const errorMessage = error?.data?.message || 'OTP verification failed. Please try again.';
+      toast.error(errorMessage);
     }
   };
 
@@ -76,8 +80,11 @@ const OtpStep: React.FC = () => {
     try {
       await resendOtp({ email: email }).unwrap();
       setCountdown(59); // Reset countdown
-    } catch (error) {
+      toast.success('OTP has been resent to your email.');
+    } catch (error: any) {
       console.log("Resend OTP error:", error);
+      const errorMessage = error?.data?.message || 'Failed to resend OTP. Please try again.';
+      toast.error(errorMessage);
     }
   };
 

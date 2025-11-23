@@ -1,5 +1,17 @@
 import BlurText from "@/components/animation/BlurText";
 import { appStrings } from "@/service";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy - Your Data Protection | Telzen",
+  description: "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
+  keywords: "privacy policy, data protection, user privacy, Telzen privacy, GDPR compliance, data security",
+  openGraph: {
+    title: "Privacy Policy - Your Data Protection | Telzen",
+    description: "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
+    url: "/privacy-policy",
+  },
+};
 
 function PrivacyPolicy() {
   return (

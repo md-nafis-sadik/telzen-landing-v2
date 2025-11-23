@@ -57,4 +57,6 @@ export const images = {
   officeImage7: "/images/office-image/7.webp",
   officeImage8: "/images/office-image/8.webp",
   blog1: "/images/blog1.webp",
+  removeIcon: "/images/remove-icon.webp",
+  LogoutIcon: "/images/logout-icon.webp",
 };
