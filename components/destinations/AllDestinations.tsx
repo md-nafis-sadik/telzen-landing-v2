@@ -31,13 +31,8 @@ function AllDestinations() {
   } = useAllDestinations();
 
   return (
-    <section
-      className="py-10 md:py-16 lg:py-20 bg-white lg:min-h-screen flex"
-      id="allDestinations"
-    >
-      <div className="w-full">
-        <div className="containerX">
-          <HeaderPrev link="/" text={appStrings.destinations} />
+    <>
+          <HeaderPrev text={appStrings.destinations} />
           <div className="w-full flex flex-col gap-4 sm:flex-row items-center justify-between my-6 md:my-8 lg:my-10">
             <BigToggleSwitch onToggle={handleToggle} />
 
@@ -117,9 +112,7 @@ function AllDestinations() {
               description="We couldn't find any destinations. Please try again later."
             />
           )}
-        </div>
-      </div>
-    </section>
+        </>
   );
 }
 

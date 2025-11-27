@@ -18,3 +18,15 @@ export const getDeviceId = (): string => {
   localStorage.setItem('telzen_device_id', newId);
   return newId;
 };
+
+// Get device IP address using external API
+export const getDeviceIpAddress = async (): Promise<string> => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip || ''; // fallback to localhost if API fails
+  } catch (error) {
+    console.error('Failed to fetch IP address:', error);
+    return ''; // fallback to localhost on error
+  }
+};

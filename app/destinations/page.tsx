@@ -1,4 +1,4 @@
-import AllDestinations from "@/components/destinations/AllDestinations";
+import AllDestinationsContainer from "@/components/destinations/AllDestinationsContainer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 function Destinations() {
   return (
     <main className="font-inter bg-white">
-      <AllDestinations />
+      <AllDestinationsContainer />
     </main>
   );
 }

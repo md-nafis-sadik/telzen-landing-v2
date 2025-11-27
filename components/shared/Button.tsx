@@ -43,24 +43,24 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles
     const baseStyles =
-      "rounded-full font-medium transition-all inline-flex items-center justify-center gap-2";
+      "rounded-full font-medium transition-all inline-flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-95 select-none";
 
     // Variant styles
     const variantStyles = {
       primary:
-        "bg-primary-700 text-white hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
+        "bg-primary-700 text-white hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold tracking-wider",
       secondary:
         "border border-natural-500 text-black hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold",
-      link: "text-primary-700 hover:text-primary-800 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer p-0 bg-transparent border-0",
+      link: "text-primary-700 hover:text-primary-800 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer !p-0 bg-transparent border-0",
       google:
         "border border-natural-500 text-black hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer font-semibold",
     };
 
     // Size styles
     const sizeStyles = {
-      sm: "px-3 py-1.5 text-xs md:text-sm h-9",
+      sm: "px-3 py-1.5 text-sm md:text-base h-9",
       md: "px-4 py-2 text-sm md:text-base h-11 md:h-13",
-      lg: "px-6 py-3 text-base md:text-lg h-12 md:h-14",
+      lg: "px-6 py-3 text-sm md:text-base h-12 md:h-14",
     };
 
     // Width styles

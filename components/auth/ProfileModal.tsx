@@ -222,7 +222,7 @@ function ProfileModal() {
                   isLoading={updateLoading}
                   loadingText={appStrings.saving}
                   animate
-                  className="mt-6"
+                  className="mt-6 font-semibold lg:text-base"
                 >
                   {appStrings.save}
                 </Button>

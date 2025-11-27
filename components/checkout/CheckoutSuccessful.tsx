@@ -4,8 +4,10 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { images, appStrings } from "@/service";
 import Button from "../shared/Button";
+import { useRouter } from "next/navigation";
 
 function CheckoutSuccessful() {
+  const router = useRouter();
   return (
     <div className="w-full max-w-[505px] mx-auto">
       <div className="mb-6 flex justify-center">
@@ -47,37 +49,34 @@ function CheckoutSuccessful() {
         You can continue using Telzen eSIM now.
       </motion.p>
 
-      <div className="flex gap-3 lg:gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
+      <div className="flex gap-3 lg:gap-6 w-full">
+        
           <Button
             variant="secondary"
             size="md"
             fullWidth
             animate
-            className="mb-3 bg-black text-white hover:bg-natural-950 border-black"
+            className="mb-3 bg-black text-white hover:bg-natural-950 border-black w-full"
+            onClick={() => {
+              router.push("/");
+            }}  
           >
             {appStrings.homepage}
           </Button>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
+        
           <Button
             variant="primary"
             size="md"
             fullWidth
             animate
-            className="mb-3"
+            className="mb-3 w-full"
+            onClick={() => {
+              router.push("/my-esim");
+            }}  
           >
             {appStrings.myEsim}
           </Button>
-        </motion.div>
+        
       </div>
     </div>
   );

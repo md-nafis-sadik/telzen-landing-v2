@@ -11,17 +11,21 @@ export interface SignupData {
     name: string;
   };
   device_id: string;
+  device_web_ip_address: string;
 }
 
 export interface SigninData {
   email: string;
   device_id: string;
+  device_web_ip_address: string;
 }
 
 export interface OtpVerifyData {
   email: string;
   otp: string;
   type: "signin" | "signup";
+  device_id: string;
+  device_web_ip_address: string;
 }
 
 export interface ResendOtpData {

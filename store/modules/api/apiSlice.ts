@@ -27,7 +27,7 @@ const baseQueryWithDynamicUrl = async (
     url = `${args.baseUrl}${args.url}`;
   } else {
     // Use default app API base URL
-    url = `http://46.250.238.64:9000/api/v1/app${args.url}`;
+    url = `http://46.250.238.64:9000/api/v1/web${args.url}`;
   }
 
   // Create new args with the full URL

@@ -5,6 +5,7 @@ export interface UiState {
     isOpen: boolean;
     step: "login" | "register" | "otp" | "success";
     email: string;
+    otpType: "signin" | "signup";
   };
   profileModal: {
     isOpen: boolean;
@@ -29,6 +30,7 @@ const initialState: UiState = {
     isOpen: false,
     step: "login",
     email: "soumikdev03@gmail.com",
+    otpType: "signin",
   },
   profileModal: {
     isOpen: false,
@@ -66,6 +68,7 @@ const uiSlice = createSlice({
       state.authModal.isOpen = false;
       state.authModal.step = "login";
       state.authModal.email = "";
+      state.authModal.otpType = "signin";
     },
     setAuthModalStep: (
       state,
@@ -75,6 +78,9 @@ const uiSlice = createSlice({
     },
     setAuthModalEmail: (state, action: PayloadAction<string>) => {
       state.authModal.email = action.payload;
+    },
+    setAuthModalOtpType: (state, action: PayloadAction<"signin" | "signup">) => {
+      state.authModal.otpType = action.payload;
     },
     setGlobalLoading: (state, action: PayloadAction<boolean>) => {
       state.loading.global = action.payload;
@@ -113,6 +119,7 @@ export const {
   closeAuthModal,
   setAuthModalStep,
   setAuthModalEmail,
+  setAuthModalOtpType,
   setGlobalLoading,
   openProfileModal,
   closeProfileModal,

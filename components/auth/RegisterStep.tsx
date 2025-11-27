@@ -2,11 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import { images, appStrings } from "@/service";
-import { useRegister, countries } from "@/hook";
+import { images, appStrings, countriesData } from "@/service";
+import { useRegister } from "@/hook";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
-import Select from "../shared/Select";
+import SelectDropdown, { SelectOption } from "../shared/SelectDropdown";
 
 const RegisterStep: React.FC = () => {
   const {
@@ -51,24 +51,25 @@ const RegisterStep: React.FC = () => {
           required
         />
 
-        <Select
-          id="country"
+        <SelectDropdown
           label={appStrings.country}
+          options={countriesData.map((country) => ({
+            value: country.code,
+            label: country.name,
+            code: country.code,
+            flagCode: country.code,
+          }))}
           value={formData.country.code}
-          onChange={(e) => {
-            const selectedCountry =
-              countries.find((c) => c.code === e.target.value) ||
-              countries[0];
-            setFormData({ ...formData, country: selectedCountry });
+          onChange={(value, option) => {
+            setFormData({
+              ...formData,
+              country: { code: value, name: option.label },
+            });
           }}
-          className="focus:border-primary-800"
-        >
-          {countries.map((country) => (
-            <option key={country.code} value={country.code}>
-              {country.name}
-            </option>
-          ))}
-        </Select>
+          placeholder="Select your country"
+          showFlag={true}
+          searchable={true}
+        />
 
         <div className="flex items-start gap-3 text-left">
           <input
@@ -106,7 +107,7 @@ const RegisterStep: React.FC = () => {
           variant="primary"
           size="md"
           fullWidth
-          disabled={!formData.agreeToTerms}
+          disabled={!formData.name.trim() || !formData.email.trim()}
           isLoading={loading}
           loadingText="Registering..."
           className="mb-3"

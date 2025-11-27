@@ -5,6 +5,7 @@ import {
   useOtpVerifyMutation,
   useResendOtpMutation,
 } from "@/store/modules/auth/authApi";
+import { getDeviceId, getDeviceIpAddress } from "@/service/helpers/device.utils";
 import { toast } from "react-toastify";
 
 export const useOtpVerification = () => {
@@ -12,6 +13,7 @@ export const useOtpVerification = () => {
   const { loading } = useAppSelector((state) => state.auth);
   const { authModal } = useAppSelector((state) => state.ui);
   const email = authModal.email;
+  const otpType = authModal.otpType;
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [countdown, setCountdown] = useState(59);
   const [otpVerify] = useOtpVerifyMutation();
@@ -59,10 +61,15 @@ export const useOtpVerification = () => {
     }
 
     try {
+      const deviceId = getDeviceId();
+      const ipAddress = await getDeviceIpAddress();
+      
       await otpVerify({
         email: email,
         otp: otpString,
-        type: "signin",
+        type: otpType,
+        device_id: deviceId,
+        device_web_ip_address: ipAddress,
       }).unwrap();
 
       dispatch(setAuthModalStep("success"));

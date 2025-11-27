@@ -2,23 +2,34 @@
 
 import React from "react";
 import { motion } from "motion/react";
+import Button from "./Button";
+import { appStrings } from "@/service";
+import { useRouter } from "next/navigation";
 
 interface EmptyStateProps {
   title?: string;
   description?: string;
   searchQuery?: string;
+  noText?: string;
+  noText2nd?: string;
+  className?: string;
 }
 
-function EmptyState({ 
-  title = "No Destinations Found", 
+function EmptyState({
+  title = "No Destinations Found",
   description = "We couldn't find any destinations matching your search.",
-  searchQuery 
+  searchQuery,
+  noText,
+  noText2nd,
+  className = "",
 }: EmptyStateProps) {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
+    <div className={`flex flex-col items-center justify-center py-16 md:py-20 lg:py-24 ${className}`}>
       {/* Animated Empty Box SVG */}
-      <motion.div 
-        className="w-full max-w-[200px] md:max-w-[250px]"
+      <motion.div
+        className="w-full max-w-[160px] md:max-w-[220px]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -39,7 +50,7 @@ function EmptyState({
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 1, ease: "easeInOut" }}
           />
-          
+
           {/* Box Top */}
           <motion.path
             d="M100 90L40 55L100 20L160 55L100 90Z"
@@ -50,7 +61,7 @@ function EmptyState({
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeInOut" }}
           />
-          
+
           {/* Box Right Side */}
           <motion.path
             d="M100 90V140L160 105V55L100 90Z"
@@ -61,21 +72,21 @@ function EmptyState({
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
           />
-          
+
           {/* Floating Particles */}
           <motion.circle
             cx="60"
             cy="40"
             r="3"
             fill="#00C896"
-            animate={{ 
+            animate={{
               y: [-5, 5, -5],
-              opacity: [0.3, 1, 0.3]
+              opacity: [0.3, 1, 0.3],
             }}
-            transition={{ 
+            transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
           />
           <motion.circle
@@ -83,15 +94,15 @@ function EmptyState({
             cy="60"
             r="2.5"
             fill="#00C896"
-            animate={{ 
+            animate={{
               y: [5, -5, 5],
-              opacity: [0.3, 1, 0.3]
+              opacity: [0.3, 1, 0.3],
             }}
-            transition={{ 
+            transition={{
               duration: 2.5,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 0.5
+              delay: 0.5,
             }}
           />
           <motion.circle
@@ -99,18 +110,18 @@ function EmptyState({
             cy="30"
             r="2"
             fill="#00C896"
-            animate={{ 
+            animate={{
               y: [-3, 3, -3],
-              opacity: [0.3, 1, 0.3]
+              opacity: [0.3, 1, 0.3],
             }}
-            transition={{ 
+            transition={{
               duration: 3,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 1
+              delay: 1,
             }}
           />
-          
+
           {/* Magnifying Glass */}
           <motion.g
             initial={{ opacity: 0, scale: 0 }}
@@ -125,10 +136,10 @@ function EmptyState({
               strokeWidth="3"
               fill="none"
               animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ 
+              transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
             <motion.line
@@ -140,10 +151,10 @@ function EmptyState({
               strokeWidth="3"
               strokeLinecap="round"
               animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ 
+              transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           </motion.g>
@@ -157,22 +168,31 @@ function EmptyState({
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center"
       >
-        <h3 className="text-xl md:text-2xl font-bold text-text-900 mb-3">
+        <h3 className="text-lg md:text-xl font-bold text-text-900 mb-3">
           {title}
         </h3>
-        <p className="text-base md:text-lg text-text-600 max-w-md px-4">
-          {searchQuery 
-            ? (
-              <>
-                No destinations found for <span className="font-semibold text-primary-700">"{searchQuery}"</span>
-                <br />
-                <span className="text-sm mt-2 inline-block">Try adjusting your search or browse all destinations.</span>
-              </>
-            )
-            : description
-          }
+        <p className="text-sm md:text-base text-text-600 max-w-md px-4">
+          {searchQuery ? (
+            <>
+              {noText ? noText : `No destinations found for `}
+              <span className="font-semibold text-primary-700">
+                &quot;{searchQuery}&quot;
+              </span>
+              <br />
+              <span className="text-sm mt-2 inline-block">
+                {noText2nd
+                  ? noText2nd
+                  : "Try adjusting your search or browse all destinations."}
+              </span>
+            </>
+          ) : (
+            description
+          )}
         </p>
       </motion.div>
+      <Button variant="primary" onClick={() => router.push("/destinations")} className="text-xs md:text-sm h-8 md:h-10 mt-4">
+        {appStrings.browseAllDestinations}
+      </Button>
     </div>
   );
 }

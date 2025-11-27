@@ -1,23 +1,28 @@
 "use client";
 
 import CheckoutCard from "@/components/checkout/CheckoutCard";
-import CheckoutForm from "@/components/checkout/CheckoutForm";
 import CheckoutLoginForm from "@/components/checkout/CheckoutLoginForm";
 import CheckoutSuccessful from "@/components/checkout/CheckoutSuccessful";
+import EmbeddedCheckoutForm from "@/components/checkout/EmbeddedCheckoutForm";
 import HeaderPrev from "@/components/shared/HeaderPrev";
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetSinglePackageQuery } from "@/store/modules/destination/destinationApi";
+import { useState } from "react";
 
 function CheckOut() {
   const searchParams = useSearchParams();
   const { isAuthenticated, authInitialized } = useAppSelector(
     (state) => state.auth
   );
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [finalAmount, setFinalAmount] = useState<number>(0);
+  const [appliedCouponId, setAppliedCouponId] = useState<string | undefined>();
 
   const packageId = searchParams.get("package_id");
   const countryId = searchParams.get("country_id");
   const regionId = searchParams.get("region_id");
+  const orderType = searchParams.get("order_type") || "new";
 
   const {
     data: packageData,
@@ -153,14 +158,33 @@ function CheckOut() {
       >
         <div className="w-full h-full">
           <div className="containerX">
-            {/* <div className="flex flex-col justify-center items-center h-full py-20">
-            <CheckoutSuccessful/>
-            </div> */}
-            <HeaderPrev text="Check out" />
-            <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10">
-              {!isAuthenticated ? <CheckoutLoginForm /> : <CheckoutForm />}
-              <CheckoutCard packageData={packageData.data} />
-            </div>
+            {showSuccess ? (
+              <div className="flex flex-col justify-center items-center h-full py-20">
+                <CheckoutSuccessful />
+              </div>
+            ) : (
+              <>
+                <HeaderPrev text="Check out" />
+                <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10">
+                  {!isAuthenticated ? (
+                    <CheckoutLoginForm />
+                  ) : (
+                    <EmbeddedCheckoutForm
+                      packageId={packageId}
+                      amount={finalAmount > 0 ? finalAmount : packageData?.data?.grand_total_selling_price || 0}
+                      currency="USD"
+                      couponId={appliedCouponId}
+                      orderType={orderType as "new" | "topup"}
+                    />
+                  )}
+                  <CheckoutCard
+                    packageData={packageData.data}
+                    onAmountChange={setFinalAmount}
+                    onCouponChange={setAppliedCouponId}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>

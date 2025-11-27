@@ -3,9 +3,12 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setAuthModalStep,
   setAuthModalEmail,
+  setAuthModalOtpType,
 } from "@/store/modules/ui/uiSlice";
 import { useSigninMutation } from "@/store/modules/auth/authApi";
-import { getDeviceId } from "@/service/helpers/device.utils";
+import { getDeviceId, getDeviceIpAddress } from "@/service/helpers/device.utils";
+import { countriesData, envConfig } from "@/service";
+import { getCountryCode } from "./useLocation";
 import { toast } from "react-toastify";
 
 export const useLogin = () => {
@@ -23,12 +26,16 @@ export const useLogin = () => {
 
     try {
       const deviceId = getDeviceId();
+      const ipAddress = await getDeviceIpAddress();
+      
       await signin({
         email: email.trim(),
         device_id: deviceId,
+        device_web_ip_address: ipAddress,
       }).unwrap();
 
       dispatch(setAuthModalEmail(email.trim()));
+      dispatch(setAuthModalOtpType("signin"));
       dispatch(setAuthModalStep("otp"));
     } catch (error: any) {
       console.log("Login error:", error);
@@ -37,8 +44,24 @@ export const useLogin = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    console.log("Google login clicked");
+  const handleGoogleLogin = async () => {
+    try {
+      const deviceId = getDeviceId();
+      const ipAddress = await getDeviceIpAddress();
+      
+      // Try to get country from location, otherwise use default
+      const locationCountryCode = getCountryCode();
+      const country = countriesData.find(c => c.code === locationCountryCode) || countriesData[0];
+      
+      // Build Google OAuth URL with query parameters
+      const googleAuthUrl = `${envConfig.baseUrl}auth/google?device_id=${deviceId}&country_code=${country.code}&country_name=${encodeURIComponent(country.name)}&ip_address=${ipAddress}`;
+      
+      // Redirect to Google OAuth
+      window.location.href = googleAuthUrl;
+    } catch (error) {
+      console.error("Google login error:", error);
+      toast.error("Failed to initiate Google login. Please try again.");
+    }
   };
 
   const handleRegisterClick = () => {

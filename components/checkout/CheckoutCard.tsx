@@ -7,21 +7,31 @@ import {
   appStrings,
 } from "@/service";
 import Image from "next/image";
-import { useState } from "react";
-import { Package, useLazyValidateCouponQuery } from "@/store/modules/destination/destinationApi";
+import { useState, useEffect } from "react";
+import {
+  Package,
+  useLazyValidateCouponQuery,
+} from "@/store/modules/destination/destinationApi";
 import { toast } from "react-toastify";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 
 interface CheckoutCardProps {
   packageData?: Package;
+  onAmountChange?: (amount: number) => void;
+  onCouponChange?: (couponId: string | undefined) => void;
 }
 
-function CheckoutCard({ packageData }: CheckoutCardProps) {
+function CheckoutCard({
+  packageData,
+  onAmountChange,
+  onCouponChange,
+}: CheckoutCardProps) {
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
   const [showCouponInput, setShowCouponInput] = useState(false);
-  const [validateCoupon, { isLoading: couponLoading }] = useLazyValidateCouponQuery();
+  const [validateCoupon, { isLoading: couponLoading }] =
+    useLazyValidateCouponQuery();
 
   // Helper function to format data size
   const formatDataSize = (sizeInMB: number) => {
@@ -58,7 +68,7 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
 
     try {
       const result = await validateCoupon(couponCode.trim()).unwrap();
-      
+
       if (result.success && result.data) {
         setAppliedCoupon(result.data);
         toast.success("Coupon applied successfully!");
@@ -67,7 +77,8 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
       }
     } catch (error: any) {
       console.error("Coupon validation error:", error);
-      const errorMessage = error?.data?.message || "Failed to validate coupon. Please try again.";
+      const errorMessage =
+        error?.data?.message || "Failed to validate coupon. Please try again.";
       toast.error(errorMessage);
     }
   };
@@ -75,9 +86,9 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
   // Calculate prices with coupon
   const subtotal = packageData?.grand_total_selling_price || 0;
   let discount = 0;
-  
+
   if (appliedCoupon && subtotal >= appliedCoupon.minimum_order_amount) {
-    if (appliedCoupon.type === 'percentage') {
+    if (appliedCoupon.type === "percentage") {
       discount = (subtotal * appliedCoupon.value) / 100;
       if (appliedCoupon.maximum_discount_amount) {
         discount = Math.min(discount, appliedCoupon.maximum_discount_amount);
@@ -86,9 +97,22 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
       discount = appliedCoupon.value;
     }
   }
-  
+
   const grandTotal = subtotal - discount;
-  
+
+  // Notify parent component when amount or coupon changes
+  useEffect(() => {
+    if (onAmountChange) {
+      onAmountChange(grandTotal);
+    }
+  }, [grandTotal, onAmountChange]);
+
+  useEffect(() => {
+    if (onCouponChange) {
+      onCouponChange(appliedCoupon?._id);
+    }
+  }, [appliedCoupon, onCouponChange]);
+
   return (
     <div className="bg-white rounded-3xl p-6 w-full h-max">
       <div className="flex flex-col xl:flex-row justify-between bg-primary-100 rounded-lg overflow-hidden">
@@ -169,7 +193,7 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
             </div>
             <div className="font-bold">${subtotal.toFixed(2)}</div>
           </div>
-          
+
           {/* Show discount if coupon applied */}
           {appliedCoupon && discount > 0 && (
             <div className="flex items-center justify-between">
@@ -179,14 +203,14 @@ function CheckoutCard({ packageData }: CheckoutCardProps) {
               <div className="font-bold">-${discount.toFixed(2)}</div>
             </div>
           )}
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span>Grand Total</span>
             </div>
             <div className="font-bold">${grandTotal.toFixed(2)}</div>
           </div>
-          
+
           {/* Coupon section */}
           <div>
             {appliedCoupon ? (
