@@ -5,6 +5,7 @@ import CheckoutLoginForm from "@/components/checkout/CheckoutLoginForm";
 import CheckoutSuccessful from "@/components/checkout/CheckoutSuccessful";
 import EmbeddedCheckoutForm from "@/components/checkout/EmbeddedCheckoutForm";
 import HeaderPrev from "@/components/shared/HeaderPrev";
+import { StripeProvider } from "@/components/providers";
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetSinglePackageQuery } from "@/store/modules/destination/destinationApi";
@@ -169,13 +170,16 @@ function CheckOut() {
                   {!isAuthenticated ? (
                     <CheckoutLoginForm />
                   ) : (
-                    <EmbeddedCheckoutForm
-                      packageId={packageId}
-                      amount={finalAmount > 0 ? finalAmount : packageData?.data?.grand_total_selling_price || 0}
-                      currency="USD"
-                      couponId={appliedCouponId}
-                      orderType={orderType as "new" | "topup"}
-                    />
+                    <StripeProvider>
+                      <EmbeddedCheckoutForm
+                        packageId={packageId}
+                        amount={finalAmount > 0 ? finalAmount : packageData?.data?.grand_total_selling_price || 0}
+                        currency="USD"
+                        couponId={appliedCouponId}
+                        orderType={orderType as "new" | "topup"}
+                        onSuccess={() => setShowSuccess(true)}
+                      />
+                    </StripeProvider>
                   )}
                   <CheckoutCard
                     packageData={packageData.data}

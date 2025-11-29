@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { envConfig } from "@/service/config/env";
 
 export interface Region {
   _id: string;
@@ -96,6 +97,25 @@ export interface PackageParams {
   limit?: number;
 }
 
+export interface PackagesResponse {
+  status_code: number;
+  success: boolean;
+  message: string;
+  meta: {
+    total_items: number;
+    total_pages: number;
+    current_page: number;
+    page_size: number;
+    has_next_page: boolean;
+    has_previous_page: boolean;
+  };
+  data: {
+    country: Country | null;
+    region: Region | null;
+    packages: Package[];
+  };
+}
+
 export interface SinglePackageParams {
   country_id?: string;
   region_id?: string;
@@ -116,17 +136,23 @@ export interface Esim {
   msisdn: string;
   qr_code_url: string;
   activation_code: string;
-  status: 'active' | 'expired' | 'pending';
+  status: "active" | "expired" | "pending";
   is_set_active: boolean;
   activate_before: number;
   order: string;
   associated_country: {
     _id: string;
     name: string;
+    image: string;
+    cover_image: string;
+    flag: string;
   } | null;
   associated_region: {
     _id: string;
     name: string;
+    image: string;
+    cover_image: string;
+    flag: string;
   } | null;
   data_package: {
     total_data_plan_in_mb: number;
@@ -160,7 +186,7 @@ export interface CouponValidationResponse {
   data: {
     _id: string;
     code: string;
-    type: 'percentage' | 'fixed';
+    type: "percentage" | "fixed";
     value: number;
     minimum_order_amount: number;
     maximum_discount_amount?: number;
@@ -205,7 +231,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/region?${params.toString()}`,
-          baseUrl: "http://46.250.238.64:9000/api/v1/app",
+          baseUrl: envConfig.webApiUrl,
         };
       },
       providesTags: ["Destination"],
@@ -224,7 +250,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/country?${params.toString()}`,
-          baseUrl: "http://46.250.238.64:9000/api/v1/app",
+          baseUrl: envConfig.webApiUrl,
         };
       },
       providesTags: ["Destination"],
@@ -237,23 +263,22 @@ export const destinationApi = apiSlice.injectEndpoints({
       query: ({ country_code } = {}) => {
         // If country_code is provided, include it in the query
         // If not provided, call the API without country_code parameter
-        const baseUrl = "http://46.250.238.64:9000/api/v1/app";
         if (country_code) {
           return {
             url: `/country/popular?country_code=${country_code}`,
-            baseUrl,
+            baseUrl: envConfig.webApiUrl,
           };
         } else {
           return {
             url: `/country/popular`,
-            baseUrl,
+            baseUrl: envConfig.webApiUrl,
           };
         }
       },
       providesTags: ["Destination"],
     }),
 
-    getPackages: builder.query<ApiResponse<Package>, PackageParams>({
+    getPackages: builder.query<PackagesResponse, PackageParams>({
       query: ({ region_id, country_id, page = 1, limit = 10 }) => {
         const params = new URLSearchParams({
           page: page.toString(),
@@ -270,7 +295,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/package?${params.toString()}`,
-          baseUrl: "http://46.250.238.64:9000/api/v1/app",
+          baseUrl: envConfig.webApiUrl,
         };
       },
       providesTags: ["Package"],
@@ -293,7 +318,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
           return {
             url: `/package/single?${params.toString()}`,
-            baseUrl: "http://46.250.238.64:9000/api/v1/app",
+            baseUrl: envConfig.webApiUrl,
           };
         },
         providesTags: ["Package"],
@@ -302,37 +327,40 @@ export const destinationApi = apiSlice.injectEndpoints({
 
     getPersonalEsims: builder.query<ApiResponse<Esim>, void>({
       query: () => ({
-        url: '/esim/personal',
-        baseUrl: 'http://46.250.238.64:9000/api/v1/app'
+        url: "/esim/personal",
+        baseUrl: envConfig.webApiUrl,
       }),
-      providesTags: ['Esim'],
+      providesTags: ["Esim"],
     }),
 
     deleteEsim: builder.mutation<EsimDeleteResponse, EsimDeleteParams>({
       query: ({ esim_id }) => ({
         url: `/esim/delete?esim_id=${esim_id}`,
-        method: 'DELETE',
-        baseUrl: 'http://46.250.238.64:9000/api/v1/app'
+        method: "DELETE",
+        baseUrl: envConfig.webApiUrl,
       }),
-      invalidatesTags: ['Esim'],
+      invalidatesTags: ["Esim"],
     }),
 
     // Validate coupon
     validateCoupon: builder.query<CouponValidationResponse, string>({
       query: (couponCode) => ({
         url: `/coupon/is-valid?search=${encodeURIComponent(couponCode)}`,
-        method: 'GET',
-        baseUrl: 'http://46.250.238.64:9000/api/v1/app'
+        method: "GET",
+        baseUrl: envConfig.webApiUrl,
       }),
     }),
-    
+
     // Contact support
-    createContactSupport: builder.mutation<ContactSupportResponse, ContactSupportData>({
+    createContactSupport: builder.mutation<
+      ContactSupportResponse,
+      ContactSupportData
+    >({
       query: (data) => ({
-        url: '/contact-support/create',
-        method: 'POST',
+        url: "/contact-support/create",
+        method: "POST",
         body: data,
-        baseUrl: 'http://46.250.238.64:9000/api/v1/app'
+        baseUrl: envConfig.webApiUrl,
       }),
     }),
   }),

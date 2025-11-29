@@ -13,6 +13,7 @@ interface EmptyStateProps {
   noText?: string;
   noText2nd?: string;
   className?: string;
+  isButton?: boolean;
 }
 
 function EmptyState({
@@ -22,11 +23,14 @@ function EmptyState({
   noText,
   noText2nd,
   className = "",
+  isButton = true,
 }: EmptyStateProps) {
   const router = useRouter();
 
   return (
-    <div className={`flex flex-col items-center justify-center py-16 md:py-20 lg:py-24 ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center py-16 md:py-20 lg:py-24 ${className}`}
+    >
       {/* Animated Empty Box SVG */}
       <motion.div
         className="w-full max-w-[160px] md:max-w-[220px]"
@@ -190,9 +194,15 @@ function EmptyState({
           )}
         </p>
       </motion.div>
-      <Button variant="primary" onClick={() => router.push("/destinations")} className="text-xs md:text-sm h-8 md:h-10 mt-4">
-        {appStrings.browseAllDestinations}
-      </Button>
+      {isButton && (
+        <Button
+          variant="primary"
+          onClick={() => router.push("/destinations")}
+          className="text-xs md:text-sm h-8 md:h-10 mt-4"
+        >
+          {appStrings.browseAllDestinations}
+        </Button>
+      )}
     </div>
   );
 }

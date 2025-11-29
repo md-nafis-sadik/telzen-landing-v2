@@ -6,7 +6,7 @@ export async function getGeneratedMetadata({
   path = "",
 }) {
   let response: { data?: any } = { data: {} };
-  
+
   try {
     const fetchResponse = await fetch(`${envConfig.blogUrl}${apiUrl}`, {
       next: { revalidate: 300 },
@@ -15,7 +15,7 @@ export async function getGeneratedMetadata({
       response = await fetchResponse.json();
     }
   } catch (error) {
-    console.error("Error fetching metadata:", error);
+    console.log("Error fetching metadata:", error);
   }
   const data = response?.data || {};
   const socialLinks = {

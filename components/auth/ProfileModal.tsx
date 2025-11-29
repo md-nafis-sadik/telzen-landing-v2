@@ -9,7 +9,7 @@ import {
 } from "@/store/modules/auth/authApi";
 import { closeProfileModal } from "@/store/modules/ui/uiSlice";
 import { CloseIcon, countriesData as countries, appStrings } from "@/service";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import SelectDropdown, { SelectOption } from "../shared/SelectDropdown";
 import { getCountryCode, getStoredLocationData } from "@/hook/useLocation";
 import Button from "../shared/Button";
@@ -49,12 +49,14 @@ function ProfileModal() {
     if (profile) {
       // If profile has country, use it; otherwise, use location data
       let countryData = profile.country || { code: "", name: "" };
-      
+
       // If no country in profile, try to get from location
       if (!countryData.code) {
         const locationCountryCode = getCountryCode();
         if (locationCountryCode) {
-          const foundCountry = countries.find(c => c.code === locationCountryCode);
+          const foundCountry = countries.find(
+            (c) => c.code === locationCountryCode
+          );
           if (foundCountry) {
             countryData = {
               code: foundCountry.code,
@@ -63,7 +65,7 @@ function ProfileModal() {
           }
         }
       }
-      
+
       setFormData({
         name: profile.name || "",
         email: profile.email || "",
@@ -73,9 +75,11 @@ function ProfileModal() {
       // If no profile loaded yet, try to preselect from location
       const locationCountryCode = getCountryCode();
       if (locationCountryCode) {
-        const foundCountry = countries.find(c => c.code === locationCountryCode);
+        const foundCountry = countries.find(
+          (c) => c.code === locationCountryCode
+        );
         if (foundCountry) {
-          setFormData(prev => ({
+          setFormData((prev) => ({
             ...prev,
             country: {
               code: foundCountry.code,
@@ -106,11 +110,12 @@ function ProfileModal() {
   const handleSave = async () => {
     try {
       await updateProfile(formData).unwrap();
-      toast.success('Profile updated successfully!');
+      toast.success("Profile updated successfully!");
       handleClose();
     } catch (error: any) {
-      console.error("Failed to update profile:", error);
-      const errorMessage = error?.data?.message || 'Failed to update profile. Please try again.';
+      console.log("Failed to update profile:", error);
+      const errorMessage =
+        error?.data?.message || "Failed to update profile. Please try again.";
       toast.error(errorMessage);
     }
   };

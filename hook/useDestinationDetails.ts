@@ -24,7 +24,6 @@ export const useDestinationDetails = () => {
 
   // Determine if this is a regional or country package
   const isRegional = !!regionId;
-  const displayName = isRegional ? regionName : countryName;
 
   const {
     data: packagesData,
@@ -34,8 +33,17 @@ export const useDestinationDetails = () => {
     country_id: countryId || undefined,
     region_id: regionId || undefined,
     page: 1,
-    limit: 10,
+    limit: 999999,
   });
+
+  // Get display name and image from API response
+  const displayName = packagesData?.data?.country?.name || 
+                      packagesData?.data?.region?.name || 
+                      (isRegional ? regionName : countryName);
+  
+  const displayImage = packagesData?.data?.country?.image || 
+                       packagesData?.data?.region?.image || 
+                       null;
 
   const handlePackageClick = (packageId: string) => {
     const params = new URLSearchParams({ package_id: packageId });
@@ -71,6 +79,7 @@ export const useDestinationDetails = () => {
 
   return {
     displayName,
+    displayImage,
     isRegional,
     packagesData,
     isLoading,

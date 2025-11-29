@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout, clearAuthState } from "../auth/authSlice";
+import { envConfig } from "@/service/config/env";
 
 const dynamicBaseQuery = fetchBaseQuery({
   baseUrl: "/", // Default base URL, will be overridden by individual endpoints
@@ -26,8 +27,8 @@ const baseQueryWithDynamicUrl = async (
   if (args.baseUrl) {
     url = `${args.baseUrl}${args.url}`;
   } else {
-    // Use default app API base URL
-    url = `http://46.250.238.64:9000/api/v1/web${args.url}`;
+    // Use default web API base URL from environment
+    url = `${envConfig.webApiUrl}${args.url}`;
   }
 
   // Create new args with the full URL

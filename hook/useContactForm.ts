@@ -64,7 +64,7 @@ export const useContactForm = () => {
         );
       }
     } catch (error: any) {
-      console.error("Contact form error:", error);
+      console.log("Contact form error:", error);
       const errorMessage =
         error?.data?.message || "Failed to send message. Please try again.";
       toast.error(errorMessage);

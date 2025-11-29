@@ -6,7 +6,10 @@ import {
   setAuthModalOtpType,
 } from "@/store/modules/ui/uiSlice";
 import { useSignupMutation } from "@/store/modules/auth/authApi";
-import { getDeviceId, getDeviceIpAddress } from "@/service/helpers/device.utils";
+import {
+  getDeviceId,
+  getDeviceIpAddress,
+} from "@/service/helpers/device.utils";
 import { countriesData, envConfig } from "@/service";
 import { toast } from "react-toastify";
 
@@ -38,7 +41,7 @@ export const useRegister = () => {
     try {
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
-      
+
       await signup({
         name: formData.name.trim(),
         email: formData.email.trim(),
@@ -62,18 +65,22 @@ export const useRegister = () => {
     try {
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
-      
+
       // Get current selected country or default
       const countryCode = formData.country?.code || countriesData[0].code;
       const countryName = formData.country?.name || countriesData[0].name;
-      
+
       // Build Google OAuth URL with query parameters
-      const googleAuthUrl = `${envConfig.baseUrl}auth/google?device_id=${deviceId}&country_code=${countryCode}&country_name=${encodeURIComponent(countryName)}&ip_address=${ipAddress}`;
-      
+      const googleAuthUrl = `${
+        envConfig.baseUrl
+      }auth/google?device_id=${deviceId}&country_code=${countryCode}&country_name=${encodeURIComponent(
+        countryName
+      )}&ip_address=${ipAddress}`;
+
       // Redirect to Google OAuth
       window.location.href = googleAuthUrl;
     } catch (error) {
-      console.error("Google login error:", error);
+      console.log("Google login error:", error);
       toast.error("Failed to initiate Google login. Please try again.");
     }
   };
@@ -82,7 +89,10 @@ export const useRegister = () => {
     dispatch(setAuthModalStep("login"));
   };
 
-  const updateFormData = (field: string, value: string | boolean | typeof countriesData[0]) => {
+  const updateFormData = (
+    field: string,
+    value: string | boolean | (typeof countriesData)[0]
+  ) => {
     setFormData({ ...formData, [field]: value });
   };
 

@@ -7,16 +7,12 @@ import { motion } from "motion/react";
 import { useMyEsim } from "@/hook";
 import { useRouter } from "next/navigation";
 import EsimCard from "./EsimCard";
+import EmptyState from "../shared/EmptyState";
 
 function MyEsimComponent() {
   const router = useRouter();
-  const {
-    isAuthenticated,
-    esims,
-    isLoading,
-    error,
-    handleToggleChange,
-  } = useMyEsim();
+  const { isAuthenticated, esims, isLoading, error, handleToggleChange } =
+    useMyEsim();
 
   // Don't render if not authenticated (will redirect)
   if (!isAuthenticated) {
@@ -73,8 +69,34 @@ function MyEsimComponent() {
 
           {/* Error State */}
           {error && (
-            <div className="text-center py-8 text-red-500">
-              <p>Failed to load eSIMs. Please try again later.</p>
+            <div className="w-full flex flex-col items-center justify-center py-12">
+              <EmptyState
+                title="Error Loading Esims"
+                description="We couldn't load the esims. Please try again."
+                className="!py-0 !md:py-0 !lg:py-0 w-full"
+                isButton={false}
+              />
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.reload()}
+                className="cursor-pointer mt-6 px-4 md:px-6 py-2 md:py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-full font-semibold transition-colors duration-200 flex items-center gap-2 text-sm md:text-base"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Reload Page
+              </motion.button>
             </div>
           )}
 
@@ -86,9 +108,7 @@ function MyEsimComponent() {
               ) : (
                 <div className="text-center py-12 text-gray-500">
                   <p className="text-lg mb-2">{appStrings.noEsimsFound}</p>
-                  <p className="text-sm">
-                    {appStrings.purchaseFirstEsim}
-                  </p>
+                  <p className="text-sm">{appStrings.purchaseFirstEsim}</p>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

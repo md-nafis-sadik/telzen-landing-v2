@@ -78,7 +78,7 @@ function CheckoutForm({
     }
 
     setIsProcessing(true);
-    setError(null);
+    console.log("Clearing error state");
 
     try {
       const cardElement = elements.getElement(CardElement);
@@ -131,7 +131,7 @@ function CheckoutForm({
 
         if (cardError) {
           toast.error(cardError.message || "Invalid card details");
-          setError(cardError.message || "Invalid card details");
+          console.log(cardError.message || "Invalid card details");
           return;
         }
 
@@ -166,7 +166,7 @@ function CheckoutForm({
 
       if (stripeError) {
         toast.error(stripeError.message || "Payment failed");
-        setError(stripeError.message || "Payment failed");
+        console.log(stripeError.message || "Payment failed");
         return;
       }
 
@@ -182,7 +182,7 @@ function CheckoutForm({
         }
       }
     } catch (err: any) {
-      console.error("Payment error:", err);
+      console.log("Payment error:", err);
       toast.error(err.message || "An error occurred during payment");
     } finally {
       setIsProcessing(false);
@@ -258,7 +258,6 @@ function CheckoutForm({
               {isProcessing ? "Processing..." : appStrings.continue}
             </Button>
           </div>
-
         </form>
         <div className="text-sm md:text-base text-text-950 tracking-tight mt-7">
           Your input data is always safe and we never store your any sensitive

@@ -189,7 +189,7 @@ export const authApi = apiSlice.injectEndpoints({
             );
           }
         } catch (error) {
-          console.error('Failed to update auth from profile:', error);
+          console.log("Failed to update auth from profile:", error);
         }
       },
       providesTags: ["Auth"],

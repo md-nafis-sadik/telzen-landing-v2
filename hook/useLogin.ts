@@ -6,7 +6,10 @@ import {
   setAuthModalOtpType,
 } from "@/store/modules/ui/uiSlice";
 import { useSigninMutation } from "@/store/modules/auth/authApi";
-import { getDeviceId, getDeviceIpAddress } from "@/service/helpers/device.utils";
+import {
+  getDeviceId,
+  getDeviceIpAddress,
+} from "@/service/helpers/device.utils";
 import { countriesData, envConfig } from "@/service";
 import { getCountryCode } from "./useLocation";
 import { toast } from "react-toastify";
@@ -27,7 +30,7 @@ export const useLogin = () => {
     try {
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
-      
+
       await signin({
         email: email.trim(),
         device_id: deviceId,
@@ -39,7 +42,8 @@ export const useLogin = () => {
       dispatch(setAuthModalStep("otp"));
     } catch (error: any) {
       console.log("Login error:", error);
-      const errorMessage = error?.data?.message || "Login failed. Please try again.";
+      const errorMessage =
+        error?.data?.message || "Login failed. Please try again.";
       toast.error(errorMessage);
     }
   };
@@ -48,18 +52,26 @@ export const useLogin = () => {
     try {
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
-      
+
       // Try to get country from location, otherwise use default
       const locationCountryCode = getCountryCode();
-      const country = countriesData.find(c => c.code === locationCountryCode) || countriesData[0];
-      
+      const country =
+        countriesData.find((c) => c.code === locationCountryCode) ||
+        countriesData[0];
+
       // Build Google OAuth URL with query parameters
-      const googleAuthUrl = `${envConfig.baseUrl}auth/google?device_id=${deviceId}&country_code=${country.code}&country_name=${encodeURIComponent(country.name)}&ip_address=${ipAddress}`;
-      
+      const googleAuthUrl = `${
+        envConfig.baseUrl
+      }auth/google?device_id=${deviceId}&country_code=${
+        country.code
+      }&country_name=${encodeURIComponent(
+        country.name
+      )}&ip_address=${ipAddress}`;
+
       // Redirect to Google OAuth
       window.location.href = googleAuthUrl;
     } catch (error) {
-      console.error("Google login error:", error);
+      console.log("Google login error:", error);
       toast.error("Failed to initiate Google login. Please try again.");
     }
   };

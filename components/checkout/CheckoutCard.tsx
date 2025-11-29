@@ -76,7 +76,7 @@ function CheckoutCard({
         toast.error(result.message || "Invalid coupon code");
       }
     } catch (error: any) {
-      console.error("Coupon validation error:", error);
+      console.log("Coupon validation error:", error);
       const errorMessage =
         error?.data?.message || "Failed to validate coupon. Please try again.";
       toast.error(errorMessage);

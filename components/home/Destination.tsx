@@ -42,9 +42,67 @@ function Destination() {
 
           {/* Error State */}
           {hasError && (
-            <div className="text-center text-text-200 py-8">
-              <p>Failed to load destinations. Please try again later.</p>
-            </div>
+            <>
+              <div className="relative mt-6 md:mt-10 mb-6">
+                {/* Blur overlay */}
+                <div className="absolute inset-0 bg-primary-black/60 backdrop-blur-sm rounded-3xl z-10 flex flex-col items-center justify-center px-4">
+                  <div className="text-center max-w-md">
+                    <h3 className="text-xl md:text-2xl font-bold text-primary-700 mb-2">
+                      Failed to Load Destinations
+                    </h3>
+                    <p className="text-text-200 mb-6">
+                      We couldn&apos;t fetch the latest destinations. Please try
+                      again.
+                    </p>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-full font-semibold transition-colors duration-200 flex items-center gap-2 mx-auto"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
+                      </svg>
+                      Reload Page
+                    </button>
+                  </div>
+                </div>
+
+                {/* Fallback cards below blur */}
+                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 opacity-50 p-4">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <DestinationCard
+                      key={`error-${index}`}
+                      index={index}
+                      destinationImage="/images/new-zealand.webp"
+                      destinationName="New Zealand"
+                      destinationPrice="5.00"
+                    />
+                  ))}
+                </div>
+
+                {/* Fallback cards below blur */}
+                <div className="grid md:hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 opacity-50 p-4">
+                  {Array.from({ length: 2 }).map((_, index) => (
+                    <DestinationCard
+                      key={`error-${index}`}
+                      index={index}
+                      destinationImage="/images/new-zealand.webp"
+                      destinationName="New Zealand"
+                      destinationPrice="5.00"
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
           )}
 
           {/* Loading State */}

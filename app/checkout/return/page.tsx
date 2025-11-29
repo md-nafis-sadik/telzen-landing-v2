@@ -1,68 +1,41 @@
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams, redirect } from 'next/navigation';
-import { getCheckoutSession } from '@/app/actions/stripe';
 import CheckoutSuccessful from '@/components/checkout/CheckoutSuccessful';
-import { useCheckout } from '@/hook';
-import { useAppSelector } from '@/store/hooks';
-import { toast } from 'react-toastify';
+import { useVerifyPaymentMutation } from '@/store/modules/checkout/checkoutApi';
 
 function ReturnContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const packageId = searchParams.get('package_id');
-  const orderType = searchParams.get('order_type');
+  const orderId = searchParams.get('order_id');
 
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const [customerEmail, setCustomerEmail] = useState<string>('');
-  const { verifyPayment } = useCheckout();
-  const authData = useAppSelector((state) => state.auth.auth);
-  const token = authData?.token || '';
+  const [status, setStatus] = useState<'success' | 'error' | null>(null);
+  const [verifyPayment, { isLoading }] = useVerifyPaymentMutation();
 
-  useEffect(() => {
-    if (!sessionId) {
-      redirect('/checkout');
-      return;
+  // Redirect if no session ID or order ID
+  if (!sessionId || !orderId) {
+    redirect('/checkout');
+  }
+
+  // Handle payment verification
+  const handleVerify = async () => {
+    if (status !== null) return; // Already processed
+
+    try {
+      const result = await verifyPayment({ orderId }).unwrap();
+      setStatus(result.success ? 'success' : 'error');
+    } catch (error) {
+      setStatus('error');
     }
+  };
 
-    async function handleReturn() {
-      try {
-        if (!sessionId) return;
-        
-        const session = await getCheckoutSession(sessionId);
+  // Auto-verify on mount (only once)
+  if (status === null && !isLoading) {
+    handleVerify();
+  }
 
-        if (session.status === 'open') {
-          redirect('/checkout');
-          return;
-        }
-
-        if (session.status === 'complete' && session.paymentStatus === 'paid') {
-          setCustomerEmail(session.customerEmail || '');
-          
-          // Verify payment with your backend
-          if (session.metadata?.package_id && token) {
-            const orderId = session.metadata.package_id;
-            await verifyPayment(orderId, token);
-          }
-          
-          setStatus('success');
-          toast.success('Payment successful! Your eSIM is being activated.');
-        } else {
-          setStatus('error');
-          toast.error('Payment was not completed. Please try again.');
-        }
-      } catch (error: any) {
-        console.error('Error processing return:', error);
-        setStatus('error');
-        toast.error('An error occurred while processing your payment.');
-      }
-    }
-
-    handleReturn();
-  }, [sessionId, token, verifyPayment]);
-
-  if (status === 'loading') {
+  if (isLoading || status === null) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -95,11 +68,6 @@ function ReturnContent() {
   return (
     <section id="success" className="containerX py-20">
       <CheckoutSuccessful />
-      {customerEmail && (
-        <p className="text-center text-text-700 mt-6">
-          A confirmation email has been sent to <strong>{customerEmail}</strong>
-        </p>
-      )}
     </section>
   );
 }

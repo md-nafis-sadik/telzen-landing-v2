@@ -23,7 +23,7 @@ export const useRemoveEsim = () => {
         handleClose();
         dispatch(openEsimSuccessModal());
       } catch (error: any) {
-        console.error("Failed to remove eSIM:", error);
+        console.log("Failed to remove eSIM:", error);
         const errorMessage =
           error?.data?.message || "Failed to remove eSIM. Please try again.";
         toast.error(errorMessage);

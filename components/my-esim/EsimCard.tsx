@@ -35,12 +35,17 @@ function EsimCard({ esim }: EsimCardProps) {
     toggleDropdown,
   } = useEsimCard(esim);
 
+  // Get image from esim data
+  const displayImage = esim?.associated_country?.image || 
+                       esim?.associated_region?.image || 
+                       images?.newZealand;
+
   return (
     <div className="bg-white w-full flex flex-col lg:flex-row rounded-xl border border-natural-200">
       {/* Image */}
       <div className="hidden lg:flex w-[348px] h-[185px]">
         <Image
-          src={images?.newZealand}
+          src={displayImage}
           alt="destination"
           width={384}
           height={185}
@@ -50,7 +55,7 @@ function EsimCard({ esim }: EsimCardProps) {
       </div>
       <div className="flex lg:hidden w-full h-[200px] md:h-[320px] relative">
         <Image
-          src={images?.newZealand}
+          src={displayImage}
           alt="destination"
           fill
           priority

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface LocationData {
   latitude: number;
@@ -27,7 +27,7 @@ interface UseLocationReturn {
   clearLocation: () => void;
 }
 
-const LOCATION_STORAGE_KEY = 'telzen_user_location';
+const LOCATION_STORAGE_KEY = "telzen_user_location";
 const LOCATION_CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export const useLocation = (): UseLocationReturn => {
@@ -44,13 +44,13 @@ export const useLocation = (): UseLocationReturn => {
   }, []);
 
   const getStoredLocation = (): LocationData | null => {
-    if (typeof window === 'undefined') return null;
-    
+    if (typeof window === "undefined") return null;
+
     try {
       const stored = localStorage.getItem(LOCATION_STORAGE_KEY);
       if (stored) {
         const locationData: LocationData = JSON.parse(stored);
-        
+
         // Check if cached location is still valid (not expired)
         const now = Date.now();
         if (now - locationData.timestamp < LOCATION_CACHE_DURATION) {
@@ -61,29 +61,32 @@ export const useLocation = (): UseLocationReturn => {
         }
       }
     } catch (err) {
-      console.error('Error reading location from localStorage:', err);
+      console.log("Error reading location from localStorage:", err);
       localStorage.removeItem(LOCATION_STORAGE_KEY);
     }
     return null;
   };
 
   const saveLocationToStorage = (locationData: LocationData): void => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     try {
       localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(locationData));
     } catch (err) {
-      console.error('Error saving location to localStorage:', err);
+      console.log("Error saving location to localStorage:", err);
     }
   };
 
-  const getLocationDetails = async (lat: number, lon: number): Promise<Partial<LocationData>> => {
+  const getLocationDetails = async (
+    lat: number,
+    lon: number
+  ): Promise<Partial<LocationData>> => {
     try {
       // Using a free geocoding service (you can replace with your preferred service)
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
       );
-      
+
       if (response.ok) {
         const data = await response.json();
         const locationDetails = {
@@ -93,18 +96,18 @@ export const useLocation = (): UseLocationReturn => {
           region: data.principalSubdivision,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         };
-        
+
         // Also save country code separately for easy access
         if (data.countryCode) {
-          localStorage.setItem('telzen_country_code', data.countryCode);
+          localStorage.setItem("telzen_country_code", data.countryCode);
         }
-        
+
         return locationDetails;
       }
     } catch (err) {
-      console.warn('Could not fetch location details:', err);
+      console.warn("Could not fetch location details:", err);
     }
-    
+
     return {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
@@ -115,7 +118,7 @@ export const useLocation = (): UseLocationReturn => {
     if (!navigator.geolocation) {
       setError({
         code: 0,
-        message: 'Geolocation is not supported by this browser.'
+        message: "Geolocation is not supported by this browser.",
       });
       return;
     }
@@ -133,10 +136,10 @@ export const useLocation = (): UseLocationReturn => {
       async (position: GeolocationPosition) => {
         try {
           const { latitude, longitude, accuracy } = position.coords;
-          
+
           // Get additional location details
           const locationDetails = await getLocationDetails(latitude, longitude);
-          
+
           const locationData: LocationData = {
             latitude,
             longitude,
@@ -149,10 +152,10 @@ export const useLocation = (): UseLocationReturn => {
           saveLocationToStorage(locationData);
           setError(null);
         } catch (err) {
-          console.error('Error processing location:', err);
+          console.log("Error processing location:", err);
           setError({
             code: 0,
-            message: 'Error processing location data.'
+            message: "Error processing location data.",
           });
         } finally {
           setLoading(false);
@@ -160,20 +163,20 @@ export const useLocation = (): UseLocationReturn => {
       },
       (err: GeolocationPositionError) => {
         setLoading(false);
-        
-        let message = 'Unable to retrieve location.';
+
+        let message = "Unable to retrieve location.";
         switch (err.code) {
           case err.PERMISSION_DENIED:
-            message = 'Location access denied by user.';
+            message = "Location access denied by user.";
             break;
           case err.POSITION_UNAVAILABLE:
-            message = 'Location information is unavailable.';
+            message = "Location information is unavailable.";
             break;
           case err.TIMEOUT:
-            message = 'Location request timed out.';
+            message = "Location request timed out.";
             break;
         }
-        
+
         setError({
           code: err.code,
           message,
@@ -186,9 +189,9 @@ export const useLocation = (): UseLocationReturn => {
   const clearLocation = (): void => {
     setLocation(null);
     setError(null);
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.removeItem(LOCATION_STORAGE_KEY);
-      localStorage.removeItem('telzen_country_code');
+      localStorage.removeItem("telzen_country_code");
     }
   };
 
@@ -203,27 +206,27 @@ export const useLocation = (): UseLocationReturn => {
 
 // Utility function to get location from localStorage without the hook
 export const getStoredLocationData = (): LocationData | null => {
-  if (typeof window === 'undefined') return null;
-  
+  if (typeof window === "undefined") return null;
+
   try {
     const stored = localStorage.getItem(LOCATION_STORAGE_KEY);
     if (stored) {
       const locationData: LocationData = JSON.parse(stored);
-      
+
       // Check if cached location is still valid
       const now = Date.now();
       if (now - locationData.timestamp < LOCATION_CACHE_DURATION) {
         return locationData;
       } else {
         localStorage.removeItem(LOCATION_STORAGE_KEY);
-        localStorage.removeItem('telzen_country_code');
+        localStorage.removeItem("telzen_country_code");
       }
     }
   } catch (err) {
-    console.error('Error reading location from localStorage:', err);
-    if (typeof window !== 'undefined') {
+    console.log("Error reading location from localStorage:", err);
+    if (typeof window !== "undefined") {
       localStorage.removeItem(LOCATION_STORAGE_KEY);
-      localStorage.removeItem('telzen_country_code');
+      localStorage.removeItem("telzen_country_code");
     }
   }
   return null;
@@ -231,14 +234,14 @@ export const getStoredLocationData = (): LocationData | null => {
 
 // Utility function to get country code from various sources
 export const getCountryCode = (): string => {
-  if (typeof window === 'undefined') return 'BD'; // Default fallback
-  
+  if (typeof window === "undefined") return "BD"; // Default fallback
+
   // First, try to get from stored location
-  const storedCountryCode = localStorage.getItem('telzen_country_code');
+  const storedCountryCode = localStorage.getItem("telzen_country_code");
   if (storedCountryCode) {
     return storedCountryCode;
   }
-  
+
   // If no stored country code, return default
-  return 'BD'; // Default to Bangladesh
+  return "BD"; // Default to Bangladesh
 };
