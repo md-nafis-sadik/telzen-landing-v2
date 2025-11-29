@@ -1,12 +1,7 @@
 import moment from "moment";
 import { apiSlice } from "../api/apiSlice";
-import { saveAuthData, setLoading, setError, updateAuth } from "./authSlice";
+import { saveAuthData, setLoading, setError, updateAuth, AuthCountry } from "./authSlice";
 import { closeAuthModal } from "../ui/uiSlice";
-
-export interface AuthCountry {
-  code: string;
-  name: string;
-}
 
 export interface SignupData {
   name: string;
