@@ -20,12 +20,14 @@ interface CheckoutCardProps {
   packageData?: Package;
   onAmountChange?: (amount: number) => void;
   onCouponChange?: (couponId: string | undefined) => void;
+  onCouponLoadingChange?: (isLoading: boolean) => void;
 }
 
 function CheckoutCard({
   packageData,
   onAmountChange,
   onCouponChange,
+  onCouponLoadingChange,
 }: CheckoutCardProps) {
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
@@ -112,6 +114,12 @@ function CheckoutCard({
       onCouponChange(appliedCoupon?._id);
     }
   }, [appliedCoupon, onCouponChange]);
+
+  useEffect(() => {
+    if (onCouponLoadingChange) {
+      onCouponLoadingChange(couponLoading);
+    }
+  }, [couponLoading, onCouponLoadingChange]);
 
   return (
     <div className="bg-white rounded-3xl p-6 w-full h-max">
@@ -232,7 +240,7 @@ function CheckoutCard({
                   disabled={!couponCode.trim()}
                   isLoading={couponLoading}
                   loadingText={appStrings.applying}
-                  className="text-sm whitespace-nowrap"
+                  className="text-sm whitespace-nowrap max-h-[46px]"
                 >
                   {appStrings.applyCouponBtn}
                 </Button>

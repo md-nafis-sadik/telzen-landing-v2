@@ -119,30 +119,15 @@ function CheckoutForm({
 
       // Handle free purchase - validate card but don't charge
       if (isFree) {
-        // Create a payment method to validate the card without charging
-        const { error: cardError, paymentMethod } =
-          await stripe.createPaymentMethod({
-            type: "card",
-            card: cardElement,
-            billing_details: {
-              email: email,
-            },
-          });
-
-        if (cardError) {
-          toast.error(cardError.message || "Invalid card details");
-          console.log(cardError.message || "Invalid card details");
-          return;
-        }
-
-        // Verify free purchase with backend
-        const verifyResult = await verifyPayment(createdOrderId, token);
-
-        if (verifyResult?.success || verifyResult?.status_code === 409) {
-          toast.success("Free package activated successfully!");
-          if (onSuccess) onSuccess();
+        // For free packages, just show success message and redirect
+        toast.success("Free package activated successfully!");
+        
+        // Redirect to success page with order ID
+        if (onSuccess) {
+          onSuccess();
         } else {
-          toast.error("Activation failed. Please contact support.");
+          // Fallback redirect to my-esim page
+          window.location.href = "/my-esim";
         }
         return;
       }
@@ -255,7 +240,11 @@ function CheckoutForm({
               disabled={!stripe || isProcessing}
               isLoading={isProcessing}
             >
-              {isProcessing ? "Processing..." : appStrings.continue}
+              {isProcessing 
+                ? "Processing..." 
+                : paymentAmount === 0 
+                  ? "Continue to Purchase" 
+                  : appStrings.continue}
             </Button>
           </div>
         </form>

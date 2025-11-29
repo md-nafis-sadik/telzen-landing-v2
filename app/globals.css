@@ -32,6 +32,7 @@
   --primary-700: #00c896;
   --primary-500: #00ff95;
   --primary-100: #9fe2d1;
+  --primary-50: #eafff7;
   --blue-50: #d0fff7;
 
   /* red */
@@ -92,6 +93,7 @@
   --color-primary-700: var(--primary-700);
   --color-primary-500: var(--primary-500);
   --color-primary-100: var(--primary-100);
+  --color-primary-50: var(--primary-50);
   --color-blue-50: var(--blue-50);
 
   /* red */

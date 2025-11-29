@@ -56,7 +56,7 @@ const uiSlice = createSlice({
   reducers: {
     openAuthModal: (
       state,
-      action: PayloadAction<{ step?: "login" | "register"; email?: string }>
+      action: PayloadAction<{ step?: "login" | "register" | "otp" | "success"; email?: string }>
     ) => {
       state.authModal.isOpen = true;
       state.authModal.step = action.payload?.step || "login";

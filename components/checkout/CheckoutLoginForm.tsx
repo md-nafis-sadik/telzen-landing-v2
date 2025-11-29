@@ -1,9 +1,21 @@
+"use client";
+
 import { images, appStrings } from "@/service";
 import Image from "next/image";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
+import { useCheckoutLogin } from "@/hook";
 
 function CheckoutLoginForm() {
+  const {
+    email,
+    setEmail,
+    isLoading,
+    handleSubmit,
+    handleGoogleLogin,
+    handleRegisterClick,
+  } = useCheckoutLogin();
+
   return (
     <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
       <div>
@@ -16,12 +28,14 @@ function CheckoutLoginForm() {
         </p>
 
         {/* Form */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
             type="email"
             id="email"
             label={appStrings.yourEmail}
             placeholder={appStrings.enterYourEmail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -32,6 +46,9 @@ function CheckoutLoginForm() {
               size="md"
               fullWidth
               className="mb-3"
+              isLoading={isLoading}
+              loadingText={appStrings.loggingIn}
+              disabled={isLoading}
             >
               {appStrings.loginBtn}
             </Button>
@@ -40,6 +57,8 @@ function CheckoutLoginForm() {
               {appStrings.dontHaveAccount}{" "}
               <Button
                 variant="link"
+                onClick={handleRegisterClick}
+                type="button"
               >
                 {appStrings.registerNow}
               </Button>
@@ -49,6 +68,8 @@ function CheckoutLoginForm() {
           <Button
             variant="google"
             fullWidth
+            onClick={handleGoogleLogin}
+            type="button"
             className="py-3"
             leftIcon={
               <div className="relative w-5 md:w-6 h-5 md:h-6">

@@ -198,8 +198,8 @@ export const authApi = apiSlice.injectEndpoints({
     // Update profile mutation (dummy for now)
     updateProfile: builder.mutation<any, UpdateProfileData>({
       query: (formData) => ({
-        url: "/auth/profile", // This will be the actual API when ready
-        method: "PUT",
+        url: "/customer/update-own-profile", // This will be the actual API when ready
+        method: "PATCH",
         body: formData,
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {

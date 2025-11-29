@@ -14,7 +14,9 @@ import { useCheckout } from "@/hook";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "react-toastify";
 import Button from "../shared/Button";
+import { motion } from "motion/react";
 import Link from "next/link";
+import { images } from "@/service";
 
 interface EmbeddedCheckoutFormProps {
   packageId: string;
@@ -23,6 +25,7 @@ interface EmbeddedCheckoutFormProps {
   couponId?: string;
   orderType: "new" | "topup";
   onSuccess?: () => void;
+  isCouponLoading?: boolean;
 }
 
 export default function EmbeddedCheckoutForm({
@@ -32,6 +35,7 @@ export default function EmbeddedCheckoutForm({
   couponId,
   orderType,
   onSuccess,
+  isCouponLoading = false,
 }: EmbeddedCheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -93,16 +97,6 @@ export default function EmbeddedCheckoutForm({
         is_free_purchase,
       } = paymentResult.data;
 
-      // Handle free packages
-      if (is_free_purchase) {
-        const verifyResult = await verifyPayment(orderId, token);
-        if (verifyResult?.success) {
-          toast.success("Free package activated successfully!");
-          if (onSuccess) onSuccess();
-        }
-        return;
-      }
-
       // Confirm card payment with Stripe
       const { error: stripeError, paymentIntent } =
         await stripe.confirmCardPayment(client_secret, {
@@ -128,6 +122,43 @@ export default function EmbeddedCheckoutForm({
       }
     } catch (err: any) {
       const errorMsg = err.message || "Payment failed. Please try again.";
+      setError(errorMsg);
+      toast.error(errorMsg);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleFreePackage = async () => {
+    if (!token) {
+      toast.error("Please login to continue.");
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      // Create payment on backend for free package
+      const paymentResult = await createPayment(
+        {
+          package_id: packageId,
+          order_type: orderType,
+          final_payment_amount: 0,
+          currency,
+          coupon_id: couponId,
+        },
+        token
+      );
+
+      if (!paymentResult?.data) {
+        throw new Error("Failed to activate free package");
+      }
+
+      toast.success("Free package activated successfully!");
+      if (onSuccess) onSuccess();
+    } catch (err: any) {
+      const errorMsg = err.message || "Activation failed. Please try again.";
       setError(errorMsg);
       toast.error(errorMsg);
     } finally {
@@ -188,64 +219,92 @@ export default function EmbeddedCheckoutForm({
 
   return (
     <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Cardholder Name */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Your Name
-          </label>
-          <input
-            type="text"
-            value={cardholderName}
-            onChange={(e) => setCardholderName(e.target.value)}
-            placeholder="Enter your Name"
-            className="w-full px-3 md:px-4 py-2.5 md:py-3.5 border border-gray-300 rounded-lg focus:ring-0 outline-none transition-all text-gray-900 placeholder:text-gray-400"
-            required
-          />
+      {/* Show loading state when applying coupon */}
+      {isCouponLoading ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-700 mb-4"></div>
+          <p className="text-text-700">Applying coupon...</p>
         </div>
+      ) : amount === 0 ? (
+        /* Show free package message and button for $0 */
+        <div className="space-y-6">
+          <div className=" rounded-lg p-6 text-center">
+            <div className="mb-6 flex justify-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.5,
+                  type: "spring",
+                  bounce: 0.5,
+                }}
+                className="relative"
+              >
+                <Image
+                  src={images?.successful}
+                  alt="successful"
+                  width={260}
+                  height={260}
+                  priority
+                />
+              </motion.div>
+            </div>
+            <p className="text-text-600 text-sm md:text-base">
+              This package is completely free. Click continue to activate.
+            </p>
+          </div>
 
-        {/* Card Number with Brand Icon */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Card Number
-          </label>
-          <div className="relative border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 pr-16 focus-within:border-primary-500 transition-colors">
-            <CardNumberElement
-              options={{
-                placeholder: "0000 0000 0000 0000",
-                style: {
-                  base: {
-                    fontSize: "16px",
-                    color: "#111827",
-                    fontFamily: "system-ui, -apple-system, sans-serif",
-                    "::placeholder": {
-                      color: "#9ca3af",
-                    },
-                  },
-                  invalid: {
-                    color: "#ef4444",
-                  },
-                },
-              }}
-              onChange={handleCardChange}
+          {error && (
+            <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">
+              {error}
+            </div>
+          )}
+
+          <Button
+            onClick={handleFreePackage}
+            variant="primary"
+            size="md"
+            fullWidth
+            disabled={isProcessing}
+            isLoading={isProcessing}
+            loadingText="Activating..."
+            className="font-semibold !rounded-full !py-4"
+          >
+            Continue to Activate
+          </Button>
+
+          <p className="text-xs text-gray-500 text-center">
+            Your free package will be activated immediately.
+          </p>
+        </div>
+      ) : (
+        /* Show card form for paid packages */
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Cardholder Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Name
+            </label>
+            <input
+              type="text"
+              value={cardholderName}
+              onChange={(e) => setCardholderName(e.target.value)}
+              placeholder="Enter your Name"
+              className="w-full px-3 md:px-4 py-2.5 md:py-3.5 border border-gray-300 rounded-lg focus:ring-0 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+              required
             />
-            {/* Card Brand Icon */}
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <CardBrandIcon brand={cardBrand} />
-            </div>
           </div>
-        </div>
 
-        {/* Expiration Date and CVV */}
-        <div className="grid grid-cols-2 gap-4">
+          {/* Card Number with Brand Icon */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Expiration Date
+              Card Number
             </label>
-            <div className="border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 focus-within:border-primary-500 transition-colors">
-              <CardExpiryElement
+            <div className="relative border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 pr-16 focus-within:border-primary-500 transition-colors">
+              <CardNumberElement
                 options={{
-                  placeholder: "MM/YY",
+                  placeholder: "0000 0000 0000 0000",
                   style: {
                     base: {
                       fontSize: "16px",
@@ -260,75 +319,111 @@ export default function EmbeddedCheckoutForm({
                     },
                   },
                 }}
+                onChange={handleCardChange}
               />
+              {/* Card Brand Icon */}
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <CardBrandIcon brand={cardBrand} />
+              </div>
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              CVV/CVC
-            </label>
-            <div className="border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 focus-within:border-primary-500 transition-colors">
-              <CardCvcElement
-                options={{
-                  placeholder: "000",
-                  style: {
-                    base: {
-                      fontSize: "16px",
-                      color: "#111827",
-                      fontFamily: "system-ui, -apple-system, sans-serif",
-                      "::placeholder": {
-                        color: "#9ca3af",
+          {/* Expiration Date and CVV */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Expiration Date
+              </label>
+              <div className="border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 focus-within:border-primary-500 transition-colors">
+                <CardExpiryElement
+                  options={{
+                    placeholder: "MM/YY",
+                    style: {
+                      base: {
+                        fontSize: "16px",
+                        color: "#111827",
+                        fontFamily: "system-ui, -apple-system, sans-serif",
+                        "::placeholder": {
+                          color: "#9ca3af",
+                        },
+                      },
+                      invalid: {
+                        color: "#ef4444",
                       },
                     },
-                    invalid: {
-                      color: "#ef4444",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                CVV/CVC
+              </label>
+              <div className="border border-gray-300 rounded-lg px-3 md:px-4 py-2.5 md:py-3.5 focus-within:border-primary-500 transition-colors">
+                <CardCvcElement
+                  options={{
+                    placeholder: "000",
+                    style: {
+                      base: {
+                        fontSize: "16px",
+                        color: "#111827",
+                        fontFamily: "system-ui, -apple-system, sans-serif",
+                        "::placeholder": {
+                          color: "#9ca3af",
+                        },
+                      },
+                      invalid: {
+                        color: "#ef4444",
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        {error && (
-          <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">
-            {error}
-          </div>
-        )}
+          {error && (
+            <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">
+              {error}
+            </div>
+          )}
 
-        <Button
-          type="submit"
-          variant="primary"
-          size="md"
-          fullWidth
-          disabled={!stripe || isProcessing || !cardholderName.trim()}
-          isLoading={isProcessing}
-          loadingText={amount === 0 ? "Activating..." : "Processing Payment..."}
-          className="font-semibold !rounded-full !py-4 mt-2"
-        >
-          {amount === 0 ? "Activate Free Package" : "Continue"}
-        </Button>
-
-        <p className="text-sm lg:text-base text-text-700">
-          Your input data is always safe and we never store your any sensitive
-          data. You can also check our{" "}
-          <Link
-            href="/terms-and-conditions"
-            className="underline font-bold text-text-950"
+          <Button
+            type="submit"
+            variant="primary"
+            size="md"
+            fullWidth
+            disabled={!stripe || isProcessing || !cardholderName.trim()}
+            isLoading={isProcessing}
+            loadingText={
+              amount === 0 ? "Activating..." : "Processing Payment..."
+            }
+            className="font-semibold !rounded-full !py-4 mt-2"
           >
-            Terms of Use
-          </Link>{" "}
-          &{" "}
-          <Link
-            href="/privacy-policy"
-            className="underline font-bold text-text-950"
-          >
-            Privacy Policy
-          </Link>
-          .
-        </p>
-      </form>
+            {amount === 0 ? "Activate Free Package" : "Continue"}
+          </Button>
+
+          <p className="text-sm lg:text-base text-text-700">
+            Your input data is always safe and we never store your any sensitive
+            data. You can also check our{" "}
+            <Link
+              href="/terms-and-conditions"
+              className="underline font-bold text-text-950"
+            >
+              Terms of Use
+            </Link>{" "}
+            &{" "}
+            <Link
+              href="/privacy-policy"
+              className="underline font-bold text-text-950"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        </form>
+      )}
     </div>
   );
 }

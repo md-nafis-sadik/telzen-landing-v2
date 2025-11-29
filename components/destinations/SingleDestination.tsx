@@ -129,7 +129,7 @@ function SingleDestination() {
                     return (
                       <div
                         key={packageItem._id}
-                        className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full hover:bg-text-200 transition-colors"
+                        className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full border border-text-100 hover:bg-primary-50 hover:border hover:border-primary-700 transition-all duration-500 select-none"
                         onClick={() => handlePackageClick(packageItem._id)}
                       >
                         <div className="flex flex-col w-full gap-3">
@@ -137,7 +137,7 @@ function SingleDestination() {
                             <IconComponent className="w-6 md:w-7 lg:w-8 h-6 md:h-7 lg:h-8" />
                           </span>
                           <div className="flex flex-col gap-1">
-                            <div className="text-lg md:text-xl lg:text-2xl">
+                            <div className="text-lg md:text-xl lg:text-2xl tracking-wider">
                               {formatDataSize(
                                 packageItem.total_data_plan_in_mb
                               )}{" "}
@@ -155,7 +155,7 @@ function SingleDestination() {
                           </div>
                         </div>
                         <div className="flex flex-col items-end justify-end">
-                          <div className="text-xl md:text-2xl lg:text-3xl justify-end">
+                          <div className="text-xl md:text-2xl lg:text-[28px] justify-end font-semibold">
                             ${packageItem.grand_total_selling_price.toFixed(2)}
                           </div>
                         </div>

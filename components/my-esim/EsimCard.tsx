@@ -149,7 +149,7 @@ function EsimCard({ esim }: EsimCardProps) {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="fixed w-44 bg-white rounded-lg border border-natural-200 z-[101] overflow-hidden"
+                      className="fixed w-44 px-2 bg-white rounded-lg border border-natural-200 z-[101] overflow-hidden"
                       style={{
                         top: buttonRect.bottom + 8,
                         right: window.innerWidth - buttonRect.right,
@@ -163,20 +163,21 @@ function EsimCard({ esim }: EsimCardProps) {
                             <QRIconSvg />
                           </span>
                         }
-                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal"
+                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none hover:text-natural-400"
                       >
                         {appStrings.downloadQr}
                       </Button>
 
                       <Button
                         variant="link"
-                        onClick={handleRemoveEsim}
+                        // onClick={handleRemoveEsim}
+                        disabled
                         leftIcon={
                           <span className="w-6 h-6">
                             <EsimBlackIconSvg />
                           </span>
                         }
-                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal"
+                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none hover:text--naturan-400"
                       >
                         {appStrings.removeEsim}
                       </Button>
@@ -189,7 +190,7 @@ function EsimCard({ esim }: EsimCardProps) {
                             <BuyBoxIconSvg />
                           </span>
                         }
-                        className="w-full px-4 py-3 justify-start text-natural-400 text-sm font-normal"
+                        className="w-full px-4 py-3 justify-start text-natural-400 text-sm font-normal rounded-none hover:text--naturan-400"
                       >
                         {appStrings.buyAnotherPlan}
                       </Button>

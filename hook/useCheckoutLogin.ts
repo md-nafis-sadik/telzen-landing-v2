@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import {
+  openAuthModal,
   setAuthModalStep,
   setAuthModalEmail,
   setAuthModalOtpType,
@@ -14,18 +15,21 @@ import { countriesData, envConfig } from "@/service";
 import { getCountryCode } from "./useLocation";
 import { toast } from "react-toastify";
 
-export const useLogin = () => {
+export const useCheckoutLogin = () => {
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.auth);
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [signin] = useSigninMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email.trim()) {
+      toast.error("Please enter your email");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const deviceId = getDeviceId();
@@ -37,14 +41,19 @@ export const useLogin = () => {
         device_web_ip_address: ipAddress,
       }).unwrap();
 
+      // Store email and set OTP type
       dispatch(setAuthModalEmail(email.trim()));
       dispatch(setAuthModalOtpType("signin"));
-      dispatch(setAuthModalStep("otp"));
+      
+      // Open the auth modal at OTP step
+      dispatch(openAuthModal({ step: "otp", email: email.trim() }));
     } catch (error: any) {
-      console.log("Login error:", error);
+      console.error("Login error:", error);
       const errorMessage =
         error?.data?.message || "Login failed. Please try again.";
       toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,20 +80,19 @@ export const useLogin = () => {
       // Redirect to Google OAuth
       window.location.href = googleAuthUrl;
     } catch (error) {
-      console.log("Google login error:", error);
+      console.error("Google login error:", error);
       toast.error("Failed to initiate Google login. Please try again.");
     }
   };
 
   const handleRegisterClick = () => {
-    dispatch(setAuthModalStep("register"));
+    dispatch(openAuthModal({ step: "register" }));
   };
 
   return {
     email,
     setEmail,
-    loading,
-    error,
+    isLoading,
     handleSubmit,
     handleGoogleLogin,
     handleRegisterClick,

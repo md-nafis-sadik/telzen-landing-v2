@@ -19,6 +19,7 @@ function CheckOut() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [finalAmount, setFinalAmount] = useState<number>(0);
   const [appliedCouponId, setAppliedCouponId] = useState<string | undefined>();
+  const [isCouponLoading, setIsCouponLoading] = useState(false);
 
   const packageId = searchParams.get("package_id");
   const countryId = searchParams.get("country_id");
@@ -178,6 +179,7 @@ function CheckOut() {
                         couponId={appliedCouponId}
                         orderType={orderType as "new" | "topup"}
                         onSuccess={() => setShowSuccess(true)}
+                        isCouponLoading={isCouponLoading}
                       />
                     </StripeProvider>
                   )}
@@ -185,6 +187,7 @@ function CheckOut() {
                     packageData={packageData.data}
                     onAmountChange={setFinalAmount}
                     onCouponChange={setAppliedCouponId}
+                    onCouponLoadingChange={setIsCouponLoading}
                   />
                 </div>
               </>

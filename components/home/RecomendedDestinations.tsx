@@ -127,7 +127,7 @@ function RecomendedDestinations() {
               <p>No recommended destinations found.</p>
             </div>
           )}
-          <div>
+          {/* <div>
             <Link
               href="/destinations"
               className="flex justify-center items-center text-text-50 gap-2 mt-6 lg:mt-10"
@@ -135,7 +135,7 @@ function RecomendedDestinations() {
               <span>See more</span>
               <ArrowRightSvg />
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

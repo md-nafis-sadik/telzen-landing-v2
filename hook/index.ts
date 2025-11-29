@@ -1,5 +1,6 @@
 export { useLocation, getStoredLocationData } from "./useLocation";
 export { useLogin } from "./useLogin";
+export { useCheckoutLogin } from "./useCheckoutLogin";
 export { useRegister, countries } from "./useRegister";
 export { useOtpVerification } from "./useOtpVerification";
 export { useContactForm } from "./useContactForm";
