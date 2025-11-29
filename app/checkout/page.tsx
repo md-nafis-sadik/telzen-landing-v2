@@ -9,9 +9,9 @@ import { StripeProvider } from "@/components/providers";
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetSinglePackageQuery } from "@/store/modules/destination/destinationApi";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 
-function CheckOut() {
+function CheckOutContent() {
   const searchParams = useSearchParams();
   const { isAuthenticated, authInitialized } = useAppSelector(
     (state) => state.auth
@@ -196,6 +196,24 @@ function CheckOut() {
         </div>
       </section>
     </main>
+  );
+}
+
+function CheckOut() {
+  return (
+    <Suspense
+      fallback={
+        <main className="font-inter bg-white">
+          <section className="py-10 md:py-16 lg:py-20 bg-[#fafafa] flex items-center justify-center min-h-screen">
+            <div className="text-center text-text-700">
+              <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+            </div>
+          </section>
+        </main>
+      }
+    >
+      <CheckOutContent />
+    </Suspense>
   );
 }
 
