@@ -3,13 +3,15 @@ import { apiSlice } from "../api/apiSlice";
 import { saveAuthData, setLoading, setError, updateAuth } from "./authSlice";
 import { closeAuthModal } from "../ui/uiSlice";
 
+export interface AuthCountry {
+  code: string;
+  name: string;
+}
+
 export interface SignupData {
   name: string;
   email: string;
-  country: {
-    code: string;
-    name: string;
-  };
+  country: AuthCountry;
   device_id: string;
   device_web_ip_address: string;
 }
@@ -36,10 +38,7 @@ export interface ProfileData {
   _id: string;
   name: string;
   email: string;
-  country: {
-    name: string;
-    code: string;
-  };
+  country: AuthCountry;
   is_email_verified: boolean;
   image: string;
   currency: string;
@@ -59,10 +58,7 @@ export interface ProfileResponse {
 export interface UpdateProfileData {
   name: string;
   email: string;
-  country: {
-    code: string;
-    name: string;
-  };
+  country: AuthCountry;
 }
 
 export const authApi = apiSlice.injectEndpoints({

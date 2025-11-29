@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface Country {
+export interface AuthCountry {
   code: string;
   name: string;
 }
@@ -9,7 +9,7 @@ export interface User {
   id?: string;
   name?: string;
   email?: string;
-  country?: Country;
+  country?: AuthCountry;
   token?: string;
   image?: string;
   expireAt?: number;
