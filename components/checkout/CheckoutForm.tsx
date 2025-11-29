@@ -5,7 +5,7 @@ import Image from "next/image";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState, useEffect, Suspense } from "react";
 import { useCheckout } from "@/hook";
 import { useAppSelector } from "@/store/hooks";
 import { useSearchParams } from "next/navigation";
@@ -18,7 +18,7 @@ interface CheckoutFormProps {
   couponId?: string;
 }
 
-function CheckoutForm({
+function CheckoutFormContent({
   packageData,
   onSuccess,
   finalAmount,
@@ -260,6 +260,24 @@ function CheckoutForm({
         </div>
       </div>
     </div>
+  );
+}
+
+function CheckoutForm(props: CheckoutFormProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
+          <div className="space-y-4">
+            <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+            <div className="w-full h-32 bg-gray-200 rounded-lg animate-pulse"></div>
+            <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+          </div>
+        </div>
+      }
+    >
+      <CheckoutFormContent {...props} />
+    </Suspense>
   );
 }
 
