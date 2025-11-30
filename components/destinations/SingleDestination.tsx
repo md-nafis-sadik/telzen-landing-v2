@@ -134,7 +134,7 @@ function SingleDestination() {
                       >
                         <div className="flex flex-col w-full gap-3">
                           <span>
-                            <IconComponent className="w-6 md:w-7 lg:w-8 h-6 md:h-7 lg:h-8" />
+                            <IconComponent className="w-6 h-6" />
                           </span>
                           <div className="flex flex-col gap-1">
                             <div className="text-lg md:text-xl lg:text-2xl tracking-wider">

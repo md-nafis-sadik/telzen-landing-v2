@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 function PrivacyPolicy() {
-  const { intro, sections } = appStrings.privacyPolicyContent;
+  const { sections } = appStrings.privacyPolicyContent;
 
   const renderContent = (content: any, index: number) => {
     if (content.type === "paragraph") {
@@ -23,7 +23,7 @@ function PrivacyPolicy() {
     
     if (content.type === "ul") {
       return (
-        <ul key={index} className="list-disc list-inside">
+        <ul key={index} className="list-disc list-inside space-y-1 mt-2">
           {content.items.map((item: string, i: number) => (
             <li key={i}>{item}</li>
           ))}
@@ -46,19 +46,14 @@ function PrivacyPolicy() {
             />
           </h2>
           <div className="flex flex-col gap-4 md:gap-5 lg:gap-6 text-sm md:text-base lg:text-lg leading-[160%] text-[#888]">
-            <p>{appStrings.lastUpdated} 20th April 2025</p>
+            <p>{appStrings.effectiveDate}</p>
             
-            {/* Intro Paragraphs */}
-            {intro.map((paragraph: string, index: number) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-
             {/* Sections */}
             {sections.map((section: any, sectionIndex: number) => (
               <div key={sectionIndex}>
-                <ol className="list-decimal list-inside font-bold" start={section.number}>
-                  <li>{section.title}</li>
-                </ol>
+                <h3 className="font-bold">
+                  {section.number}. {section.title}
+                </h3>
 
                 {/* Section Paragraphs */}
                 {section.paragraphs?.map((paragraph: string, pIndex: number) => (
@@ -67,7 +62,7 @@ function PrivacyPolicy() {
 
                 {/* Section List */}
                 {section.list && (
-                  <ul className="list-disc list-inside">
+                  <ul className="list-disc list-inside space-y-1 mt-2">
                     {section.list.items.map((item: string, itemIndex: number) => (
                       <li key={itemIndex}>{item}</li>
                     ))}
@@ -81,15 +76,15 @@ function PrivacyPolicy() {
 
                 {/* Subsections */}
                 {section.subsections?.map((subsection: any, subIndex: number) => (
-                  <div key={subIndex}>
-                    <p className="font-bold mt-4">{subsection.title}</p>
+                  <div key={subIndex} className="mt-4">
+                    <p className="font-bold ">{subsection.title}</p>
                     
                     {subsection.paragraphs?.map((paragraph: string, pIndex: number) => (
-                      <p key={pIndex}>{paragraph}</p>
+                      <p key={pIndex} className="mt-2">{paragraph}</p>
                     ))}
 
                     {subsection.list && (
-                      <ul className="list-disc list-inside">
+                      <ul className="list-disc list-inside space-y-1 mt-2">
                         {subsection.list.items.map((item: string, itemIndex: number) => (
                           <li key={itemIndex}>{item}</li>
                         ))}

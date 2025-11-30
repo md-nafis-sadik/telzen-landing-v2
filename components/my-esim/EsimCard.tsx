@@ -14,6 +14,7 @@ import { Esim } from "@/store/modules/destination/destinationApi";
 import { motion, AnimatePresence } from "motion/react";
 import { createPortal } from "react-dom";
 import { useEsimCard } from "@/hook";
+import Link from "next/link";
 
 interface EsimCardProps {
   esim: Esim;
@@ -177,37 +178,33 @@ function EsimCard({ esim }: EsimCardProps) {
                             <QRIconSvg />
                           </span>
                         }
-                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none hover:text-natural-400"
+                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none"
                       >
                         {appStrings.downloadQr}
                       </Button>
 
                       <Button
                         variant="link"
-                        // onClick={handleRemoveEsim}
-                        disabled
+                        onClick={handleRemoveEsim}
                         leftIcon={
                           <span className="w-6 h-6">
                             <EsimBlackIconSvg />
                           </span>
                         }
-                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none hover:text--naturan-400"
+                        className="w-full px-4 py-3 justify-start hover:bg-natural-50 text-sm text-black font-normal rounded-none"
                       >
                         {appStrings.removeEsim}
                       </Button>
 
-                      <Button
-                        variant="link"
-                        disabled
-                        leftIcon={
-                          <span className="w-6 h-6">
+                      <Link
+                        href="/destinations"
+                        className="w-full flex pt-2 pb-3 gap-2 justify-start text-black hover:bg-natural-50 text-sm md:text-base font-normal rounded-none hover:text-primary-800"
+                      >
+                        <span className="w-6 h-6">
                             <BuyBoxIconSvg />
                           </span>
-                        }
-                        className="w-full px-4 py-3 justify-start text-natural-400 text-sm font-normal rounded-none hover:text--naturan-400"
-                      >
                         {appStrings.buyAnotherPlan}
-                      </Button>
+                      </Link>
                     </motion.div>
                   </>
                 )}

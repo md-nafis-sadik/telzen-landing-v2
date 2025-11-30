@@ -108,18 +108,11 @@ function MyEsimComponent() {
               {esims.length > 0 ? (
                 esims.map((esim) => <EsimCard key={esim._id} esim={esim} />)
               ) : (
-                <div className="text-center py-12 text-gray-500">
-                  <p className="text-lg mb-2">{appStrings.noEsimsFound}</p>
-                  <p className="text-sm">{appStrings.purchaseFirstEsim}</p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => router.push("/destinations")}
-                    className="mt-4 px-6 py-2 bg-primary-700 text-white rounded-full hover:bg-primary-800 transition"
-                  >
-                    {appStrings.browseDestinations}
-                  </motion.button>
-                </div>
+                <EmptyState
+                  // searchQuery={apiSearchQuery}
+                  title={appStrings.noEsimsFound}
+                  description={appStrings.purchaseFirstEsim}
+                />
               )}
             </div>
           )}

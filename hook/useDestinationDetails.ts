@@ -5,6 +5,13 @@ import {
   SmileGreenSvg,
   BoltrGreenSvg,
   MobileWithStarsSvg,
+  HashTagsGreenSvg,
+  PublicGreenSvg,
+  StarGreenSvg,
+  FireGreenSvg,
+  GameControllerGreenSvg,
+  GroupGreenSvg,
+  Icon1GreenSvg,
 } from "@/service";
 
 export const useDestinationDetails = () => {
@@ -19,7 +26,13 @@ export const useDestinationDetails = () => {
   const [packageIcons] = useState([
     SmileGreenSvg,
     BoltrGreenSvg,
-    MobileWithStarsSvg,
+    HashTagsGreenSvg,
+    PublicGreenSvg,
+    StarGreenSvg,
+    FireGreenSvg,
+    GameControllerGreenSvg,
+    GroupGreenSvg,
+    Icon1GreenSvg,
   ]);
 
   // Determine if this is a regional or country package
@@ -37,13 +50,15 @@ export const useDestinationDetails = () => {
   });
 
   // Get display name and image from API response
-  const displayName = packagesData?.data?.country?.name || 
-                      packagesData?.data?.region?.name || 
-                      (isRegional ? regionName : countryName);
-  
-  const displayImage = packagesData?.data?.country?.image || 
-                       packagesData?.data?.region?.image || 
-                       null;
+  const displayName =
+    packagesData?.data?.country?.name ||
+    packagesData?.data?.region?.name ||
+    (isRegional ? regionName : countryName);
+
+  const displayImage =
+    packagesData?.data?.country?.image ||
+    packagesData?.data?.region?.image ||
+    null;
 
   const handlePackageClick = (packageId: string) => {
     const params = new URLSearchParams({ package_id: packageId });

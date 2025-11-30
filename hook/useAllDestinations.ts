@@ -16,7 +16,7 @@ export const useAllDestinations = () => {
   const { activeType } = useAppSelector((state) => state.destination);
 
   const itemsPerPage = 15;
-  const loadMoreCount = 5;
+  const loadMoreCount = 15;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(
@@ -26,6 +26,7 @@ export const useAllDestinations = () => {
     searchParams.get("search") || ""
   );
   const [allDestinations, setAllDestinations] = useState<any[]>([]);
+  const [accumulatedData, setAccumulatedData] = useState<Map<number, any[]>>(new Map());
 
   // API queries for both regions and countries
   const {
@@ -36,7 +37,7 @@ export const useAllDestinations = () => {
   } = useGetRegionsQuery(
     {
       page: currentPage,
-      limit: currentPage === 1 ? itemsPerPage : loadMoreCount,
+      limit: itemsPerPage,
       search: apiSearchQuery,
     },
     {
@@ -52,7 +53,7 @@ export const useAllDestinations = () => {
   } = useGetCountriesQuery(
     {
       page: currentPage,
-      limit: currentPage === 1 ? itemsPerPage : loadMoreCount,
+      limit: itemsPerPage,
       search: apiSearchQuery,
     },
     {
@@ -69,16 +70,32 @@ export const useAllDestinations = () => {
   const hasError = activeType === "regions" ? regionsError : countriesError;
   const hasMore = currentData?.meta?.has_next_page ?? false;
 
+  // Reset accumulated data when type or search changes
+  useEffect(() => {
+    setAccumulatedData(new Map());
+    setAllDestinations([]);
+  }, [activeType, apiSearchQuery]);
+
   // Update destinations when data changes
   useEffect(() => {
-    if (currentData?.data) {
-      if (currentPage === 1) {
-        setAllDestinations(currentData.data);
-      } else {
-        setAllDestinations((prev) => [...prev, ...currentData.data]);
-      }
+    if (currentData?.data && !isFetching) {
+      setAccumulatedData((prev) => {
+        const newMap = new Map(prev);
+        
+        // Only add if this page isn't already in the map
+        if (!newMap.has(currentPage)) {
+          newMap.set(currentPage, currentData.data);
+          
+          // Rebuild the full array from all pages in order
+          const sortedPages = Array.from(newMap.keys()).sort((a, b) => a - b);
+          const allData = sortedPages.flatMap(page => newMap.get(page) || []);
+          setAllDestinations(allData);
+        }
+        
+        return newMap;
+      });
     }
-  }, [currentData, currentPage]);
+  }, [currentData, currentPage, isFetching]);
 
   const handleToggle = (typeOrText: DestinationType | string) => {
     // Convert button text to DestinationType if needed
@@ -93,7 +110,6 @@ export const useAllDestinations = () => {
     
     dispatch(setDestinationType(type));
     setCurrentPage(1);
-    setAllDestinations([]);
   };
 
   const handleSearchChange = (value: string) => {
@@ -102,7 +118,6 @@ export const useAllDestinations = () => {
 
   const handleSearch = () => {
     setCurrentPage(1);
-    setAllDestinations([]);
     setApiSearchQuery(searchQuery);
   };
 

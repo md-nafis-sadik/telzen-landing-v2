@@ -136,7 +136,7 @@ const LoginStep: React.FC = () => {
           </div>
         </div>
 
-        {/* <Button
+        <Button
           variant="google"
           fullWidth
           onClick={handleGoogleLogin}
@@ -154,7 +154,7 @@ const LoginStep: React.FC = () => {
           }
         >
           {appStrings.loginWithGoogle}
-        </Button> */}
+        </Button>
       </form>
     </div>
   );

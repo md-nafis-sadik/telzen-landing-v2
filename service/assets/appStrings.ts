@@ -139,90 +139,55 @@ export const appStrings = {
   lastUpdated: "Last Updated:",
   privacyPolicyTitle: "Privacy Policy",
   termsAndConditionsTitle: "Terms and Conditions",
+  effectiveDate: "Effective Date: 28th October, 2025",
   
   // Privacy Policy Content Structure
   privacyPolicyContent: {
     intro: [
-      "Telzen (\"Telzen,\" \"we,\" \"us,\" or \"our\") is a digital eSIM service operated by Kloud Apps LLC. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our website, mobile application, eSIM products, and related services (\"Services\").",
-      "By using Telzen, you agree to the practices described in this Privacy Policy."
+      "This Privacy Policy describes how Telzen Digital (\"we\", \"us\", \"our\") collects, uses, and shares information in connection with your use of our mobile application, Telzen (\"App\"), and its related services (\"Services\"). This policy is intended to inform you about our practices and to comply with the Google Play Store's requirements.",
+      "By using our App, you agree to the collection and use of information in accordance with this policy."
     ],
     sections: [
       {
         type: "section",
         number: 1,
+        title: "Introduction",
+        paragraphs: [
+          "This Privacy Policy describes how Telzen Digital (\"we\", \"us\", \"our\") collects, uses, and shares information in connection with your use of our mobile application, Telzen (\"App\"), and its related services (\"Services\"). This policy is intended to inform you about our practices and to comply with the Google Play Store's requirements.",
+          "By using our App, you agree to the collection and use of information in accordance with this policy."
+        ]
+      },
+      {
+        type: "section",
+        number: 2,
         title: "Information We Collect",
+        paragraphs: ["We collect several types of information to provide and improve our Services."],
         subsections: [
           {
             type: "subsection",
-            title: "1.1 Personal Information You Provide",
-            paragraphs: ["We may collect personal information when you:"],
+            title: "A. Information You Provide to Us",
             list: {
               type: "ul",
               items: [
-                "Create an account",
-                "Purchase an eSIM or data plan",
-                "Contact customer support",
-                "Redeem or earn Telzen Points",
-                "Use features such as VPN or Gift eSIM"
-              ]
-            },
-            additionalContent: [
-              { type: "paragraph", text: "This information may include:" },
-              {
-                type: "ul",
-                items: [
-                  "Name",
-                  "Email address",
-                  "Phone number",
-                  "Payment details (processed via third-party gateways)",
-                  "Country and device information",
-                  "Profile or account preferences"
-                ]
-              },
-              { type: "paragraph", text: "We do not store full payment card details." }
-            ]
-          },
-          {
-            type: "subsection",
-            title: "1.2 Automatically Collected Information",
-            paragraphs: ["When you use our Services, we may automatically collect:"],
-            list: {
-              type: "ul",
-              items: [
-                "Device type and operating system",
-                "IP address",
-                "Approximate location (for service availability, fraud prevention, and regulatory purposes)",
-                "App usage behavior and analytics",
-                "Log data related to eSIM activation or network usage"
+                "Account Information: When you register, we collect personal information such as your email address and/or phone number (for OTP verification). You may also provide a password and other profile details.",
+                "Payment Information: To process payments for packages, we use a third-party payment processor (Stripe). We do not store your full credit card details. We may collect billing information, such as your name and billing address, which is passed securely to Stripe.",
+                "Third-Party Login: If you register using Google Login, we receive information from Google, such as your name, email address, and profile picture, as permitted by your Google profile settings.",
+                "Gifting Information: If you choose to gift a package, we will collect information about the recipient, such as their Telzen account identifier (e.g., email or phone number), to fulfill the request.",
+                "Profile Data: Information you provide when you update your profile.",
+                "Communications: If you contact us for support, we may collect your name, email address, and the contents of your message."
               ]
             }
           },
           {
             type: "subsection",
-            title: "1.3 Network & Connectivity Information",
-            paragraphs: ["To operate eSIM services, we may receive:"],
+            title: "B. Information Collected Automatically",
             list: {
               type: "ul",
               items: [
-                "eSIM installation status",
-                "Network identifiers (e.g., ICCID, IMEI)",
-                "Connectivity performance metrics",
-                "Data usage required for plan accuracy"
-              ]
-            },
-            additionalContent: [
-              { type: "paragraph", text: "We do not monitor the content of your communications or browsing activity." }
-            ]
-          },
-          {
-            type: "subsection",
-            title: "1.4 VPN Usage Information",
-            paragraphs: ["If you use Telzen's VPN:"],
-            list: {
-              type: "ul",
-              items: [
-                "We may collect basic VPN connection metadata (e.g., session time, bandwidth usage).",
-                "We do not log browsing history, DNS queries, or traffic content."
+                "Usage Data: We collect information about your interactions with the App, such as the packages you view, your remaining data balance, countries you browse, and features you use.",
+                "Device and eSIM Information: To provide eSIM services, we may need to collect specific information about your device, such as its model, operating system, and potentially device-unique identifiers (e.g., EID) required for eSIM provisioning.",
+                "Location Information: We may infer your general region or country from your IP address to provide relevant content, such as recommended countries and regional package availability.",
+                "Log Data: Our servers may automatically log information, including your IP address, device type, app version, and crash data, for analytical and troubleshooting purposes."
               ]
             }
           }
@@ -230,199 +195,121 @@ export const appStrings = {
       },
       {
         type: "section",
-        number: 2,
-        title: "How We Use Your Information",
-        paragraphs: ["We use your information to:"],
-        list: {
-          type: "ul",
-          items: [
-            "Provide and activate eSIM services",
-            "Manage your account",
-            "Process payments and transactions",
-            "Improve app performance and user experience",
-            "Offer customer support",
-            "Send service updates, promotions, or notifications",
-            "Detect fraud and maintain service security",
-            "Comply with legal obligations"
-          ]
-        },
-        additionalContent: [
-          { type: "paragraph", text: "We do not sell your personal data." }
-        ]
-      },
-      {
-        type: "section",
         number: 3,
-        title: "Telzen Points and Rewards Data",
-        paragraphs: ["When you earn or redeem Telzen Points, we collect:"],
+        title: "How We Use Your Information",
+        paragraphs: ["We use the information we collect for the following purposes:"],
         list: {
           type: "ul",
           items: [
-            "Transaction history",
-            "Referral information",
-            "Engagement data with loyalty campaigns"
+            "To Provide and Maintain the Service: To create your account, authenticate you, provide access to your purchased eSIMs, and display your data usage.",
+            "To Process Transactions: To process payments for packages and apply coupons using our third-party payment processor, Stripe.",
+            "To Personalize Your Experience: To show you recommended countries and relevant packages based on your region or usage.",
+            "To Enable App Features: To allow you to gift packages to other users.",
+            "To Communicate With You: To send you OTPs for verification, transactional emails, service announcements, and respond to support requests.",
+            "To Improve Our App: To analyze usage patterns, identify bugs, and develop new features.",
+            "For Security and Compliance: To prevent fraud, enforce our terms, and comply with legal obligations."
           ]
-        },
-        additionalContent: [
-          { type: "paragraph", text: "This information is used to track rewards and prevent misuse." }
-        ]
+        }
       },
       {
         type: "section",
         number: 4,
-        title: "Sharing & Disclosure of Information",
-        paragraphs: ["We may share your information with:"],
+        title: "How We Share Your Information",
+        paragraphs: ["We do not sell your personal information. We may share your information in the following limited circumstances:"],
         subsections: [
           {
             type: "subsection",
-            title: "4.1 Service Providers",
-            paragraphs: ["Trusted third parties who assist with:"],
+            title: "Service Providers",
+            paragraphs: ["We share information with third-party vendors who perform services on our behalf. This includes:"],
             list: {
               type: "ul",
               items: [
-                "Payment processing",
-                "eSIM provisioning and telecom partners",
-                "Cloud hosting and storage",
-                "Analytics and crash reporting",
-                "Customer support tools"
-              ]
-            },
-            additionalContent: [
-              { type: "paragraph", text: "All partners are required to protect your data." }
-            ]
-          },
-          {
-            type: "subsection",
-            title: "4.2 Telecom & Network Operators",
-            paragraphs: ["To activate eSIMs and provide connectivity, we must share certain technical details with local carriers."]
-          },
-          {
-            type: "subsection",
-            title: "4.3 Legal Compliance",
-            paragraphs: ["We may disclose information:"],
-            list: {
-              type: "ul",
-              items: [
-                "When required by law",
-                "To respond to government authorities",
-                "To protect Telzen, our users, or enforce Terms & Conditions"
+                "Payment Processing: With Stripe, to process your payments.",
+                "Authentication: With Google (for Google Login) and our OTP provider (to send verification codes).",
+                "eSIM Provisioning: With our telecommunications partners and carriers to activate and manage your eSIMs.",
+                "Hosting and Infrastructure: With cloud service providers who host our data and backend systems."
               ]
             }
           },
           {
             type: "subsection",
-            title: "4.4 Business Transfers",
-            paragraphs: ["If Kloud Apps LLC merges, sells assets, or undergoes acquisition, user information may be transferred as part of the transaction."]
+            title: "With Other Users",
+            paragraphs: ["When you gift a package, the recipient may be notified that the gift is from you (e.g., using your profile name or email)."]
+          },
+          {
+            type: "subsection",
+            title: "Legal Requirements",
+            paragraphs: ["We may disclose your information if required by law, subpoena, or other legal process, or if we have a good faith belief that such action is necessary to comply with the law."]
+          },
+          {
+            type: "subsection",
+            title: "Business Transfers",
+            paragraphs: ["In connection with a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred as part of that transaction."]
           }
         ]
       },
       {
         type: "section",
         number: 5,
-        title: "Cookies & Tracking Technologies",
-        paragraphs: ["We use cookies and similar technologies to:"],
+        title: "Third-Party Services",
+        paragraphs: ["Our App relies on third-party services, most notably:"],
         list: {
           type: "ul",
           items: [
-            "Remember user preferences",
-            "Improve website functionality",
-            "Analyze usage patterns",
-            "Deliver personalized content or promotions"
+            "Google (for Login): Your use of Google Login is subject to Google's Privacy Policy.",
+            "Stripe (for Payments): All payment processing is handled by Stripe. Your payment information is provided directly to Stripe, and its use is governed by Stripe's Privacy Policy."
           ]
         },
         additionalContent: [
-          { type: "paragraph", text: "You may disable cookies through browser settings, but some features may not function properly." }
+          { type: "paragraph", text: "This policy does not apply to the practices of third parties that we do not own or control." }
         ]
       },
       {
         type: "section",
         number: 6,
-        title: "Data Retention",
-        paragraphs: ["We retain personal information only as long as necessary for:"],
-        list: {
-          type: "ul",
-          items: [
-            "Service delivery",
-            "Legal compliance",
-            "Fraud prevention",
-            "Accounting and business purposes"
-          ]
-        },
-        additionalContent: [
-          { type: "paragraph", text: "Users may request deletion of their account (see Section 10)." }
-        ]
+        title: "Data Security",
+        paragraphs: ["We implement reasonable administrative, technical, and physical security measures to protect your information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee its absolute security."]
       },
       {
         type: "section",
         number: 7,
-        title: "Security",
-        paragraphs: ["We employ industry-standard security measures to protect your data, including:"],
-        list: {
-          type: "ul",
-          items: [
-            "Encryption",
-            "Secure servers",
-            "Access controls",
-            "Regular audits"
-          ]
-        },
-        additionalContent: [
-          { type: "paragraph", text: "However, no transmission method is 100% secure. Users share information at their own risk." }
-        ]
+        title: "Data Retention",
+        paragraphs: ["We retain your personal information for as long as your account is active or as needed to provide you with our Services. We will also retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements. When you request account deletion, we will process your request in accordance with the section below."]
       },
       {
         type: "section",
         number: 8,
-        title: "International Data Transfers",
-        paragraphs: ["Your data may be processed outside your home country, including in jurisdictions with different data protection laws. By using our Services, you consent to such transfers."]
+        title: "Your Rights and Choices (Account Deletion)",
+        paragraphs: ["You have certain rights regarding your personal information."],
+        list: {
+          type: "ul",
+          items: [
+            "Profile Updates: You can access and update your profile information directly within the App's account settings.",
+            "Account Deletion: You may request the deletion of your account and associated personal data at any time. You can find the option to delete your account within the App's \"Account\" or \"Profile\" settings. You may also contact us directly at hello@telzen.digital to request deletion.",
+            "Consequences of Deletion: Please note that requesting deletion will permanently remove your account, profile, and all associated data, including any active eSIMs or remaining data packages. This action cannot be reversed. We may retain certain anonymous or aggregated data for analytical purposes, and we may retain some information as required by law."
+          ]
+        }
       },
       {
         type: "section",
         number: 9,
         title: "Children's Privacy",
-        paragraphs: ["Our Services are not intended for individuals under 13 years (or minimum legal age in your region). We do not knowingly collect data from children."]
+        paragraphs: ["Our Services are not directed to individuals under the age of 13 (or a higher age if required by local law). We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information."]
       },
       {
         type: "section",
         number: 10,
-        title: "Your Rights & Choices",
-        paragraphs: ["Depending on your region, you may have rights such as:"],
-        list: {
-          type: "ul",
-          items: [
-            "Access to your data",
-            "Correction or updates",
-            "Deletion requests",
-            "Opt-out of marketing communications",
-            "Restrict certain processing activities",
-            "Data portability"
-          ]
-        },
-        additionalContent: [
-          { type: "paragraph", text: "To exercise these rights, contact us at hello@telzen.net" }
-        ]
+        title: "Changes to This Privacy Policy",
+        paragraphs: ["We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the App and updating the \"Effective Date\" at the top. You are advised to review this Privacy Policy periodically for any changes."]
       },
       {
         type: "section",
         number: 11,
-        title: "Third-Party Links",
-        paragraphs: ["Our Services may contain links to third-party websites. We are not responsible for their privacy practices or content."]
-      },
-      {
-        type: "section",
-        number: 12,
-        title: "Updates to This Privacy Policy",
-        paragraphs: ["We may update this Privacy Policy periodically. Revised versions will be posted with a new \"Last Updated\" date. Continued use of our Services means you accept the updated policy."]
-      },
-      {
-        type: "section",
-        number: 13,
         title: "Contact Us",
         paragraphs: [
-          "For questions, concerns, or privacy-related requests:",
-          "Telzen — Kloud Apps LLC",
-          "Email: hello@telzen.com",
-          "Address: 254 Chapman Rd, Suite 101-B, Newark, DE 19702"
+          "If you have any questions about this Privacy Policy, please contact us at:",
+          "290/737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
+          "Email: hello@telzen.digital"
         ]
       }
     ]
