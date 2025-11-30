@@ -29,11 +29,11 @@ function MyEsimComponent() {
           <h2 className="backTitle text-text-950">
             <BlurText text="my esim" translateY={[50, 0]} />
           </h2>
-          <div className="bg-secondary-100 flex items-center gap-3 px-14 py-5 rounded-full mt-8">
+          <div className="bg-secondary-100 flex items-center gap-3 px-8 md:px-14 py-3 md:py-5 rounded-full mt-8">
             <span>
               <MobileWithStarsSvg />
             </span>
-            <span className="text-[#FF9F20]">
+            <span className="text-[#FF9F20] text-sm md:text-base">
               For best experience we recomend to use our app.
             </span>
           </div>

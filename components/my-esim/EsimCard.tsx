@@ -36,9 +36,10 @@ function EsimCard({ esim }: EsimCardProps) {
   } = useEsimCard(esim);
 
   // Get image from esim data
-  const displayImage = esim?.associated_country?.image || 
-                       esim?.associated_region?.image || 
-                       images?.newZealand;
+  const displayImage =
+    esim?.associated_country?.image ||
+    esim?.associated_region?.image ||
+    images?.newZealand;
 
   return (
     <div className="bg-white w-full flex flex-col lg:flex-row rounded-xl border border-natural-200">
@@ -63,13 +64,26 @@ function EsimCard({ esim }: EsimCardProps) {
         />
       </div>
 
-      <div className="p-4 flex flex-col lg:flex-row justify-between items-center gap-4 w-full">
-        <div className="flex flex-col gap-4 text-center lg:text-left">
+      <div className="p-4 flex flex-col lg:flex-row justify-between items-center gap-3 md:gap-4 w-full">
+        <div className="flex flex-col gap-3 md:gap-4 text-center lg:text-left">
           <div className="flex flex-col gap-1">
             <div className="flex gap-1 justify-center lg:justify-start items-center">
-              <div className="w-6 h-6 rounded flex items-center justify-center text-md">
-                🌍
-              </div>
+              {esim?.associated_country?.flag ? (
+                <div className="w-4 md:w-6 h-4 md:h-6 rounded-full overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={esim?.associated_country?.flag || ""}
+                    alt="esim"
+                    width={24}
+                    height={24}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-6 h-6 rounded flex items-center justify-center text-md">
+                  🌍
+                </div>
+              )}
+
               <span className="text-sm md:text-base uppercase tracking-wide">
                 {esim?.associated_region?.name ||
                   esim?.associated_country?.name}
