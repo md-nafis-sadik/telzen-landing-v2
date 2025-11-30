@@ -27,7 +27,7 @@ function HeaderPrev({
   return (
     <div
       onClick={handleBack}
-      className={`flex items-center gap-2 w-max select-none group ${className}`}
+      className={`flex items-center gap-2 w-max select-none group cursor-pointer ${className}`}
     >
       <motion.button
         initial={{ x: 0 }}

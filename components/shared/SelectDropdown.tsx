@@ -111,7 +111,7 @@ function SelectDropdown({
       )}
       
       {/* Label */}
-      <span className={`${isSelected ? "truncate" : ""}`}>
+      <span className={`${isSelected ? "truncate" : ""} text-sm md:text-base`}>
         {option.label}
       </span>
     </div>
@@ -164,7 +164,9 @@ function SelectDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-hidden"
+            className="absolute z-[10000000] w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-hidden"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
             {/* Search Input */}
             {searchable && (
@@ -181,7 +183,11 @@ function SelectDropdown({
             )}
 
             {/* Options List */}
-            <div className="overflow-y-auto max-h-48">
+            <div 
+              className="overflow-y-auto max-h-48"
+              onWheel={(e) => e.stopPropagation()}
+              onTouchMove={(e) => e.stopPropagation()}
+            >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option) => (
                   <motion.button

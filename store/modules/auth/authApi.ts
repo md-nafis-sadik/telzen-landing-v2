@@ -126,6 +126,7 @@ export const authApi = apiSlice.injectEndpoints({
                 image: data.data.image,
                 token: data.data.access_token, // Normalize the token field
                 expireAt,
+                customerId: data.data._id, // Save customer_id for coupon validation
               })
             );
 
@@ -168,7 +169,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           if (data?.data) {
-            // Update auth state with fresh profile data
+            // Update auth state with fresh profile data including customer_id
             dispatch(
               updateAuth({
                 id: data.data._id,
@@ -176,6 +177,7 @@ export const authApi = apiSlice.injectEndpoints({
                 email: data.data.email,
                 country: data.data.country,
                 image: data.data.image,
+                customerId: data.data._id, // Save customer_id for coupon validation
               })
             );
           }

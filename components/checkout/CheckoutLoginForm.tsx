@@ -65,7 +65,7 @@ function CheckoutLoginForm() {
             </div>
           </div>
 
-          <Button
+          {/* <Button
             variant="google"
             fullWidth
             onClick={handleGoogleLogin}
@@ -84,7 +84,7 @@ function CheckoutLoginForm() {
             }
           >
             {appStrings.loginWithGoogle}
-          </Button>
+          </Button> */}
         </form>
       </div>
     </div>

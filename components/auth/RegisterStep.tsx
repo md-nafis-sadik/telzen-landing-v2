@@ -28,7 +28,7 @@ const RegisterStep: React.FC = () => {
         {appStrings.registerDescription}
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
         <Input
           type="text"
           id="name"
@@ -82,7 +82,7 @@ const RegisterStep: React.FC = () => {
             className="mt-1 w-5 h-5 text-primary-700 border-gray-300 rounded focus:border-primary-800 focus:ring-0 cursor-pointer"
             required
           />
-          <label htmlFor="terms" className="text-sm text-gray-600">
+          <label htmlFor="terms" className="text-xs md:text-sm text-gray-600">
             By creating an account, you agree to our{" "}
             <a
               href="#"
@@ -100,7 +100,6 @@ const RegisterStep: React.FC = () => {
           </label>
         </div>
 
-        {error && <div className="text-red-500 text-sm text-left">{error}</div>}
 
         <Button
           type="submit"
@@ -125,7 +124,7 @@ const RegisterStep: React.FC = () => {
           </Button>
         </div>
 
-        <Button
+        {/* <Button
           variant="google"
           fullWidth
           onClick={handleGoogleRegister}
@@ -143,7 +142,7 @@ const RegisterStep: React.FC = () => {
           }
         >
           Login With Google
-        </Button>
+        </Button> */}
       </form>
     </div>
   );

@@ -38,7 +38,7 @@ function ContactForm() {
             <div>
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
-                <Input
+                {/* <Input
                   type="text"
                   id="name"
                   label={appStrings.yourName}
@@ -46,8 +46,8 @@ function ContactForm() {
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   placeholder={appStrings.startTypingName}
                   required
-                />
-                
+                /> */}
+
                 <Input
                   type="email"
                   id="email"
@@ -58,7 +58,7 @@ function ContactForm() {
                   className="border-natural-400 bg-white"
                   required
                 />
-                
+
                 <Input
                   type="text"
                   id="subject"
@@ -67,6 +67,7 @@ function ContactForm() {
                   onChange={(e) => handleInputChange("subject", e.target.value)}
                   placeholder={appStrings.enterSubject}
                   className="border-natural-400 bg-white"
+                  required
                 />
 
                 <Textarea

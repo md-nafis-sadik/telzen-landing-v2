@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetPersonalEsimsQuery } from "@/store/modules/destination/destinationApi";
+import { useSharedStore } from "@/store";
 
 export const useMyEsim = () => {
   const router = useRouter();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { setShowMenu } = useSharedStore();
   const [activeToggle, setActiveToggle] = useState<"myPlans" | "buyAnother">(
     "myPlans"
   );
@@ -30,6 +32,7 @@ export const useMyEsim = () => {
       setActiveToggle("myPlans");
     } else if (option === "Buy Another") {
       setActiveToggle("buyAnother");
+      setShowMenu(false); // Close mobile menu before navigation
       router.push("/destinations");
     }
   };

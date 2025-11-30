@@ -72,6 +72,12 @@ interface ITestimonial {
   rating: number;
 }
 
+interface ISocialMedia {
+  id: number;
+  link: string;
+  name: string;
+}
+
 export type {
   ICountry,
   IDestination,
@@ -80,4 +86,5 @@ export type {
   IRoute,
   ITestimonial,
   IWorkStep,
+  ISocialMedia,
 };

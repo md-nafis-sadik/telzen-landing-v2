@@ -2,10 +2,11 @@
 
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { EsimIconSvg, LogoutGreyIconSvg, PersonIconSvg } from "@/service";
+import { envConfig, EsimIconSvg, LogoutGreyIconSvg, PersonIconSvg } from "@/service";
 import Link from "next/link";
 import Image from "next/image";
 import { useUserDropdown } from "@/hook";
+import { useSharedStore } from "@/store";
 
 interface UserDropdownProps {
   onProfileClick: () => void;
@@ -13,6 +14,7 @@ interface UserDropdownProps {
 }
 
 function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
+  const { setShowMenu } = useSharedStore();
   const {
     isOpen,
     buttonRect,
@@ -26,6 +28,21 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
     handleButtonClick,
     closeDropdown,
   } = useUserDropdown(onProfileClick, onLogoutClick);
+
+  const handleProfileClickWithMenuClose = () => {
+    handleProfileClick();
+    setShowMenu(false);
+  };
+
+  const handleMyEsimClickWithMenuClose = () => {
+    handleMyEsimClick();
+    setShowMenu(false);
+  };
+
+  const handleLogoutClickWithMenuClose = () => {
+    handleLogoutClick();
+    setShowMenu(false);
+  };
 
   return (
     <>
@@ -54,7 +71,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
             </div>
           )}
         </div>
-        <span className="text-xs sm:text-sm max-w-[60px] sm:max-w-[100px] hidden sm:inline truncate">
+        <span className="text-xs sm:text-sm max-w-[60px] sm:max-w-[100px] inline truncate">
           {displayName}
         </span>
         <svg
@@ -198,7 +215,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
                   <div className="py-2">
                     {/* Profile Option */}
                     <button
-                      onClick={handleProfileClick}
+                      onClick={handleProfileClickWithMenuClose}
                       className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-gray-100 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
@@ -209,7 +226,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
 
                     {/* My eSIM Option */}
                     <button
-                      onClick={handleMyEsimClick}
+                      onClick={handleMyEsimClickWithMenuClose}
                       className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-orange-50 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
@@ -220,7 +237,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
 
                     {/* Logout Option */}
                     <button
-                      onClick={handleLogoutClick}
+                      onClick={handleLogoutClickWithMenuClose}
                       className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-red-50 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
@@ -233,7 +250,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
                   {/* Install App Link */}
                   <div className="px-6 py-4 border-t border-gray-100">
                     <Link
-                      href="#"
+                      href={envConfig.playAppUrl || "#"}
                       className="text-primary-700 text-base font-medium underline"
                     >
                       Install Telzen App

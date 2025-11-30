@@ -2,7 +2,7 @@
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 
 // Load your Stripe publishable key from environment variables
 const stripePromise = loadStripe(
@@ -18,15 +18,7 @@ export default function StripeProvider({
   children,
   clientSecret,
 }: StripeProviderProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  // Stripe Elements handles SSR automatically, no need for manual mount detection
 
   const options = clientSecret
     ? {

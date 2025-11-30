@@ -5,9 +5,10 @@ import {
   RectanglesIconSvg,
   WorldIconSvg,
   appStrings,
+  formatFloatingNumber,
 } from "@/service";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Package,
   useLazyValidateCouponQuery,
@@ -15,6 +16,7 @@ import {
 import { toast } from "react-toastify";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
+import { useAppSelector } from "@/store/hooks";
 
 interface CheckoutCardProps {
   packageData?: Package;
@@ -35,6 +37,14 @@ function CheckoutCard({
   const [validateCoupon, { isLoading: couponLoading }] =
     useLazyValidateCouponQuery();
 
+  const prevGrandTotalRef = useRef<number | undefined>(undefined);
+  const prevCouponIdRef = useRef<string | undefined>(undefined);
+  const prevCouponLoadingRef = useRef<boolean | undefined>(undefined);
+
+  // Get customer_id from auth state
+  const authData = useAppSelector((state) => state.auth.auth);
+  const customerId = authData?.customerId;
+
   // Helper function to format data size
   const formatDataSize = (sizeInMB: number) => {
     if (sizeInMB >= 1024) {
@@ -43,7 +53,6 @@ function CheckoutCard({
     return `${sizeInMB} MB`;
   };
 
-  // Get coverage display text
   const getCoverageText = () => {
     if (!packageData) return "N/A";
 
@@ -68,11 +77,36 @@ function CheckoutCard({
       return;
     }
 
+    const subtotal = packageData?.grand_total_selling_price || 0;
+
     try {
-      const result = await validateCoupon(couponCode.trim()).unwrap();
+      const result = await validateCoupon({
+        couponCode: couponCode.trim(),
+        customerId: customerId,
+      }).unwrap();
 
       if (result.success && result.data) {
-        setAppliedCoupon(result.data);
+        const coupon = result.data;
+        
+        // Check minimum order amount (lower limit)
+        if (subtotal < coupon.minimum_order_amount) {
+          toast.error(
+            `Minimum order amount is $${coupon.minimum_order_amount.toFixed(2)}. Your current order is $${subtotal.toFixed(2)}.`
+          );
+          return;
+        }
+
+        // Check maximum order amount (upper limit) - 0 means no limit
+        if (coupon.maximum_order_amount > 0 && subtotal > coupon.maximum_order_amount) {
+          toast.error(
+            `Maximum order amount is $${coupon.maximum_order_amount.toFixed(2)}. Your current order is $${subtotal.toFixed(2)}.`
+          );
+          return;
+        }
+
+        // If all checks pass, apply the coupon
+        setAppliedCoupon(coupon);
+        setShowCouponInput(false);
         toast.success("Coupon applied successfully!");
       } else {
         toast.error(result.message || "Invalid coupon code");
@@ -89,35 +123,49 @@ function CheckoutCard({
   const subtotal = packageData?.grand_total_selling_price || 0;
   let discount = 0;
 
-  if (appliedCoupon && subtotal >= appliedCoupon.minimum_order_amount) {
-    if (appliedCoupon.type === "percentage") {
-      discount = (subtotal * appliedCoupon.value) / 100;
-      if (appliedCoupon.maximum_discount_amount) {
-        discount = Math.min(discount, appliedCoupon.maximum_discount_amount);
+  if (appliedCoupon) {
+    // Check if price is within coupon limits
+    const withinMinLimit = subtotal >= appliedCoupon.minimum_order_amount;
+    const withinMaxLimit = appliedCoupon.maximum_order_amount === 0 || subtotal <= appliedCoupon.maximum_order_amount;
+    
+    if (withinMinLimit && withinMaxLimit) {
+      if (appliedCoupon.discount.is_type_percentage) {
+        // Percentage discount
+        discount = (subtotal * appliedCoupon.discount.amount) / 100;
+      } else {
+        // Fixed amount discount
+        discount = appliedCoupon.discount.amount;
       }
-    } else {
-      discount = appliedCoupon.value;
+      
+      // Ensure discount doesn't exceed subtotal
+      discount = Math.min(discount, subtotal);
     }
   }
 
-  const grandTotal = subtotal - discount;
+  const grandTotal = formatFloatingNumber(Math.max(subtotal - discount, 0));
 
-  // Notify parent component when amount or coupon changes
+  // Notify parent component when amount changes (only when value actually changes)
   useEffect(() => {
-    if (onAmountChange) {
-      onAmountChange(grandTotal);
+    if (prevGrandTotalRef.current !== grandTotal) {
+      prevGrandTotalRef.current = grandTotal;
+      onAmountChange?.(grandTotal);
     }
   }, [grandTotal, onAmountChange]);
 
+  // Notify parent when coupon changes (only when value actually changes)
   useEffect(() => {
-    if (onCouponChange) {
-      onCouponChange(appliedCoupon?._id);
+    const couponId = appliedCoupon?._id;
+    if (prevCouponIdRef.current !== couponId) {
+      prevCouponIdRef.current = couponId;
+      onCouponChange?.(couponId);
     }
   }, [appliedCoupon, onCouponChange]);
 
+  // Notify parent when coupon loading state changes (only when value actually changes)
   useEffect(() => {
-    if (onCouponLoadingChange) {
-      onCouponLoadingChange(couponLoading);
+    if (prevCouponLoadingRef.current !== couponLoading) {
+      prevCouponLoadingRef.current = couponLoading;
+      onCouponLoadingChange?.(couponLoading);
     }
   }, [couponLoading, onCouponLoadingChange]);
 
@@ -194,21 +242,21 @@ function CheckoutCard({
             <div className="font-bold">{packageData?.validity || "N/A"}</div>
           </div>
         </div>
-        <div className="border-t pt-4 flex flex-col gap-4 text-sm lg:text-base">
+        <div className="border-t border-natural-200 pt-4 flex flex-col gap-4 text-sm lg:text-base">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span>Sub total</span>
             </div>
-            <div className="font-bold">${subtotal.toFixed(2)}</div>
+            <div className="font-bold">${formatFloatingNumber(subtotal)}</div>
           </div>
 
           {/* Show discount if coupon applied */}
           {appliedCoupon && discount > 0 && (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span>Coupon Applied &quot;{appliedCoupon.code}&quot;</span>
+                <span>Coupon Applied “{appliedCoupon.code}”</span>
               </div>
-              <div className="font-bold">-${discount.toFixed(2)}</div>
+              <div className="font-bold">${formatFloatingNumber(discount)}</div>
             </div>
           )}
 
@@ -216,13 +264,13 @@ function CheckoutCard({
             <div className="flex items-center gap-2">
               <span>Grand Total</span>
             </div>
-            <div className="font-bold">${grandTotal.toFixed(2)}</div>
+            <div className="font-bold">${formatFloatingNumber(grandTotal)}</div>
           </div>
 
           {/* Coupon section */}
           <div>
             {appliedCoupon ? (
-              <div className="text-text-400 font-medium text-sm">
+              <div className="text-text-400 text-sm md:text-base tect-text-400">
                 {appStrings.couponApplied}
               </div>
             ) : showCouponInput ? (
@@ -233,6 +281,12 @@ function CheckoutCard({
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                   placeholder={appStrings.enterCouponCode}
                   className="flex-1 text-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleApplyCoupon();
+                    }
+                  }}
                 />
                 <Button
                   variant="primary"

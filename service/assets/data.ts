@@ -1,4 +1,10 @@
-import { ICountry, IDestination, ITestimonial, IWorkStep } from "../config";
+import {
+  ICountry,
+  IDestination,
+  ISocialMedia,
+  ITestimonial,
+  IWorkStep,
+} from "../config";
 import { appStrings } from "./appStrings";
 import { images } from "./images";
 
@@ -377,5 +383,28 @@ export const aboutViewData = [
     image: images.officeImage5,
     title: "Office Image 6",
     description: "Office Image 6",
+  },
+];
+
+export const socialMediaData: ISocialMedia[] = [
+  {
+    id: 1,
+    link: "https://www.facebook.com/telzenapp",
+    name: "Facebook",
+  },
+  {
+    id: 2,
+    link: "https://www.instagram.com/telzenesim",
+    name: "Insta",
+  },
+  {
+    id: 3,
+    link: "https://www.linkedin.com/company/telzen",
+    name: "Linkedin",
+  },
+  {
+    id: 4,
+    link: "https://www.youtube.com/@telzenesim",
+    name: "Youtube",
   },
 ];

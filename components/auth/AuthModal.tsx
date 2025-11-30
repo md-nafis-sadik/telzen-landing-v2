@@ -33,7 +33,7 @@ const AuthModal: React.FC = () => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center">
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,13 +52,13 @@ const AuthModal: React.FC = () => {
               duration: 0.5, 
               bounce: 0.3 
             }}
-            className={`relative  rounded-3xl p-8 w-full max-w-md mx-4 z-10 ${step === "success" ? "bg-transparent" : "bg-white"}`}
+            className={`relative rounded-3xl w-full max-w-[94%] sm:max-w-md z-10 max-h-[92vh] flex flex-col ${step === "success" ? "bg-transparent" : "bg-white"}`}
           >
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer z-10"
             >
               <svg
                 className="w-6 h-6"
@@ -75,16 +75,18 @@ const AuthModal: React.FC = () => {
               </svg>
             </motion.button>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              {step === "login" && <LoginStep />}
-              {step === "register" && <RegisterStep />}
-              {step === "otp" && <OtpStep />}
-              {step === "success" && <SuccessStep />}
-            </motion.div>
+            <div className="overflow-y-auto no-scrollbar overflow-x-hidden p-6 sm:p-8">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                {step === "login" && <LoginStep />}
+                {step === "register" && <RegisterStep />}
+                {step === "otp" && <OtpStep />}
+                {step === "success" && <SuccessStep />}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       )}

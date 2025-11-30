@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 export const useContactForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     subject: "",
     message: "",
@@ -21,11 +20,7 @@ export const useContactForm = () => {
     e.preventDefault();
 
     // Basic validation
-    if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.message.trim()
-    ) {
+    if (!formData.email.trim() || !formData.message.trim()) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -40,9 +35,8 @@ export const useContactForm = () => {
     try {
       const contactData = {
         email: formData.email.trim(),
-        subject:
-          formData.subject.trim() || `Message from ${formData.name.trim()}`,
-        message: `Name: ${formData.name.trim()}\n\n${formData.message.trim()}`,
+        subject: formData.subject.trim(),
+        message: `${formData.message.trim()}`,
       };
 
       const result = await createContactSupport(contactData).unwrap();
@@ -53,7 +47,6 @@ export const useContactForm = () => {
         );
         // Reset form
         setFormData({
-          name: "",
           email: "",
           subject: "",
           message: "",

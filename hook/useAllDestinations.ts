@@ -80,7 +80,17 @@ export const useAllDestinations = () => {
     }
   }, [currentData, currentPage]);
 
-  const handleToggle = (type: DestinationType) => {
+  const handleToggle = (typeOrText: DestinationType | string) => {
+    // Convert button text to DestinationType if needed
+    let type: DestinationType;
+    if (typeOrText === "Countries" || typeOrText === "countries") {
+      type = "countries";
+    } else if (typeOrText === "Regional Packs" || typeOrText === "regions") {
+      type = "regions";
+    } else {
+      type = typeOrText as DestinationType;
+    }
+    
     dispatch(setDestinationType(type));
     setCurrentPage(1);
     setAllDestinations([]);

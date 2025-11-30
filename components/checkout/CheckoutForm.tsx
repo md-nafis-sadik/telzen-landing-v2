@@ -1,6 +1,6 @@
 "use client";
 
-import { images, appStrings } from "@/service";
+import { images, appStrings, formatFloatingNumber } from "@/service";
 import Image from "next/image";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
@@ -99,7 +99,7 @@ function CheckoutFormContent({
         {
           package_id: packageId,
           order_type: orderType as "new" | "topup",
-          final_payment_amount: paymentAmount,
+          final_payment_amount: formatFloatingNumber(paymentAmount),
           currency: "USD",
           coupon_id: couponId,
         },

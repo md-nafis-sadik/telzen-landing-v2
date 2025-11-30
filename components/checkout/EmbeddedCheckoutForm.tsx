@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import Button from "../shared/Button";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { images } from "@/service";
+import { images, formatFloatingNumber } from "@/service";
 
 interface EmbeddedCheckoutFormProps {
   packageId: string;
@@ -80,7 +80,7 @@ export default function EmbeddedCheckoutForm({
         {
           package_id: packageId,
           order_type: orderType,
-          final_payment_amount: amount,
+          final_payment_amount: formatFloatingNumber(amount),
           currency,
           coupon_id: couponId,
         },
@@ -229,7 +229,7 @@ export default function EmbeddedCheckoutForm({
         /* Show free package message and button for $0 */
         <div className="space-y-6">
           <div className=" rounded-lg p-6 text-center">
-            <div className="mb-6 flex justify-center">
+            <div className="mb-10 flex justify-center">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -242,10 +242,10 @@ export default function EmbeddedCheckoutForm({
                 className="relative"
               >
                 <Image
-                  src={images?.successful}
+                  src={images?.checkIcon}
                   alt="successful"
-                  width={260}
-                  height={260}
+                  width={100}
+                  height={100}
                   priority
                 />
               </motion.div>

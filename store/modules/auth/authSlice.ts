@@ -13,6 +13,7 @@ export interface User {
   token?: string;
   image?: string;
   expireAt?: number;
+  customerId?: string;
 }
 
 interface AuthState {

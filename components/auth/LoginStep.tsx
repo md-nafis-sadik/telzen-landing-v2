@@ -101,7 +101,7 @@ const LoginStep: React.FC = () => {
       </p>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 max-w-[360px] mx-auto">
         <Input
           type="email"
           id="email"
@@ -136,7 +136,7 @@ const LoginStep: React.FC = () => {
           </div>
         </div>
 
-        <Button
+        {/* <Button
           variant="google"
           fullWidth
           onClick={handleGoogleLogin}
@@ -154,7 +154,7 @@ const LoginStep: React.FC = () => {
           }
         >
           {appStrings.loginWithGoogle}
-        </Button>
+        </Button> */}
       </form>
     </div>
   );

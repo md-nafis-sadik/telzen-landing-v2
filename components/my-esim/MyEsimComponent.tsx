@@ -42,6 +42,8 @@ function MyEsimComponent() {
               firstbuttonText="My Plans"
               secondbuttonText="Buy Another"
               onToggle={handleToggleChange}
+              useLocalState={true}
+              defaultActive="first"
             />
           </div>
           {/* Loading State */}

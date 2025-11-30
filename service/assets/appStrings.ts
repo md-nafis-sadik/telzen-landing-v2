@@ -97,7 +97,7 @@ export const appStrings = {
 
   // Contact Form
   subject: "Subject",
-  subjectOptional: "Subject (Optional)",
+  subjectOptional: "Subject",
   message: "Message",
   enterSubject: "Enter subject",
   startTypingName: "Start typing your name here",

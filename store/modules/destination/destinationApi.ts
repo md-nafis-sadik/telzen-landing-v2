@@ -185,13 +185,17 @@ export interface CouponValidationResponse {
   meta: null;
   data: {
     _id: string;
+    title: string;
     code: string;
-    type: "percentage" | "fixed";
-    value: number;
-    minimum_order_amount: number;
-    maximum_discount_amount?: number;
-    is_active: boolean;
-    expires_at: number;
+    coverage_countries: string[];
+    discount: {
+      amount: number;
+      is_type_percentage: boolean;
+    };
+    validity_end_at: number;
+    maximum_order_amount: number; // upper limit, 0 = no limit
+    minimum_order_amount: number; // lower limit
+    created_at: number;
   } | null;
 }
 
@@ -343,12 +347,22 @@ export const destinationApi = apiSlice.injectEndpoints({
     }),
 
     // Validate coupon
-    validateCoupon: builder.query<CouponValidationResponse, string>({
-      query: (couponCode) => ({
-        url: `/coupon/is-valid?search=${encodeURIComponent(couponCode)}`,
-        method: "GET",
-        baseUrl: envConfig.webApiUrl,
-      }),
+    validateCoupon: builder.query<CouponValidationResponse, { couponCode: string; customerId?: string }>({
+      query: ({ couponCode, customerId }) => {
+        const params = new URLSearchParams({
+          search: couponCode,
+        });
+        
+        if (customerId) {
+          params.append("customer_id", customerId);
+        }
+        
+        return {
+          url: `/coupon/is-valid?${params.toString()}`,
+          method: "GET",
+          baseUrl: envConfig.webApiUrl,
+        };
+      },
     }),
 
     // Contact support

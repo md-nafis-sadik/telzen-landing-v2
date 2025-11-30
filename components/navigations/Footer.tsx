@@ -1,6 +1,7 @@
 import {
   appStrings,
   EmailFooterIconSvg,
+  envConfig,
   FacebookFooterIconSvg,
   images,
   InstagramFooterIconSvg,
@@ -8,6 +9,7 @@ import {
   LocationFooterIconSvg,
   PhoneFooterIconSvg,
   routes,
+  socialMediaData,
   YoutubeFooterIconSvg,
 } from "@/service";
 import Image from "next/image";
@@ -38,25 +40,25 @@ function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-6 justify-center lg:justify-start">
               <Link
-                href="#"
+                href={socialMediaData[0].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
               >
                 <FacebookFooterIconSvg />
               </Link>
               <Link
-                href="#"
+                href={socialMediaData[1].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
               >
                 <InstagramFooterIconSvg />
               </Link>
               <Link
-                href="#"
+                href={socialMediaData[2].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
               >
                 <LinkedinFooterIconSvg />
               </Link>
               <Link
-                href="#"
+                href={socialMediaData[3].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
               >
                 <YoutubeFooterIconSvg />
@@ -96,7 +98,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href={envConfig.googleAppUrl || "#"}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Apple App Store
@@ -104,7 +106,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href={envConfig.playAppUrl || "#"}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Google Play Store

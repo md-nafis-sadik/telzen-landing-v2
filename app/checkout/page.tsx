@@ -41,12 +41,74 @@ function CheckOutContent() {
     }
   );
 
-  if (!authInitialized) {
+  // Show loading state for both auth initialization and package loading
+  if (!authInitialized || (!packageId && !isLoading)) {
     return (
       <main className="font-inter bg-white">
-        <section className="py-10 md:py-16 lg:py-20 bg-[#fafafa] flex items-center justify-center min-h-screen">
-          <div className="text-center text-text-700">
-            <h2 className="text-2xl font-bold mb-4">Initializing...</h2>
+        <section
+          className="py-10 md:py-16 lg:py-20 bg-[#fafafa] flex"
+          id="destinations"
+        >
+          <div className="w-full h-full">
+            <div className="containerX">
+              <div className="flex items-center gap-2 w-max mb-10">
+                <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+                <div className="w-32 h-8 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12">
+                <div className="flex-1">
+                  <div className="bg-white rounded-3xl p-6 space-y-6">
+                    <div className="w-48 h-8 bg-gray-200 rounded animate-pulse"></div>
+
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <div key={index} className="space-y-2">
+                        <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+                      </div>
+                    ))}
+
+                    <div className="w-full h-12 bg-gray-200 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+
+                <div className="w-full lg:w-1/2">
+                  <div className="bg-white rounded-3xl p-6 space-y-4">
+                    <div className="bg-gray-100 rounded-lg p-4 space-y-2">
+                      <div className="w-32 h-6 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="w-full h-4 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="w-3/4 h-4 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="w-40 h-6 bg-gray-200 rounded animate-pulse mx-auto"></div>
+
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center"
+                        >
+                          <div className="w-20 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                      ))}
+
+                      <div className="border-t pt-4 space-y-4">
+                        <div className="flex justify-between items-center">
+                          <div className="w-16 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="w-12 h-4 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div className="w-20 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="w-16 h-5 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                        <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -167,7 +229,7 @@ function CheckOutContent() {
             ) : (
               <>
                 <HeaderPrev text="Check out" />
-                <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10">
+                <div className="flex flex-col-reverse lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10">
                   {!isAuthenticated ? (
                     <CheckoutLoginForm />
                   ) : (
@@ -204,9 +266,70 @@ function CheckOut() {
     <Suspense
       fallback={
         <main className="font-inter bg-white">
-          <section className="py-10 md:py-16 lg:py-20 bg-[#fafafa] flex items-center justify-center min-h-screen">
-            <div className="text-center text-text-700">
-              <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+          <section
+            className="py-10 md:py-16 lg:py-20 bg-[#fafafa] flex"
+            id="destinations"
+          >
+            <div className="w-full h-full">
+              <div className="containerX">
+                <div className="flex items-center gap-2 w-max mb-10">
+                  <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="w-32 h-8 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12">
+                  <div className="flex-1">
+                    <div className="bg-white rounded-3xl p-6 space-y-6">
+                      <div className="w-48 h-8 bg-gray-200 rounded animate-pulse"></div>
+
+                      {Array.from({ length: 4 }).map((_, index) => (
+                        <div key={index} className="space-y-2">
+                          <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+                        </div>
+                      ))}
+
+                      <div className="w-full h-12 bg-gray-200 rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-1/2">
+                    <div className="bg-white rounded-3xl p-6 space-y-4">
+                      <div className="bg-gray-100 rounded-lg p-4 space-y-2">
+                        <div className="w-32 h-6 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="w-full h-4 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="w-3/4 h-4 bg-gray-200 rounded animate-pulse"></div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="w-40 h-6 bg-gray-200 rounded animate-pulse mx-auto"></div>
+
+                        {Array.from({ length: 4 }).map((_, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center"
+                          >
+                            <div className="w-20 h-4 bg-gray-200 rounded animate-pulse"></div>
+                            <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          </div>
+                        ))}
+
+                        <div className="border-t pt-4 space-y-4">
+                          <div className="flex justify-between items-center">
+                            <div className="w-16 h-4 bg-gray-200 rounded animate-pulse"></div>
+                            <div className="w-12 h-4 bg-gray-200 rounded animate-pulse"></div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <div className="w-20 h-4 bg-gray-200 rounded animate-pulse"></div>
+                            <div className="w-16 h-5 bg-gray-200 rounded animate-pulse"></div>
+                          </div>
+                          <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </main>
