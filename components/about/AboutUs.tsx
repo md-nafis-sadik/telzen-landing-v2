@@ -14,28 +14,22 @@ function AboutUs() {
             className="md:tracking-[-2px]"
           />
         </h2>
-        <div className="flex flex-col gap-4 md:gap-6 lg:gap-8">
-          <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
-            <BlurText
-              translateX={[30, 0]}
-              delay={50}
-              text={appStrings.about1}
-            />
-          </p>
-          <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
-            <BlurText
-              translateX={[30, 0]}
-              delay={50}
-              text={appStrings.about2}
-            />
-          </p>
-          <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
-            <BlurText
-              translateX={[30, 0]}
-              delay={50}
-              text={appStrings.about3}
-            />
-          </p>
+        <div className="overflow-hidden">
+          <BlurCard
+            translateX={[30, 0]}
+            delay={50}
+            className="flex flex-col gap-4 md:gap-6 lg:gap-8"
+          >
+            <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
+              {appStrings.about1}
+            </p>
+            <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
+              {appStrings.about2}
+            </p>
+            <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-950 max-w-[1030px] mx-auto">
+              {appStrings.about3}
+            </p>
+          </BlurCard>
         </div>
       </div>
     </section>
