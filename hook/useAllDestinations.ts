@@ -18,15 +18,23 @@ export const useAllDestinations = () => {
   const itemsPerPage = 15;
   const loadMoreCount = 15;
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [regionsPage, setRegionsPage] = useState(1);
+  const [countriesPage, setCountriesPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("search") || ""
   );
   const [apiSearchQuery, setApiSearchQuery] = useState(
     searchParams.get("search") || ""
   );
-  const [allDestinations, setAllDestinations] = useState<any[]>([]);
-  const [accumulatedData, setAccumulatedData] = useState<Map<number, any[]>>(new Map());
+  const [regionsAccumulatedData, setRegionsAccumulatedData] = useState<Map<number, any[]>>(
+    new Map()
+  );
+  const [countriesAccumulatedData, setCountriesAccumulatedData] = useState<Map<number, any[]>>(
+    new Map()
+  );
+  
+  // Use the appropriate page based on active type
+  const currentPage = activeType === "regions" ? regionsPage : countriesPage;
 
   // API queries for both regions and countries
   const {
@@ -70,32 +78,64 @@ export const useAllDestinations = () => {
   const hasError = activeType === "regions" ? regionsError : countriesError;
   const hasMore = currentData?.meta?.has_next_page ?? false;
 
-  // Reset accumulated data when type or search changes
-  useEffect(() => {
-    setAccumulatedData(new Map());
-    setAllDestinations([]);
-  }, [activeType, apiSearchQuery]);
-
-  // Update destinations when data changes
-  useEffect(() => {
-    if (currentData?.data && !isFetching) {
-      setAccumulatedData((prev) => {
-        const newMap = new Map(prev);
-        
-        // Only add if this page isn't already in the map
-        if (!newMap.has(currentPage)) {
-          newMap.set(currentPage, currentData.data);
-          
-          // Rebuild the full array from all pages in order
-          const sortedPages = Array.from(newMap.keys()).sort((a, b) => a - b);
-          const allData = sortedPages.flatMap(page => newMap.get(page) || []);
-          setAllDestinations(allData);
-        }
-        
-        return newMap;
-      });
+  // Compute allDestinations based on activeType
+  const accumulatedData = activeType === "regions" ? regionsAccumulatedData : countriesAccumulatedData;
+  const sortedPages = Array.from(accumulatedData.keys()).sort((a, b) => a - b);
+  const allData = sortedPages.flatMap((page) => accumulatedData.get(page) || []);
+  
+  // Deduplicate by _id to prevent duplicate entries
+  const seenIds = new Set<string>();
+  const allDestinations = allData.filter((item: any) => {
+    if (seenIds.has(item._id)) {
+      return false;
     }
-  }, [currentData, currentPage, isFetching]);
+    seenIds.add(item._id);
+    return true;
+  });
+
+  // Reset accumulated data and pages when search changes
+  useEffect(() => {
+    setRegionsAccumulatedData(new Map());
+    setCountriesAccumulatedData(new Map());
+    setRegionsPage(1);
+    setCountriesPage(1);
+  }, [apiSearchQuery]);
+
+  // Update regions accumulated data - only when data is fresh and matches current activeType
+  useEffect(() => {
+    // Only process if we're actually viewing regions and data is available
+    if (activeType === "regions" && regionsData?.data && regionsData.data.length > 0) {
+      // Validate that this is actually region data (not cached country data)
+      const isValidRegionData = regionsData.data.every((item: any) => 'region_id' in item);
+      
+      if (isValidRegionData) {
+        setRegionsAccumulatedData((prev) => {
+          const newMap = new Map(prev);
+          // Always set the data for current page (handles both new page and refresh)
+          newMap.set(currentPage, regionsData.data);
+          return newMap;
+        });
+      }
+    }
+  }, [regionsData, currentPage, activeType]);
+
+  // Update countries accumulated data - only when data is fresh and matches current activeType
+  useEffect(() => {
+    // Only process if we're actually viewing countries and data is available
+    if (activeType === "countries" && countriesData?.data && countriesData.data.length > 0) {
+      // Validate that this is actually country data (not cached region data)
+      const isValidCountryData = countriesData.data.every((item: any) => 'country_id' in item);
+      
+      if (isValidCountryData) {
+        setCountriesAccumulatedData((prev) => {
+          const newMap = new Map(prev);
+          // Always set the data for current page (handles both new page and refresh)
+          newMap.set(currentPage, countriesData.data);
+          return newMap;
+        });
+      }
+    }
+  }, [countriesData, currentPage, activeType]);
 
   const handleToggle = (typeOrText: DestinationType | string) => {
     // Convert button text to DestinationType if needed
@@ -107,9 +147,10 @@ export const useAllDestinations = () => {
     } else {
       type = typeOrText as DestinationType;
     }
-    
+
     dispatch(setDestinationType(type));
-    setCurrentPage(1);
+    // Use current search query from input field when toggling
+    setApiSearchQuery(searchQuery);
   };
 
   const handleSearchChange = (value: string) => {
@@ -117,13 +158,18 @@ export const useAllDestinations = () => {
   };
 
   const handleSearch = () => {
-    setCurrentPage(1);
+    setRegionsPage(1);
+    setCountriesPage(1);
     setApiSearchQuery(searchQuery);
   };
 
   const handleLoadMore = () => {
     if (hasMore && !isFetching) {
-      setCurrentPage((prev) => prev + 1);
+      if (activeType === "regions") {
+        setRegionsPage((prev) => prev + 1);
+      } else {
+        setCountriesPage((prev) => prev + 1);
+      }
     }
   };
 

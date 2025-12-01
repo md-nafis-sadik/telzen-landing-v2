@@ -59,6 +59,11 @@ export const useCheckoutLogin = () => {
 
   const handleGoogleLogin = async () => {
     try {
+      // Save current URL for redirect after OAuth
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("oauth_redirect_url", window.location.pathname + window.location.search);
+      }
+
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
 

@@ -95,7 +95,7 @@ function AllDestinations() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
             {allDestinations.map((item, index) => (
               <DestinationCard
-                key={index}
+                key={`${activeType}-${item._id}-${index}`}
                 index={index}
                 data={item}
                 isRegional={activeType === "regions"}
@@ -137,6 +137,7 @@ function AllDestinations() {
           searchQuery={apiSearchQuery}
           title="No Destinations Found"
           description="We couldn't find any destinations. Please try again later."
+          isButton={false}
         />
       )}
     </>

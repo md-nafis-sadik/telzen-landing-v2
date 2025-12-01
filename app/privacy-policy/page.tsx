@@ -4,11 +4,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - Your Data Protection | Telzen",
-  description: "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
-  keywords: "privacy policy, data protection, user privacy, Telzen privacy, GDPR compliance, data security",
+  description:
+    "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
+  keywords:
+    "privacy policy, data protection, user privacy, Telzen privacy, GDPR compliance, data security",
   openGraph: {
     title: "Privacy Policy - Your Data Protection | Telzen",
-    description: "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
+    description:
+      "Read Telzen's privacy policy to understand how we protect and handle your personal data when using our eSIM services.",
     url: "/privacy-policy",
   },
 };
@@ -18,9 +21,13 @@ function PrivacyPolicy() {
 
   const renderContent = (content: any, index: number) => {
     if (content.type === "paragraph") {
-      return <p key={index} className={content.className || "mt-2"}>{content.text}</p>;
+      return (
+        <p key={index} className={content.className || "mt-2"}>
+          {content.text}
+        </p>
+      );
     }
-    
+
     if (content.type === "ul") {
       return (
         <ul key={index} className="list-disc list-inside space-y-1 mt-2">
@@ -30,7 +37,7 @@ function PrivacyPolicy() {
         </ul>
       );
     }
-    
+
     return null;
   };
 
@@ -47,7 +54,7 @@ function PrivacyPolicy() {
           </h2>
           <div className="flex flex-col gap-4 md:gap-5 lg:gap-6 text-sm md:text-base lg:text-lg leading-[160%] text-[#888]">
             <p>{appStrings.effectiveDate}</p>
-            
+
             {/* Sections */}
             {sections.map((section: any, sectionIndex: number) => (
               <div key={sectionIndex}>
@@ -56,46 +63,62 @@ function PrivacyPolicy() {
                 </h3>
 
                 {/* Section Paragraphs */}
-                {section.paragraphs?.map((paragraph: string, pIndex: number) => (
-                  <p key={pIndex} className={pIndex > 0 ? "mt-2" : ""}>{paragraph}</p>
-                ))}
+                {section.paragraphs?.map(
+                  (paragraph: string, pIndex: number) => (
+                    <p key={pIndex} className={pIndex > 0 ? "mt-2" : ""}>
+                      {paragraph}
+                    </p>
+                  )
+                )}
 
                 {/* Section List */}
                 {section.list && (
                   <ul className="list-disc list-inside space-y-1 mt-2">
-                    {section.list.items.map((item: string, itemIndex: number) => (
-                      <li key={itemIndex}>{item}</li>
-                    ))}
+                    {section.list.items.map(
+                      (item: string, itemIndex: number) => (
+                        <li key={itemIndex}>{item}</li>
+                      )
+                    )}
                   </ul>
                 )}
 
                 {/* Additional Content (mixed paragraphs and lists) */}
-                {section.additionalContent?.map((content: any, contentIndex: number) =>
-                  renderContent(content, contentIndex)
+                {section.additionalContent?.map(
+                  (content: any, contentIndex: number) =>
+                    renderContent(content, contentIndex)
                 )}
 
                 {/* Subsections */}
-                {section.subsections?.map((subsection: any, subIndex: number) => (
-                  <div key={subIndex} className="mt-4">
-                    <p className="font-bold ">{subsection.title}</p>
-                    
-                    {subsection.paragraphs?.map((paragraph: string, pIndex: number) => (
-                      <p key={pIndex} className="mt-2">{paragraph}</p>
-                    ))}
+                {section.subsections?.map(
+                  (subsection: any, subIndex: number) => (
+                    <div key={subIndex} className="mt-4">
+                      <p className="font-bold ">{subsection.title}</p>
 
-                    {subsection.list && (
-                      <ul className="list-disc list-inside space-y-1 mt-2">
-                        {subsection.list.items.map((item: string, itemIndex: number) => (
-                          <li key={itemIndex}>{item}</li>
-                        ))}
-                      </ul>
-                    )}
+                      {subsection.paragraphs?.map(
+                        (paragraph: string, pIndex: number) => (
+                          <p key={pIndex} className="mt-2">
+                            {paragraph}
+                          </p>
+                        )
+                      )}
 
-                    {subsection.additionalContent?.map((content: any, contentIndex: number) =>
-                      renderContent(content, contentIndex)
-                    )}
-                  </div>
-                ))}
+                      {subsection.list && (
+                        <ul className="list-disc list-inside space-y-1 mt-2">
+                          {subsection.list.items.map(
+                            (item: string, itemIndex: number) => (
+                              <li key={itemIndex}>{item}</li>
+                            )
+                          )}
+                        </ul>
+                      )}
+
+                      {subsection.additionalContent?.map(
+                        (content: any, contentIndex: number) =>
+                          renderContent(content, contentIndex)
+                      )}
+                    </div>
+                  )
+                )}
               </div>
             ))}
           </div>
