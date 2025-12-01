@@ -70,7 +70,7 @@ function Hero() {
               </p>
             </div> */}
 
-            <p className="text-2xl text-text-700 font-semibold mt-8">
+            <p className="text-lg lg:text-xl text-text-700 mt-8">
               {appStrings.downloadNow}
             </p>
             <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 flex-wrap">
@@ -83,8 +83,8 @@ function Hero() {
                 <Image
                   src={images.appStore}
                   alt="app store"
-                  width={150}
-                  height={50}
+                  width={120}
+                  height={40}
                   className="w-full h-full duration-200"
                   priority
                 />
@@ -98,8 +98,8 @@ function Hero() {
                 <Image
                   src={images.googlePlay}
                   alt="app store"
-                  width={150}
-                  height={50}
+                  width={120}
+                  height={40}
                   className="w-full h-full duration-200"
                   priority
                 />
