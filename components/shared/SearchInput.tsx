@@ -57,7 +57,7 @@ function SearchInput({
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className={`flex items-center border border-[#8C8C8C] rounded-full overflow-hidden h-13 bg-white ${className}`}
+        className={`flex items-center border border-[#8C8C8C] rounded-full overflow-hidden min-h-[44px] sm:h-13 bg-white ${className}`}
         whileFocus={{ borderColor: '#00CD8E', boxShadow: '0 0 0 2px rgba(0, 205, 142, 0.1)' }}
         transition={{ duration: 0.2 }}
       >
@@ -67,12 +67,12 @@ function SearchInput({
           value={currentValue}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
-          className={`flex-1 pl-6 text-sm text-gray-700 placeholder-gray-400 focus:outline-none ${inputClassName}`}
+          className={`flex-1 pl-3 sm:pl-4 md:pl-6 text-sm text-gray-700 placeholder-gray-400 focus:outline-none min-w-0 ${inputClassName}`}
         />
 
         <motion.button
           type="submit"
-          className={`bg-[#00CD8E] text-white text-sm lg:text-base font-medium px-5 py-[7px] h-max rounded-full m-2 cursor-pointer ${buttonClassName}`}
+          className={`bg-[#00CD8E] text-white text-xs sm:text-sm lg:text-base font-medium px-3 sm:px-4 md:px-5 py-[7px] h-max rounded-full m-1.5 sm:m-2 cursor-pointer flex-shrink-0 ${buttonClassName}`}
           whileHover={{ 
             scale: 1.05,
             backgroundColor: '#00B87A'
