@@ -1,8 +1,14 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { appStrings, envConfig, images } from "@/service";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AppStoreSvg,
+  appStrings,
+  envConfig,
+  GooglePlaySvg,
+  images,
+} from "@/service";
 import Image from "next/image";
 import AnimateCard from "../animation/AnimateCard";
 import BlurText from "../animation/BlurText";
@@ -10,13 +16,15 @@ import SearchInput from "../shared/SearchInput";
 
 function Hero() {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      router.push(`/destinations?search=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(
+        `/destinations?search=${encodeURIComponent(searchQuery.trim())}`
+      );
     } else {
-      router.push('/destinations');
+      router.push("/destinations");
     }
   };
 
@@ -56,7 +64,7 @@ function Hero() {
             </div>
             <div>
               <div className="w-full max-w-[360px] my-4 lg:my-8">
-                <SearchInput 
+                <SearchInput
                   placeholder="Search destinations..."
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -78,31 +86,15 @@ function Hero() {
                 href={envConfig.playAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-32 sm:w-40 h-14"
               >
-                <Image
-                  src={images.appStore}
-                  alt="app store"
-                  width={120}
-                  height={40}
-                  className="w-full h-full duration-200"
-                  priority
-                />
+                <AppStoreSvg />
               </a>
               <a
                 href={envConfig.googleAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-32 sm:w-40 h-14"
               >
-                <Image
-                  src={images.googlePlay}
-                  alt="app store"
-                  width={120}
-                  height={40}
-                  className="w-full h-full duration-200"
-                  priority
-                />
+                <GooglePlaySvg />
               </a>
             </div>
           </div>
