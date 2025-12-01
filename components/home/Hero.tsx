@@ -13,6 +13,7 @@ import Image from "next/image";
 import AnimateCard from "../animation/AnimateCard";
 import BlurText from "../animation/BlurText";
 import SearchInput from "../shared/SearchInput";
+import Link from "next/link";
 
 function Hero() {
   const router = useRouter();
@@ -82,20 +83,20 @@ function Hero() {
               {appStrings.downloadNow}
             </p>
             <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 flex-wrap">
-              <a
-                href={envConfig.playAppUrl}
+              <Link
+                href={envConfig.playAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <AppStoreSvg />
-              </a>
-              <a
-                href={envConfig.googleAppUrl}
+              </Link>
+              <Link
+                href={envConfig.googleAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <GooglePlaySvg />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="relative max-w-96 mx-auto md:max-w-none min-h-[380px]">

@@ -2,6 +2,7 @@ import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
+import Link from "next/link";
 
 function Download() {
   return (
@@ -41,8 +42,8 @@ function Download() {
                 delay={100}
                 className="w-32 sm:w-40 h-14"
               >
-                <a
-                  href={envConfig.playAppUrl}
+                <Link
+                  href={envConfig.playAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full h-full"
@@ -54,15 +55,15 @@ function Download() {
                     height={50}
                     className="w-full h-full duration-200"
                   />
-                </a>
+                </Link>
               </BlurCard>
               <BlurCard
                 scale={[0.8, 1]}
                 delay={300}
                 className="w-32 sm:w-40 h-14"
               >
-                <a
-                  href={envConfig.googleAppUrl}
+                <Link
+                  href={envConfig.googleAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full h-full"
@@ -74,7 +75,7 @@ function Download() {
                     height={50}
                     className="w-full h-full duration-200"
                   />
-                </a>
+                </Link>
               </BlurCard>
             </div>
           </div>

@@ -118,8 +118,8 @@ function EsimCard({ esim }: EsimCardProps) {
         {/* Dropdown Menu */}
         <div className="flex">
           <div className="flex">
-            <a
-              href={esim?.qr_code_url}
+            <Link
+              href={esim?.qr_code_url || ""}
               target="_blank"
               rel="noopener noreferrer"
               className=" transition-colors"
@@ -134,7 +134,7 @@ function EsimCard({ esim }: EsimCardProps) {
                   className="rounded-l-xl object-cover"
                 />
               </div>
-            </a>
+            </Link>
             <motion.button
               ref={buttonRef}
               whileHover={{ backgroundColor: "#f3f4f6" }}

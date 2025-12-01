@@ -26,13 +26,13 @@ export const useAllDestinations = () => {
   const [apiSearchQuery, setApiSearchQuery] = useState(
     searchParams.get("search") || ""
   );
-  const [regionsAccumulatedData, setRegionsAccumulatedData] = useState<Map<number, any[]>>(
-    new Map()
-  );
-  const [countriesAccumulatedData, setCountriesAccumulatedData] = useState<Map<number, any[]>>(
-    new Map()
-  );
-  
+  const [regionsAccumulatedData, setRegionsAccumulatedData] = useState<
+    Map<number, any[]>
+  >(new Map());
+  const [countriesAccumulatedData, setCountriesAccumulatedData] = useState<
+    Map<number, any[]>
+  >(new Map());
+
   // Use the appropriate page based on active type
   const currentPage = activeType === "regions" ? regionsPage : countriesPage;
 
@@ -79,10 +79,15 @@ export const useAllDestinations = () => {
   const hasMore = currentData?.meta?.has_next_page ?? false;
 
   // Compute allDestinations based on activeType
-  const accumulatedData = activeType === "regions" ? regionsAccumulatedData : countriesAccumulatedData;
+  const accumulatedData =
+    activeType === "regions"
+      ? regionsAccumulatedData
+      : countriesAccumulatedData;
   const sortedPages = Array.from(accumulatedData.keys()).sort((a, b) => a - b);
-  const allData = sortedPages.flatMap((page) => accumulatedData.get(page) || []);
-  
+  const allData = sortedPages.flatMap(
+    (page) => accumulatedData.get(page) || []
+  );
+
   // Deduplicate by _id to prevent duplicate entries
   const seenIds = new Set<string>();
   const allDestinations = allData.filter((item: any) => {
@@ -104,10 +109,16 @@ export const useAllDestinations = () => {
   // Update regions accumulated data - only when data is fresh and matches current activeType
   useEffect(() => {
     // Only process if we're actually viewing regions and data is available
-    if (activeType === "regions" && regionsData?.data && regionsData.data.length > 0) {
+    if (
+      activeType === "regions" &&
+      regionsData?.data &&
+      regionsData.data.length > 0
+    ) {
       // Validate that this is actually region data (not cached country data)
-      const isValidRegionData = regionsData.data.every((item: any) => 'region_id' in item);
-      
+      const isValidRegionData = regionsData.data.every(
+        (item: any) => "region_id" in item
+      );
+
       if (isValidRegionData) {
         setRegionsAccumulatedData((prev) => {
           const newMap = new Map(prev);
@@ -122,10 +133,16 @@ export const useAllDestinations = () => {
   // Update countries accumulated data - only when data is fresh and matches current activeType
   useEffect(() => {
     // Only process if we're actually viewing countries and data is available
-    if (activeType === "countries" && countriesData?.data && countriesData.data.length > 0) {
+    if (
+      activeType === "countries" &&
+      countriesData?.data &&
+      countriesData.data.length > 0
+    ) {
       // Validate that this is actually country data (not cached region data)
-      const isValidCountryData = countriesData.data.every((item: any) => 'country_id' in item);
-      
+      const isValidCountryData = countriesData.data.every(
+        (item: any) => "country_id" in item
+      );
+
       if (isValidCountryData) {
         setCountriesAccumulatedData((prev) => {
           const newMap = new Map(prev);
@@ -149,8 +166,9 @@ export const useAllDestinations = () => {
     }
 
     dispatch(setDestinationType(type));
-    // Use current search query from input field when toggling
-    setApiSearchQuery(searchQuery);
+    // Reset search when toggling
+    setSearchQuery("");
+    setApiSearchQuery("");
   };
 
   const handleSearchChange = (value: string) => {

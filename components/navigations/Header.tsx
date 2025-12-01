@@ -31,22 +31,22 @@ function Header() {
           <ClientNavigation>
             <ul className="flex flex-col sm:flex-row sm:items-center gap-6">
               <li>
-                <a
+                <Link
                   className="text-base text-text-700 hover:text-primary-800"
                   href="/destinations"
                   onClick={handleLinkClick}
                 >
                   {routes.buyPlans.name}
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   className="text-base text-text-700 hover:text-primary-800"
                   href="/contact"
                   onClick={handleLinkClick}
                 >
                   {routes.contactUs.name}
-                </a>
+                </Link>
               </li>
               {/* <li>
                 <SelectLanguage />

@@ -1,5 +1,6 @@
 "use client";
 import { handleCopy } from "@/lib/apiHandler";
+import Link from "next/link";
 import { useState } from "react";
 
 const BlogDetailsShareSocials = ({ blog }: any) => {
@@ -15,7 +16,7 @@ const BlogDetailsShareSocials = ({ blog }: any) => {
 
       <div className="flex items-center flex-wrap gap-3 sm:gap-4 mt-6 duration-200">
         {/* facebook  */}
-        <a
+        <Link
           href={`https://www.facebook.com/sharer.php?u=${url}`}
           target="_blank"
           className="w-10 sm:w-[60px] aspect-square bg-black border-2 border-transparent hover:bg-transparent hover:border-black rounded-full flex items-center justify-center duration-300 transition-colors group"
@@ -34,9 +35,9 @@ const BlogDetailsShareSocials = ({ blog }: any) => {
               className="fill-white group-hover:fill-black duration-300"
             />
           </svg>
-        </a>
+        </Link>
         {/* linkedin  */}
-        <a
+        <Link
           href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}`}
           target="_blank"
           className="w-10 sm:w-[60px] aspect-square bg-black border-2 border-transparent hover:bg-transparent hover:border-black rounded-full flex items-center justify-center duration-300 transition-colors group"
@@ -63,9 +64,9 @@ const BlogDetailsShareSocials = ({ blog }: any) => {
               className="fill-white group-hover:fill-black duration-300"
             />
           </svg>
-        </a>
+        </Link>
         {/* twitter */}
-        <a
+        <Link
           href={`https://twitter.com/intent/tweet?url=${url}`}
           target="_blank"
           className="w-10 sm:w-[60px] aspect-square bg-black border-2 border-transparent hover:bg-transparent hover:border-black rounded-full flex items-center justify-center duration-300 transition-colors group"
@@ -84,7 +85,7 @@ const BlogDetailsShareSocials = ({ blog }: any) => {
               className="fill-white group-hover:fill-black duration-300"
             />
           </svg>
-        </a>
+        </Link>
         <button
           type="button"
           aria-label="copy link"

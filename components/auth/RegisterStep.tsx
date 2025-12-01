@@ -7,6 +7,7 @@ import { useRegister } from "@/hook";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import SelectDropdown, { SelectOption } from "../shared/SelectDropdown";
+import Link from "next/link";
 
 const RegisterStep: React.FC = () => {
   const {
@@ -82,19 +83,19 @@ const RegisterStep: React.FC = () => {
           />
           <label htmlFor="terms" className="text-xs md:text-sm text-gray-600">
             By creating an account, you agree to our{" "}
-            <a
+            <Link
               href="#"
               className="text-primary-700 cursor-pointer hover:text-primary-800"
             >
               Terms & Conditions
-            </a>{" "}
+            </Link>{" "}
             and{" "}
-            <a
+            <Link
               href="#"
               className="text-primary-700 cursor-pointer hover:text-primary-800"
             >
               Privacy Policy
-            </a>
+            </Link>
           </label>
         </div>
 

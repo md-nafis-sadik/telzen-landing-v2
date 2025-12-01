@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react';
 import { useSearchParams, redirect } from 'next/navigation';
 import CheckoutSuccessful from '@/components/checkout/CheckoutSuccessful';
 import { useVerifyPaymentMutation } from '@/store/modules/checkout/checkoutApi';
+import Link from 'next/link';
 
 function ReturnContent() {
   const searchParams = useSearchParams();
@@ -54,12 +55,12 @@ function ReturnContent() {
           <p className="text-text-700 mb-6">
             We couldn&apos;t process your payment. Please try again or contact support if the problem persists.
           </p>
-          <a
+          <Link
             href="/checkout"
             className="inline-block px-6 py-3 bg-primary-700 text-white rounded-lg hover:bg-primary-800"
           >
             Back to Checkout
-          </a>
+          </Link>
         </div>
       </div>
     );
