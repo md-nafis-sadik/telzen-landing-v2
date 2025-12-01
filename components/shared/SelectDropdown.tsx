@@ -82,7 +82,7 @@ function SelectDropdown({
   };
 
   const renderOptionContent = (option: SelectOption, isSelected = false) => (
-    <div className={`flex items-center gap-3 cursor-pointer ${isSelected ? "w-full" : ""}`}>
+    <div className={`flex items-center gap-3 ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${isSelected ? "w-full" : ""}`}>
       {/* Flag */}
       {showFlag && option.flagCode && (
         <ReactCountryFlag

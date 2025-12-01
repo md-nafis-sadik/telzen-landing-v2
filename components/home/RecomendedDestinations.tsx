@@ -6,6 +6,7 @@ import BlurText from "../animation/BlurText";
 import Link from "next/link";
 import DestinationCard from "../shared/DestinationCard";
 import DestinationCardSkeleton from "../shared/DestinationCardSkeleton";
+import ErrorOverlay from "../shared/ErrorOverlay";
 import { useRecommendedDestinations } from "@/hook";
 
 function RecomendedDestinations() {
@@ -36,7 +37,7 @@ function RecomendedDestinations() {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {Array.from({ length: 4 }).map((_, index) => (
                 <DestinationCardSkeleton key={index} index={index} />
               ))}
@@ -47,40 +48,16 @@ function RecomendedDestinations() {
           {error && (
             <>
               <div className="relative mt-6 md:mt-10 mb-6">
-                {/* Blur overlay */}
-                <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-3xl z-10 flex flex-col items-center justify-center px-4">
-                  <div className="text-center max-w-md">
-                    <h3 className="text-xl md:text-2xl font-bold text-primary-700 mb-2">
-                      Failed to Load Recommendations
-                    </h3>
-                    <p className="text-text-700 mb-6">
-                      We couldn&apos;t fetch recommended destinations. Please
-                      try again.
-                    </p>
-                    <button
-                      onClick={() => window.location.reload()}
-                      className="px-4 md:px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-full font-semibold transition-colors duration-200 flex items-center gap-2 mx-auto cursor-pointer"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                      Reload Page
-                    </button>
-                  </div>
-                </div>
+                <ErrorOverlay
+                  title="Failed to Load Recommendations"
+                  description="We couldn't fetch recommended destinations. Please try again."
+                  buttonText="Reload Page"
+                  backgroundColor="bg-white/60"
+                  descriptionClassName="text-text-700"
+                />
 
                 {/* Fallback cards below blur */}
-                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -92,7 +69,7 @@ function RecomendedDestinations() {
                   ))}
                 </div>
 
-                <div className="grid md:hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="grid md:hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 2 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -109,7 +86,7 @@ function RecomendedDestinations() {
 
           {/* Data State */}
           {!isLoading && !error && popularCountries.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {popularCountries.map((item, index) => (
                 <DestinationCard
                   key={item._id}

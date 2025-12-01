@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { appStrings, ArrowRightSvg } from "@/service";
+import { appStrings, ArrowRightSvg, ReloadSvg } from "@/service";
 import HeaderPrev from "../shared/HeaderPrev";
 import SearchInput from "../shared/SearchInput";
 import BigToggleSwitch from "../shared/BigToggleSwitch";
@@ -62,19 +62,7 @@ function AllDestinations() {
             onClick={() => window.location.reload()}
             className="cursor-pointer mt-6 px-4 md:px-6 py-2 md:py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-full font-semibold transition-colors duration-200 flex items-center gap-2 text-sm md:text-base"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
+            <ReloadSvg />
             Reload Page
           </motion.button>
         </div>
@@ -82,7 +70,7 @@ function AllDestinations() {
 
       {/* Loading State */}
       {isLoading && currentPage === 1 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
           {Array.from({ length: itemsPerPage }).map((_, index) => (
             <DestinationCardSkeleton key={index} index={index} />
           ))}
@@ -92,7 +80,7 @@ function AllDestinations() {
       {/* Data State */}
       {!isLoading && !hasError && allDestinations.length > 0 && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
             {allDestinations.map((item, index) => (
               <DestinationCard
                 key={`${activeType}-${item._id}-${index}`}
@@ -105,7 +93,7 @@ function AllDestinations() {
 
           {/* Load More Loading */}
           {isFetching && currentPage > 1 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 w-full mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 w-full mx-auto">
               {Array.from({ length: loadMoreCount }).map((_, index) => (
                 <DestinationCardSkeleton
                   key={`load-more-${index}`}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "motion/react";
 import { CloseIcon, images, appStrings } from "@/service";
 import Image from "next/image";
@@ -11,16 +11,30 @@ function RemoveEsimModal() {
   const { isRemoveEsimModalOpen, isLoading, handleClose, handleRemove } =
     useRemoveEsim();
 
+  useEffect(() => {
+    if (isRemoveEsimModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isRemoveEsimModalOpen]);
+
   if (!isRemoveEsimModalOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#004534E5]/90 p-4">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#004534E5]/90 p-4 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2 }}
-        className="w-full max-w-md mx-auto bg-white rounded-2xl p-6 relative"
+        className="w-full max-w-md mx-auto bg-white rounded-2xl p-6 max-h-[90vh] overflow-y-auto no-scrollbar relative"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button

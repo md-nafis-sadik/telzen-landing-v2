@@ -38,6 +38,9 @@ function DestinationCard({
   const displayName = data?.name || destinationName || "New Zealand";
   const displayPrice = data?.start_from || destinationPrice || 0;
 
+  // Encode the image URL to handle spaces and special characters
+  const encodedImageUrl = displayImage ? encodeURI(displayImage) : displayImage;
+
   // Format price to show properly
   const formattedPrice =
     typeof displayPrice === "number" ? displayPrice.toFixed(2) : displayPrice;
@@ -70,7 +73,7 @@ function DestinationCard({
       key={index}
       className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer group"
       style={{
-        backgroundImage: `url(${displayImage})`,
+        backgroundImage: `url(${encodedImageUrl})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

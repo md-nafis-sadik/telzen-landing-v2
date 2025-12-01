@@ -4,6 +4,7 @@ import { images, StarPointSvg } from "@/service";
 import BlurText from "../animation/BlurText";
 import Image from "next/image";
 import PackageCardSkeleton from "../shared/PackageCardSkeleton";
+import PackageCard from "../shared/PackageCard";
 import { useDestinationDetails } from "@/hook";
 import EmptyState from "../shared/EmptyState";
 import HeaderPrev from "../shared/HeaderPrev";
@@ -80,9 +81,9 @@ function SingleDestination() {
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex h-full">
             {isLoading ? (
-              <div className="w-full md:w-[386px] aspect-[5/6] rounded-2xl lg:rounded-3xl bg-gray-200 animate-pulse"></div>
+              <div className="w-full md:w-[350px] lg:w-[386px] aspect-[5/6] rounded-2xl lg:rounded-3xl bg-gray-200 animate-pulse"></div>
             ) : (
-              <div className="w-full md:w-[386px]">
+              <div className="w-full md:w-[350px] lg:w-[386px]">
                 <div className="aspect-[5/6] relative">
                   <Image
                     src={displayImage || images?.newZealand}
@@ -108,7 +109,7 @@ function SingleDestination() {
                   <BlurText
                     text="Packages"
                     translateY={[50, 0]}
-                    className="text-lg md:text-2xl lg:text-[32px]"
+                    className="text-xl md:text-[26px] lg:text-[32px]"
                   />
                 </span>
 
@@ -127,39 +128,17 @@ function SingleDestination() {
                 : packagesData?.data?.packages?.map((packageItem, index) => {
                     const IconComponent = getRandomIcon(index);
                     return (
-                      <div
+                      <PackageCard
                         key={packageItem._id}
-                        className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full border border-text-100 hover:bg-primary-50 hover:border hover:border-primary-700 transition-all duration-500 select-none"
+                        packageId={packageItem._id}
+                        totalDataPlanInMb={packageItem.total_data_plan_in_mb}
+                        validity={packageItem.validity}
+                        onPurchaseRewardPoint={packageItem.on_purchase_reward_point}
+                        grandTotalSellingPrice={packageItem.grand_total_selling_price}
+                        IconComponent={IconComponent}
                         onClick={() => handlePackageClick(packageItem._id)}
-                      >
-                        <div className="flex flex-col w-full gap-3">
-                          <span>
-                            <IconComponent className="w-6 h-6" />
-                          </span>
-                          <div className="flex flex-col gap-1">
-                            <div className="text-lg md:text-xl lg:text-2xl tracking-wider">
-                              {formatDataSize(
-                                packageItem.total_data_plan_in_mb
-                              )}{" "}
-                              • {packageItem.validity}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <span>
-                                <StarPointSvg className="w-4 md:w-5 lg:w-6 h-4 md:h-5 lg:h-6" />
-                              </span>
-                              <span className="text-natural-500 text-sm md:text-base">
-                                {packageItem.on_purchase_reward_point || 0}{" "}
-                                Points
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end justify-end">
-                          <div className="text-xl md:text-2xl lg:text-[28px] justify-end font-semibold">
-                            ${packageItem.grand_total_selling_price.toFixed(2)}
-                          </div>
-                        </div>
-                      </div>
+                        formatDataSize={formatDataSize}
+                      />
                     );
                   })}
             </div>

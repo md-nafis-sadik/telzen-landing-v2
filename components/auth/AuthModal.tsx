@@ -33,7 +33,7 @@ const AuthModal: React.FC = () => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 overflow-hidden">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -53,6 +53,7 @@ const AuthModal: React.FC = () => {
               bounce: 0.3 
             }}
             className={`relative rounded-3xl w-full max-w-[94%] sm:max-w-md z-10 max-h-[92vh] flex flex-col ${step === "success" ? "bg-transparent" : "bg-white"}`}
+            onWheel={(e) => e.stopPropagation()}
           >
             <motion.button
               whileHover={{ scale: 1.1 }}

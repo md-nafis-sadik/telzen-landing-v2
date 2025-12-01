@@ -4,19 +4,13 @@ import {
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
-  useStripe,
-  useElements,
 } from "@stripe/react-stripe-js";
-import { FormEvent, useState } from "react";
-import type { StripeCardNumberElementChangeEvent } from "@stripe/stripe-js";
 import Image from "next/image";
-import { useCheckout } from "@/hook";
-import { useAppSelector } from "@/store/hooks";
-import { toast } from "react-toastify";
 import Button from "../shared/Button";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { images, formatFloatingNumber } from "@/service";
+import { images } from "@/service";
+import { useEmbeddedCheckoutForm } from "@/hook";
 
 interface EmbeddedCheckoutFormProps {
   packageId: string;
@@ -37,134 +31,24 @@ export default function EmbeddedCheckoutForm({
   onSuccess,
   isCouponLoading = false,
 }: EmbeddedCheckoutFormProps) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [cardholderName, setCardholderName] = useState("");
-  const [cardBrand, setCardBrand] = useState<string>("unknown");
-
-  const { createPayment, verifyPayment } = useCheckout();
-  const authData = useAppSelector((state) => state.auth.auth);
-  const token = authData?.token || "";
-
-  const handleCardChange = (event: StripeCardNumberElementChangeEvent) => {
-    setCardBrand(event.brand);
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (!stripe || !elements || !token) {
-      toast.error("Payment system not ready. Please try again.");
-      return;
-    }
-
-    if (!cardholderName.trim()) {
-      setError("Please enter cardholder name");
-      return;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-
-    try {
-      const cardNumberElement = elements.getElement(CardNumberElement);
-
-      if (!cardNumberElement) {
-        throw new Error("Card element not found");
-      }
-
-      // Create payment on backend
-      const paymentResult = await createPayment(
-        {
-          package_id: packageId,
-          order_type: orderType,
-          final_payment_amount: formatFloatingNumber(amount),
-          currency,
-          coupon_id: couponId,
-        },
-        token
-      );
-
-      if (!paymentResult?.data) {
-        throw new Error("Failed to create payment");
-      }
-
-      const {
-        client_secret,
-        _id: orderId,
-        is_free_purchase,
-      } = paymentResult.data;
-
-      // Confirm card payment with Stripe
-      const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(client_secret, {
-          payment_method: {
-            card: cardNumberElement,
-            billing_details: {
-              name: cardholderName.trim(),
-            },
-          },
-        });
-
-      if (stripeError) {
-        throw new Error(stripeError.message);
-      }
-
-      if (paymentIntent?.status === "succeeded") {
-        // Verify payment with backend
-        const verifyResult = await verifyPayment(orderId, token);
-        if (verifyResult?.success) {
-          toast.success("Payment successful! Your eSIM is being activated.");
-          if (onSuccess) onSuccess();
-        }
-      }
-    } catch (err: any) {
-      const errorMsg = err.message || "Payment failed. Please try again.";
-      setError(errorMsg);
-      toast.error(errorMsg);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleFreePackage = async () => {
-    if (!token) {
-      toast.error("Please login to continue.");
-      return;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-
-    try {
-      // Create payment on backend for free package
-      const paymentResult = await createPayment(
-        {
-          package_id: packageId,
-          order_type: orderType,
-          final_payment_amount: 0,
-          currency,
-          coupon_id: couponId,
-        },
-        token
-      );
-
-      if (!paymentResult?.data) {
-        throw new Error("Failed to activate free package");
-      }
-
-      toast.success("Free package activated successfully!");
-      if (onSuccess) onSuccess();
-    } catch (err: any) {
-      const errorMsg = err.message || "Activation failed. Please try again.";
-      setError(errorMsg);
-      toast.error(errorMsg);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+  const {
+    stripe,
+    isProcessing,
+    error,
+    cardholderName,
+    setCardholderName,
+    cardBrand,
+    handleCardChange,
+    handleSubmit,
+    handleFreePackage,
+  } = useEmbeddedCheckoutForm({
+    packageId,
+    amount,
+    currency,
+    couponId,
+    orderType,
+    onSuccess,
+  });
 
   // Card Brand Icon Component
   const CardBrandIcon = ({ brand }: { brand: string }) => {
@@ -218,14 +102,32 @@ export default function EmbeddedCheckoutForm({
   };
 
   return (
-    <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
-      {/* Show loading state when applying coupon */}
-      {isCouponLoading ? (
-        <div className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-700 mb-4"></div>
-          <p className="text-text-700">Applying coupon...</p>
+    <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8 relative">
+      {/* Processing Overlay */}
+      {isProcessing && (
+        <div className="absolute inset-0 bg-transparent backdrop-blur-xs rounded-3xl z-50 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-700"></div>
+            <p className="text-text-700 font-medium text-sm md:text-base">
+              Processing payment...
+            </p>
+          </div>
         </div>
-      ) : amount === 0 ? (
+      )}
+
+      {/* Show loading state when applying coupon */}
+      {isCouponLoading && (
+        <div className="absolute inset-0 bg-transparent backdrop-blur-xs rounded-3xl z-50 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-700"></div>
+            <p className="text-text-700 font-medium text-sm md:text-base">
+              Applying coupon...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {amount === 0 ? (
         /* Show free package message and button for $0 */
         <div className="space-y-6">
           <div className=" rounded-lg p-6 text-center">
@@ -291,7 +193,7 @@ export default function EmbeddedCheckoutForm({
               value={cardholderName}
               onChange={(e) => setCardholderName(e.target.value)}
               placeholder="Enter your Name"
-              className="w-full px-3 md:px-4 py-2.5 md:py-3.5 border border-gray-300 rounded-lg focus:ring-0 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+              className="w-full px-3 md:px-4 placeholder:text-sm md:placeholder:text-base py-2.5 md:py-3.5 border border-gray-300 rounded-lg focus:ring-0 outline-none transition-all text-gray-900 placeholder:text-gray-400"
               required
             />
           </div>

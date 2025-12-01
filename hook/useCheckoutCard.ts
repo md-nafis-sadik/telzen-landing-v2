@@ -76,19 +76,26 @@ export const useCheckoutCard = ({
 
       if (result.success && result.data) {
         const coupon = result.data;
-        
+
         // Check minimum order amount (lower limit)
         if (subtotal < coupon.minimum_order_amount) {
           toast.error(
-            `Minimum order amount is $${coupon.minimum_order_amount.toFixed(2)}. Your current order is $${subtotal.toFixed(2)}.`
+            `Minimum order amount is $${coupon.minimum_order_amount.toFixed(
+              2
+            )}. Your current order is $${subtotal.toFixed(2)}.`
           );
           return;
         }
 
         // Check maximum order amount (upper limit) - 0 means no limit
-        if (coupon.maximum_order_amount > 0 && subtotal > coupon.maximum_order_amount) {
+        if (
+          coupon.maximum_order_amount > 0 &&
+          subtotal > coupon.maximum_order_amount
+        ) {
           toast.error(
-            `Maximum order amount is $${coupon.maximum_order_amount.toFixed(2)}. Your current order is $${subtotal.toFixed(2)}.`
+            `Maximum order amount is $${coupon.maximum_order_amount.toFixed(
+              2
+            )}. Your current order is $${subtotal.toFixed(2)}.`
           );
           return;
         }
@@ -98,12 +105,15 @@ export const useCheckoutCard = ({
         setShowCouponInput(false);
         toast.success("Coupon applied successfully!");
       } else {
-        toast.error(result.message || "Invalid coupon code");
+        toast.error(result.error_messages[0].message || "Invalid coupon code");
       }
     } catch (error: any) {
       console.log("Coupon validation error:", error);
+      // Check error_messages array first, then data.message, then fallback
       const errorMessage =
-        error?.data?.message || "Failed to validate coupon. Please try again.";
+        error?.data?.error_messages?.[0]?.message ||
+        error?.data?.message ||
+        "Failed to validate coupon. Please try again.";
       toast.error(errorMessage);
     }
   };
@@ -115,8 +125,10 @@ export const useCheckoutCard = ({
   if (appliedCoupon) {
     // Check if price is within coupon limits
     const withinMinLimit = subtotal >= appliedCoupon.minimum_order_amount;
-    const withinMaxLimit = appliedCoupon.maximum_order_amount === 0 || subtotal <= appliedCoupon.maximum_order_amount;
-    
+    const withinMaxLimit =
+      appliedCoupon.maximum_order_amount === 0 ||
+      subtotal <= appliedCoupon.maximum_order_amount;
+
     if (withinMinLimit && withinMaxLimit) {
       if (appliedCoupon.discount.is_type_percentage) {
         // Percentage discount
@@ -125,7 +137,7 @@ export const useCheckoutCard = ({
         // Fixed amount discount
         discount = appliedCoupon.discount.amount;
       }
-      
+
       // Ensure discount doesn't exceed subtotal
       discount = Math.min(discount, subtotal);
     }

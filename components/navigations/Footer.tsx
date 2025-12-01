@@ -231,19 +231,19 @@ function Footer() {
       </div>
       {/* Bottom Section */}
       <div className="containerX">
-        <div className="flex flex-col md:flex-row justify-between border-t border-gray-200  py-5 md:py-5 lg:py-6 items-center gap-4 text-[#6F6C90] text-base md:text-lg leading-relaxed not-italic">
+        <div className="flex flex-col lg:flex-row justify-between border-t border-gray-200  py-5 md:py-5 lg:py-6 items-center gap-4 text-[#6F6C90] text-base md:text-lg leading-relaxed not-italic">
           <div className="text-center md:text-left">
             Copyright © {appStrings.kloudAppLLC}
           </div>
-          <div className="flex items-center gap-1 text-center md:text-right">
-            All Rights Reserved |{" "}
+          <div className="flex flex-col md:flex-row items-center gap-1 text-center md:text-right">
+            All Rights Reserved<span className="hidden md:block">{" | "}</span>
             <Link
               href="/terms-and-conditions"
               className="text-primary-700 underline transition-colors"
             >
               {appStrings.termsAndConditions}
             </Link>
-            {" | "}
+            <span className="hidden md:block">{" | "}</span>
             <Link
               href="/privacy-policy"
               className="text-primary-700 underline transition-colors"

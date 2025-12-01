@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/modules/auth/authSlice";
@@ -12,6 +13,18 @@ function LogoutModal() {
   const dispatch = useAppDispatch();
   const { logoutModal } = useAppSelector((state) => state.ui);
   const isOpen = logoutModal.isOpen;
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const handleClose = () => {
     dispatch(closeLogoutModal());
@@ -29,7 +42,7 @@ function LogoutModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-[#004534E5] opacity-90 flex items-center justify-center z-[10000] p-4"
+          className="fixed inset-0 bg-[#004534E5] opacity-90 flex items-center justify-center z-[10000] p-4 overflow-hidden"
           onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
           <motion.div
@@ -37,7 +50,8 @@ function LogoutModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.3, type: "spring", bounce: 0.3 }}
-            className="relative bg-white rounded-3xl p-8 w-full max-w-md text-center shadow-xl"
+            className="relative bg-white rounded-3xl p-8 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar text-center shadow-xl"
+            onWheel={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button

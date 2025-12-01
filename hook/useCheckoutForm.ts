@@ -155,7 +155,6 @@ export const useCheckoutForm = ({
         const verifyResult = await verifyPayment(createdOrderId, token);
 
         if (verifyResult?.success || verifyResult?.status_code === 409) {
-          toast.success("Payment successful! Your eSIM is being activated.");
           if (onSuccess) onSuccess();
         } else {
           toast.error("Payment verification failed. Please contact support.");

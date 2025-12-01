@@ -182,6 +182,7 @@ export interface CouponValidationResponse {
   status_code: number;
   success: boolean;
   message: string;
+  error_messages: any[];
   meta: null;
   data: {
     _id: string;
@@ -347,16 +348,19 @@ export const destinationApi = apiSlice.injectEndpoints({
     }),
 
     // Validate coupon
-    validateCoupon: builder.query<CouponValidationResponse, { couponCode: string; customerId?: string }>({
+    validateCoupon: builder.query<
+      CouponValidationResponse,
+      { couponCode: string; customerId?: string }
+    >({
       query: ({ couponCode, customerId }) => {
         const params = new URLSearchParams({
           search: couponCode,
         });
-        
+
         if (customerId) {
           params.append("customer_id", customerId);
         }
-        
+
         return {
           url: `/coupon/is-valid?${params.toString()}`,
           method: "GET",

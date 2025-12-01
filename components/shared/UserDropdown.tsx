@@ -159,7 +159,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
 
                     <div className="px-4 py-2.5 border-t border-natural-200">
                       <Link
-                        href="#"
+                        href="https://play.google.com/store/apps/details?id=com.netro.telzenapp"
                         className="text-primary-700 text-sm underline"
                       >
                         Install Telzen App
@@ -183,7 +183,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
                   </div>
 
                   {/* User Info */}
-                  <div className="px-6 py-4 border-b border-gray-100">
+                  <div className="px-5 md:px-6 py-3 md:py-4 border-b border-gray-100">
                     <div className="flex items-center gap-3">
                       <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white/20 flex-shrink-0">
                         {displayImage ? (
@@ -216,42 +216,42 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
                     {/* Profile Option */}
                     <button
                       onClick={handleProfileClickWithMenuClose}
-                      className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-gray-100 transition-colors"
+                      className="w-full px-5 md:px-6 py-3 md:py-4 text-left flex items-center gap-4 text-black active:bg-gray-100 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
                         <PersonIconSvg />
                       </span>
-                      <span className="font-medium text-base">Profile</span>
+                      <span className="font-medium text-sm md:text-base">Profile</span>
                     </button>
 
                     {/* My eSIM Option */}
                     <button
                       onClick={handleMyEsimClickWithMenuClose}
-                      className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-orange-50 transition-colors"
+                      className="w-full px-5 md:px-6 py-3 md:py-4 text-left flex items-center gap-4 text-black active:bg-orange-50 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
                         <EsimIconSvg />
                       </span>
-                      <span className="font-medium text-base">My eSIM</span>
+                      <span className="font-medium text-sm md:text-base">My eSIM</span>
                     </button>
 
                     {/* Logout Option */}
                     <button
                       onClick={handleLogoutClickWithMenuClose}
-                      className="w-full px-6 py-4 text-left flex items-center gap-4 text-black active:bg-red-50 transition-colors"
+                      className="w-full px-5 md:px-6 py-3 md:py-4 text-left flex items-center gap-4 text-black active:bg-red-50 transition-colors"
                     >
                       <span className="h-7 w-7 flex justify-center items-center">
                         <LogoutGreyIconSvg />
                       </span>
-                      <span className="font-medium text-base">Log Out</span>
+                      <span className="font-medium text-sm md:text-base">Log Out</span>
                     </button>
                   </div>
 
                   {/* Install App Link */}
-                  <div className="px-6 py-4 border-t border-gray-100">
+                  <div className="px-5 md:px-6 py-3 md:py-4 border-t border-gray-100">
                     <Link
                       href={envConfig.playAppUrl || "#"}
-                      className="text-primary-700 text-base font-medium underline"
+                      className="text-primary-700 text-sm md:text-base font-medium underline"
                     >
                       Install Telzen App
                     </Link>

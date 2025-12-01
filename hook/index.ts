@@ -15,3 +15,4 @@ export { useUserDropdown } from "./useUserDropdown";
 export { useCheckout } from "./useCheckout";
 export { useCheckoutCard } from "./useCheckoutCard";
 export { useCheckoutForm } from "./useCheckoutForm";
+export { useEmbeddedCheckoutForm } from "./useEmbeddedCheckoutForm";

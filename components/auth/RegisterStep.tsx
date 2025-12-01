@@ -44,9 +44,7 @@ const RegisterStep: React.FC = () => {
           id="register-email"
           label={appStrings.yourEmailOtp}
           value={formData.email}
-          onChange={(e) =>
-            setFormData({ ...formData, email: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           placeholder={appStrings.enterYourEmail}
           required
         />
@@ -100,7 +98,6 @@ const RegisterStep: React.FC = () => {
           </label>
         </div>
 
-
         <Button
           type="submit"
           variant="primary"
@@ -116,10 +113,7 @@ const RegisterStep: React.FC = () => {
 
         <div className="text-center text-sm md:text-base text-text-950 tracking-tight">
           Already have an account?{" "}
-          <Button
-            variant="link"
-            onClick={handleLoginClick}
-          >
+          <Button variant="link" onClick={handleLoginClick}>
             Login Now
           </Button>
         </div>

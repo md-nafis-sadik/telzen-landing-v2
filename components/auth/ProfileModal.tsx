@@ -20,6 +20,18 @@ function ProfileModal() {
   const { profileModal } = useAppSelector((state) => state.ui);
   const isOpen = profileModal.isOpen;
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const handleClose = () => {
     dispatch(closeProfileModal());
   };
@@ -145,7 +157,7 @@ function ProfileModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-[#004534E5] opacity-90 flex items-center justify-center z-[10000] p-4"
+          className="fixed inset-0 bg-[#004534E5] opacity-90 flex items-center justify-center z-[10000] p-4 overflow-hidden"
           onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
           <motion.div
@@ -153,7 +165,9 @@ function ProfileModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.3, type: "spring", bounce: 0.3 }}
-            className="bg-white rounded-3xl p-6 w-full max-w-md relative shadow-xl"
+            className="bg-white rounded-3xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar relative shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+            onWheel={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
@@ -199,20 +213,22 @@ function ProfileModal() {
                     {appStrings.yourEmail}
                   </label>
                   <input
+                    disabled
                     type="email"
                     value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    readOnly
                     placeholder={appStrings.enterYourEmail}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-0 focus:border-primary-700 outline-none transition-all placeholder:text-xs md:placeholder:text-sm"
+                    className="w-full px-4 py-3 border bg-gray-100 border-gray-300 rounded-lg cursor-not-allowed opacity-60 placeholder:text-xs md:placeholder:text-sm"
                   />
                 </div>
 
                 {/* Country Field */}
                 <SelectDropdown
+                  disabled
                   label={appStrings.country}
                   options={countryOptions}
                   value={formData.country.code}
-                  onChange={handleCountryChange}
+                  onChange={() => {}}
                   placeholder="Select your country"
                   showFlag={true}
                   searchable={true}

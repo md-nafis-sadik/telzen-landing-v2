@@ -16,7 +16,7 @@ function AllDestinationsContainer() {
             fallback={
               <div className="w-full">
                 <div className="w-48 h-8 bg-gray-200 rounded animate-pulse mb-6"></div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
                   {Array.from({ length: 15 }).map((_, index) => (
                     <DestinationCardSkeleton key={index} index={index} />
                   ))}

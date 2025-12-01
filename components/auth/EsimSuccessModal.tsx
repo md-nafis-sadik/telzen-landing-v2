@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -14,6 +14,18 @@ function EsimSuccessModal() {
   const router = useRouter();
   const { esimSuccessModal } = useAppSelector((state) => state.ui);
 
+  useEffect(() => {
+    if (esimSuccessModal.isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [esimSuccessModal.isOpen]);
+
   const handleClose = () => {
     dispatch(closeEsimSuccessModal());
   };
@@ -26,13 +38,14 @@ function EsimSuccessModal() {
   if (!esimSuccessModal.isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#004534E5]/90 p-4">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#004534E5]/90 p-4 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2 }}
-        className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 relative text-center"
+        className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 max-h-[90vh] overflow-y-auto no-scrollbar relative text-center"
+        onWheel={(e) => e.stopPropagation()}
       >
         <button
           onClick={handleClose}
