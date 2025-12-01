@@ -166,9 +166,14 @@ export const useAllDestinations = () => {
     }
 
     dispatch(setDestinationType(type));
-    // Reset search when toggling
+    
+    // Reset search and accumulated data when toggling
     setSearchQuery("");
     setApiSearchQuery("");
+    setRegionsAccumulatedData(new Map());
+    setCountriesAccumulatedData(new Map());
+    setRegionsPage(1);
+    setCountriesPage(1);
   };
 
   const handleSearchChange = (value: string) => {
