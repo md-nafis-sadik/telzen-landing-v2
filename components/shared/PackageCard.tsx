@@ -1,6 +1,9 @@
 "use client";
 
 import { StarPointSvg } from "@/service";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface PackageCardProps {
   packageId: string;
@@ -9,7 +12,8 @@ interface PackageCardProps {
   onPurchaseRewardPoint?: number;
   grandTotalSellingPrice: number;
   IconComponent: React.ComponentType<{ className?: string }>;
-  onClick: () => void;
+  onClick?: () => void;
+  checkoutUrl?: string;
   formatDataSize: (sizeInMB: number) => string;
 }
 
@@ -21,13 +25,33 @@ function PackageCard({
   grandTotalSellingPrice,
   IconComponent,
   onClick,
+  checkoutUrl,
   formatDataSize,
 }: PackageCardProps) {
-  return (
+  const router = useRouter();
+
+  // Explicit prefetch on component mount
+  useEffect(() => {
+    if (checkoutUrl) {
+      // Small delay to avoid blocking initial render
+      const timer = setTimeout(() => {
+        router.prefetch(checkoutUrl);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [checkoutUrl, router]);
+
+  // Prefetch on hover as backup
+  const handleMouseEnter = () => {
+    if (checkoutUrl) {
+      router.prefetch(checkoutUrl);
+    }
+  };
+
+  const CardContent = (
     <div
-      key={packageId}
       className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full border border-text-100 hover:bg-primary-50 hover:border hover:border-primary-700 transition-all duration-500 select-none"
-      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
     >
       <div className="flex flex-col w-full gap-3">
         <span>
@@ -54,6 +78,22 @@ function PackageCard({
       </div>
     </div>
   );
+
+  // Wrap with Link for prefetching if we have a checkout URL
+  if (checkoutUrl) {
+    return (
+      <Link href={checkoutUrl} prefetch={true} data-lenis-prevent>
+        {CardContent}
+      </Link>
+    );
+  }
+
+  // Fallback for cards without checkoutUrl (with onClick)
+  if (onClick) {
+    return <div onClick={onClick}>{CardContent}</div>;
+  }
+
+  return CardContent;
 }
 
 export default PackageCard;

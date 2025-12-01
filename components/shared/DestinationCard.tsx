@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "motion/react";
 import { cn, images } from "@/service";
 import { Region, Country } from "@/store/modules/destination/destinationApi";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface DestinationCardProps {
   buttonText?: string;
@@ -32,7 +33,7 @@ function DestinationCard({
   ...props
 }: DestinationCardProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const router = useRouter();
-
+  
   // Use data from API if available, otherwise fallback to props
   const displayImage = data?.image || destinationImage || images?.newZealand;
   const displayName = data?.name || destinationName || "New Zealand";
@@ -45,67 +46,71 @@ function DestinationCard({
   const formattedPrice =
     typeof displayPrice === "number" ? displayPrice.toFixed(2) : displayPrice;
 
-  const handleCardClick = () => {
-    if (onClick) {
-      onClick();
-    } else if (data) {
-      // Navigate to destination details with proper parameters
-      if (isRegional && "region_id" in data) {
-        const regionData = data as Region;
-        router.push(
-          `/destination/${regionData._id}?region_id=${
-            regionData._id
-          }&region_name=${encodeURIComponent(regionData.name)}`
-        );
-      } else if ("country_id" in data) {
-        const countryData = data as Country;
-        router.push(
-          `/destination/${countryData._id}?country_id=${
-            countryData._id
-          }&country_name=${encodeURIComponent(countryData.name)}`
-        );
-      }
+  // Generate destination URL for prefetching and navigation
+  const getDestinationUrl = () => {
+    if (!data) return null;
+    
+    if (isRegional && "region_id" in data) {
+      const regionData = data as Region;
+      return `/destination/${regionData._id}?region_id=${
+        regionData._id
+      }&region_name=${encodeURIComponent(regionData.name)}`;
+    } else if ("country_id" in data) {
+      const countryData = data as Country;
+      return `/destination/${countryData._id}?country_id=${
+        countryData._id
+      }&country_name=${encodeURIComponent(countryData.name)}`;
+    }
+    return null;
+  };
+
+  const destinationUrl = getDestinationUrl();
+
+  // Explicit prefetch on component mount
+  useEffect(() => {
+    if (destinationUrl) {
+      // Small delay to avoid blocking initial render
+      const timer = setTimeout(() => {
+        router.prefetch(destinationUrl);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [destinationUrl, router]);
+
+  // Prefetch on hover as backup
+  const handleMouseEnter = () => {
+    if (destinationUrl) {
+      router.prefetch(destinationUrl);
     }
   };
 
-  return (
-    <motion.div
-      key={index}
-      className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer group"
+  const CardContent = (
+    <div
+      className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer group block transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-2"
       style={{
         backgroundImage: `url(${encodedImageUrl})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      whileHover={{
-        scale: 1.05,
-        y: -8,
-      }}
-      transition={{
-        duration: 0.3,
-        ease: "easeOut",
-      }}
-      onClick={handleCardClick}
+      onMouseEnter={handleMouseEnter}
     >
-      <motion.div
+      <div
         className="absolute bottom-0 w-full rounded-b-[12.698px]"
         style={{
           height: "177.778px",
           background:
             "linear-gradient(0deg, #042855 0%, rgba(4, 40, 85, 0) 100%)",
         }}
-      ></motion.div>
+      ></div>
 
-      <motion.div
+      <div
         className={`
                       sticker absolute bottom-2 left-1/2 -translate-x-1/2 
                       w-[95%] max-w-full rounded-[9px] px-3 sm:px-[12.7px] pt-1 pb-2
+                      transition-transform duration-300 ease-out group-hover:-translate-y-1
                       ${index % 2 === 0 ? "bg-primary-700" : "bg-secondary-200"}
                     `}
-        initial={{ y: 0 }}
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <div className="text-2xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-tight">
           {displayName}
@@ -114,9 +119,30 @@ function DestinationCard({
           Start from {destinationPriceSymbol}
           {formattedPrice}
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
+
+  // Wrap with Link for prefetching if we have a destination URL
+  if (destinationUrl) {
+    return (
+      <Link 
+        href={destinationUrl} 
+        prefetch={true} 
+        className="block"
+        data-lenis-prevent
+      >
+        {CardContent}
+      </Link>
+    );
+  }
+
+  // Fallback for cards without data (with onClick)
+  if (onClick) {
+    return <div onClick={onClick}>{CardContent}</div>;
+  }
+
+  return CardContent;
 }
 
 export default DestinationCard;

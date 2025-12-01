@@ -18,6 +18,7 @@ function SingleDestination() {
     isLoading,
     error,
     handlePackageClick,
+    getCheckoutUrl,
     handleBackClick,
     formatDataSize,
     getRandomIcon,
@@ -136,6 +137,7 @@ function SingleDestination() {
                         onPurchaseRewardPoint={packageItem.on_purchase_reward_point}
                         grandTotalSellingPrice={packageItem.grand_total_selling_price}
                         IconComponent={IconComponent}
+                        checkoutUrl={getCheckoutUrl(packageItem._id)}
                         onClick={() => handlePackageClick(packageItem._id)}
                         formatDataSize={formatDataSize}
                       />

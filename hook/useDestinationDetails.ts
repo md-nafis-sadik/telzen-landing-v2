@@ -74,6 +74,20 @@ export const useDestinationDetails = () => {
     router.push(`/checkout?${params.toString()}`);
   };
 
+  const getCheckoutUrl = (packageId: string) => {
+    const params = new URLSearchParams({ package_id: packageId });
+
+    if (countryId) {
+      params.append("country_id", countryId);
+    }
+
+    if (regionId) {
+      params.append("region_id", regionId);
+    }
+
+    return `/checkout?${params.toString()}`;
+  };
+
   const handleBackClick = () => {
     router.back();
   };
@@ -100,6 +114,7 @@ export const useDestinationDetails = () => {
     isLoading,
     error,
     handlePackageClick,
+    getCheckoutUrl,
     handleBackClick,
     formatDataSize,
     getRandomIcon,
