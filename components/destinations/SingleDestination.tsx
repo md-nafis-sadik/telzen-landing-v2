@@ -80,11 +80,11 @@ function SingleDestination() {
         </div>
       ) : (
         <div className="flex flex-col md:flex-row gap-8">
-          <div className="flex h-full">
+          <div className="w-full md:w-[350px] lg:w-[386px] md:shrink-0">
             {isLoading ? (
-              <div className="w-full md:w-[350px] lg:w-[386px] aspect-[5/6] rounded-2xl lg:rounded-3xl bg-gray-200 animate-pulse"></div>
+              <div className="w-full aspect-[5/6] rounded-2xl lg:rounded-3xl bg-gray-200 animate-pulse"></div>
             ) : (
-              <div className="w-full md:w-[350px] lg:w-[386px]">
+              <div className="sticky top-4 lg:top-20">
                 <div className="aspect-[5/6] relative">
                   <Image
                     src={displayImage || images?.newZealand}

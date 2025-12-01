@@ -142,12 +142,12 @@ export const appStrings = {
   lastUpdated: "Last Updated:",
   privacyPolicyTitle: "Privacy Policy",
   termsAndConditionsTitle: "Terms and Conditions",
-  effectiveDate: "Effective Date: 28th October, 2025",
+  effectiveDate: "Effective Date: 28th November, 2025",
 
   // Privacy Policy Content Structure
   privacyPolicyContent: {
     intro: [
-      'This Privacy Policy describes how Telzen Digital ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
+      'This Privacy Policy describes how Telzen ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
       "By using our App, you agree to the collection and use of information in accordance with this policy.",
     ],
     sections: [
@@ -156,7 +156,7 @@ export const appStrings = {
         number: 1,
         title: "Introduction",
         paragraphs: [
-          'This Privacy Policy describes how Telzen Digital ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
+          'This Privacy Policy describes how Telzen ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
           "By using our App, you agree to the collection and use of information in accordance with this policy.",
         ],
       },
@@ -311,7 +311,7 @@ export const appStrings = {
           type: "ul",
           items: [
             "Profile Updates: You can access and update your profile information directly within the App's account settings.",
-            'Account Deletion: You may request the deletion of your account and associated personal data at any time. You can find the option to delete your account within the App\'s "Account" or "Profile" settings. You may also contact us directly at hello@telzen.digital to request deletion.',
+            'Account Deletion: You may request the deletion of your account and associated personal data at any time. You can find the option to delete your account within the App\'s "Account" or "Profile" settings. You may also contact us directly at hello@telzen.net to request deletion.',
             "Consequences of Deletion: Please note that requesting deletion will permanently remove your account, profile, and all associated data, including any active eSIMs or remaining data packages. This action cannot be reversed. We may retain certain anonymous or aggregated data for analytical purposes, and we may retain some information as required by law.",
           ],
         },
@@ -339,7 +339,7 @@ export const appStrings = {
         paragraphs: [
           "If you have any questions about this Privacy Policy, please contact us at:",
           "290/737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
-          "Email: hello@telzen.digital",
+          "Email: hello@telzen.net",
         ],
       },
     ],

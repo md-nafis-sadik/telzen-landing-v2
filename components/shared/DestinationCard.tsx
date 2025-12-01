@@ -69,11 +69,7 @@ function DestinationCard({
   // Explicit prefetch on component mount
   useEffect(() => {
     if (destinationUrl) {
-      // Small delay to avoid blocking initial render
-      const timer = setTimeout(() => {
-        router.prefetch(destinationUrl);
-      }, 100);
-      return () => clearTimeout(timer);
+      router.prefetch(destinationUrl);
     }
   }, [destinationUrl, router]);
 

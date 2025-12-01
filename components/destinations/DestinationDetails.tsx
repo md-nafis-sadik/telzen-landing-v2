@@ -7,11 +7,11 @@ import PackageCardSkeleton from "../shared/PackageCardSkeleton";
 function DestinationDetails() {
   return (
     <section
-      className="py-10 md:py-16 lg:py-20 bg-white lg:min-h-screen flex"
+      className="py-10 md:py-16 lg:py-20 bg-white overflow-visible"
       id="destinationDetails"
     >
-      <div className="w-full">
-        <div className="containerX">
+      <div className="w-full overflow-visible">
+        <div className="w-full max-w-[120rem] mx-auto px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-32 duration-200">
           <Suspense
             fallback={
               <div className="w-full">

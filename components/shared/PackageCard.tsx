@@ -33,11 +33,7 @@ function PackageCard({
   // Explicit prefetch on component mount
   useEffect(() => {
     if (checkoutUrl) {
-      // Small delay to avoid blocking initial render
-      const timer = setTimeout(() => {
-        router.prefetch(checkoutUrl);
-      }, 100);
-      return () => clearTimeout(timer);
+      router.prefetch(checkoutUrl);
     }
   }, [checkoutUrl, router]);
 
