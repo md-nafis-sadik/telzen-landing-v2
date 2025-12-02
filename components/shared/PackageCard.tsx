@@ -78,7 +78,7 @@ function PackageCard({
   // Wrap with Link for prefetching if we have a checkout URL
   if (checkoutUrl) {
     return (
-      <Link href={checkoutUrl} prefetch={true} data-lenis-prevent>
+      <Link href={checkoutUrl} prefetch={true}>
         {CardContent}
       </Link>
     );

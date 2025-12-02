@@ -33,7 +33,7 @@ function DestinationCard({
   ...props
 }: DestinationCardProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const router = useRouter();
-  
+
   // Use data from API if available, otherwise fallback to props
   const displayImage = data?.image || destinationImage || images?.newZealand;
   const displayName = data?.name || destinationName || "New Zealand";
@@ -49,7 +49,7 @@ function DestinationCard({
   // Generate destination URL for prefetching and navigation
   const getDestinationUrl = () => {
     if (!data) return null;
-    
+
     if (isRegional && "region_id" in data) {
       const regionData = data as Region;
       return `/destination/${regionData._id}?region_id=${
@@ -122,11 +122,10 @@ function DestinationCard({
   // Wrap with Link for prefetching if we have a destination URL
   if (destinationUrl) {
     return (
-      <Link 
-        href={destinationUrl} 
-        prefetch={true} 
+      <Link
+        href={destinationUrl}
+        prefetch={true}
         className="block"
-        data-lenis-prevent
       >
         {CardContent}
       </Link>

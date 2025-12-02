@@ -18,6 +18,11 @@ export const useUserDropdown = (
     skip: !auth.token,
   });
 
+  // Prefetch my-esim page on component mount
+  useEffect(() => {
+    router.prefetch("/my-esim");
+  }, [router]);
+
   const profile = profileData?.data;
 
   // Use profile data if available, otherwise fallback to auth data

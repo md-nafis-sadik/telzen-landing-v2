@@ -52,6 +52,29 @@ export const useOtpVerification = () => {
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").trim();
+    
+    // Only accept digits
+    const digits = pastedData.replace(/\D/g, "").slice(0, 4);
+    
+    if (digits.length > 0) {
+      const newOtp = [...otp];
+      for (let i = 0; i < digits.length && i < 4; i++) {
+        newOtp[i] = digits[i];
+      }
+      setOtp(newOtp);
+      
+      // Focus the last filled input or the next empty one
+      const nextIndex = Math.min(digits.length, 3);
+      const nextInput = document.querySelector(
+        `input[name="otp-${nextIndex}"]`
+      ) as HTMLInputElement;
+      if (nextInput) nextInput.focus();
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -106,6 +129,7 @@ export const useOtpVerification = () => {
     maskedEmail,
     handleOtpChange,
     handleKeyDown,
+    handlePaste,
     handleSubmit,
     handleResendOtp,
   };

@@ -13,6 +13,7 @@ const OtpStep: React.FC = () => {
     maskedEmail,
     handleOtpChange,
     handleKeyDown,
+    handlePaste,
     handleSubmit,
     handleResendOtp,
   } = useOtpVerification();
@@ -45,6 +46,7 @@ const OtpStep: React.FC = () => {
               value={digit}
               onChange={(e) => handleOtpChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
+              onPaste={handlePaste}
               className="w-16 md:w-21 h-10 md:h-12 text-center text-2xl font-bold bg-[#F5F5F5] border-1 border-[#E4E4E4] rounded-lg focus:ring-1 focus:ring-primary-700 focus:border-transparent outline-none transition-all max-h-[90%]"
               maxLength={1}
             />

@@ -30,17 +30,17 @@ const GoogleOAuthHandlerContent = () => {
       }
 
       setIsLoading(true);
-      
+
       try {
         // Calculate expiration time (7 days from now)
-        const expireAt = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60);
-        
+        const expireAt = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60;
+
         // Manually fetch profile using fetch API with the token
         const response = await fetch(`${envConfig.webApiUrl}/auth/profile`, {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/json",
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
         });
@@ -53,9 +53,9 @@ const GoogleOAuthHandlerContent = () => {
 
           if (result?.data) {
             const profileData = result.data;
-            
+
             console.log("Profile data fetched:", profileData);
-            
+
             // Save complete auth data with profile info and token
             dispatch(
               saveAuthData({
@@ -69,15 +69,19 @@ const GoogleOAuthHandlerContent = () => {
                 expireAt: expireAt,
               })
             );
-            
+
             // console.log("Auth data saved with name:", profileData.name);
             // toast.success("Successfully logged in!");
           }
         } else {
-          console.log("Profile API error:", response.status, await response.text());
+          console.log(
+            "Profile API error:",
+            response.status,
+            await response.text()
+          );
           // Still save the token even if profile fetch fails
           dispatch(saveAuthData({ token, expireAt }));
-        //   toast.success("Successfully logged in!");
+          //   toast.success("Successfully logged in!");
         }
 
         // Get redirect URL and clean up
@@ -87,14 +91,14 @@ const GoogleOAuthHandlerContent = () => {
         }
 
         // Small delay to ensure state is saved to localStorage
-        await new Promise(resolve => setTimeout(resolve, 150));
+        await new Promise((resolve) => setTimeout(resolve, 150));
 
         // Remove token from URL and redirect
         router.replace(redirectUrl);
       } catch (error) {
         console.log("OAuth callback error:", error);
         toast.error("Login failed. Please try again.");
-        
+
         // Clean up and redirect to home
         if (typeof window !== "undefined") {
           sessionStorage.removeItem("oauth_redirect_url");
