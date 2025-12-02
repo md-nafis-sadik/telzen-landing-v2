@@ -108,7 +108,7 @@ function DestinationCard({
                       ${index % 2 === 0 ? "bg-primary-700" : "bg-secondary-200"}
                     `}
       >
-        <div className="text-xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-5.5 sm:leading-tight">
+        <div className="text-lg sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-5.5 sm:leading-tight">
           {displayName}
         </div>
         <div className="text-xs sm:text-base md:text-lg text-[#FAFAFA]">

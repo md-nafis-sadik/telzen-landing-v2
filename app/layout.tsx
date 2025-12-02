@@ -4,6 +4,7 @@ import LenisLayout from "@/components/shared/LenisLayout";
 import Loader from "@/components/shared/Loader";
 import LocationTracker from "@/components/shared/LocationTracker";
 import GoogleOAuthHandler from "@/components/shared/GoogleOAuthHandler";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 import { ReduxProvider } from "@/components/providers";
 import { AuthModal, ProfileModal, LogoutModal, RemoveEsimModal, EsimSuccessModal } from "@/components/auth";
 import { ToastContainer } from 'react-toastify';
@@ -75,6 +76,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ReduxProvider>
+          <ScrollToTop />
           <GoogleOAuthHandler />
           <Header />
           <LenisLayout>{children}</LenisLayout>

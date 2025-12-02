@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/store/hooks";
 import { saveAuthData } from "@/store/modules/auth/authSlice";
@@ -12,6 +12,7 @@ const GoogleOAuthHandlerContent = () => {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const token = searchParams.get("token");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get the stored redirect URL from sessionStorage
   const getRedirectUrl = () => {
@@ -23,8 +24,13 @@ const GoogleOAuthHandlerContent = () => {
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
-      if (!token) return;
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
 
+      setIsLoading(true);
+      
       try {
         // Calculate expiration time (7 days from now)
         const expireAt = Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60);
@@ -94,13 +100,29 @@ const GoogleOAuthHandlerContent = () => {
           sessionStorage.removeItem("oauth_redirect_url");
         }
         router.replace("/");
+      } finally {
+        setIsLoading(false);
       }
     };
 
     handleGoogleCallback();
   }, [token, dispatch, router]);
 
-  // Show nothing while processing
+  // Show loading spinner while processing
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-white dark:bg-primary-black opacity-90 flex items-center justify-center z-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 md:w-12 h-10 md:h-12 border-4 border-gray-50 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base">
+            Signing in...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show nothing after processing
   return null;
 };
 
