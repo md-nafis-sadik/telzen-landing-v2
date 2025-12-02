@@ -14,24 +14,55 @@ function ScrollToTopContent() {
     }
 
     // Force scroll to top immediately
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
 
-    // Also scroll lenis if it exists with a slight delay to ensure it's initialized
+    // Scroll lenis if it exists
     const scrollLenis = () => {
       const lenis = (window as any).lenis;
       if (lenis) {
-        lenis.scrollTo(0, { immediate: true, force: true });
+        lenis.scrollTo(0, { immediate: true, force: true, lock: true });
       }
     };
 
+    // Immediate scroll
+    scrollToTop();
     scrollLenis();
 
-    // Retry after a short delay to ensure Lenis is ready
-    const timer = setTimeout(scrollLenis, 50);
+    // Multiple retries to ensure scroll happens even if Lenis is delayed
+    const timers = [
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 0),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 10),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 50),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 100),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 200),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 300),
+    ];
 
-    return () => clearTimeout(timer);
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, [pathname, searchParams]);
 
   return null;

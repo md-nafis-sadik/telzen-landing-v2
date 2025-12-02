@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowRightSvg } from "@/service";
+import { ArrowRightSvg, appStrings } from "@/service";
 import { cn } from "@/service";
 
 interface SeeMoreLinkProps {

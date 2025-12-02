@@ -49,9 +49,9 @@ function RecomendedDestinations() {
             <>
               <div className="relative mt-6 md:mt-10 mb-6">
                 <ErrorOverlay
-                  title="Failed to Load Recommendations"
-                  description="We couldn't fetch recommended destinations. Please try again."
-                  buttonText="Reload Page"
+                  title={appStrings.failedToLoadRecommendations}
+                  description={appStrings.failedToLoadRecommendationsDesc}
+                  buttonText={appStrings.reloadPage}
                   backgroundColor="bg-white/60"
                   descriptionClassName="text-text-700"
                 />
@@ -63,7 +63,7 @@ function RecomendedDestinations() {
                       key={`error-${index}`}
                       index={index}
                       destinationImage="/images/new-zealand.webp"
-                      destinationName="New Zealand"
+                      destinationName={appStrings.newZealand}
                       destinationPrice="5.00"
                     />
                   ))}
@@ -75,7 +75,7 @@ function RecomendedDestinations() {
                       key={`error-${index}`}
                       index={index}
                       destinationImage="/images/new-zealand.webp"
-                      destinationName="New Zealand"
+                      destinationName={appStrings.newZealand}
                       destinationPrice="5.00"
                     />
                   ))}

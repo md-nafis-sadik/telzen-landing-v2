@@ -12,6 +12,7 @@ import {
 } from "@/service/helpers/device.utils";
 import { countriesData, envConfig } from "@/service";
 import { toast } from "react-toastify";
+import { getCountryCode } from "./useLocation";
 
 // Export countries for use in components
 export const countries = countriesData;
@@ -63,18 +64,30 @@ export const useRegister = () => {
 
   const handleGoogleRegister = async () => {
     try {
+      // Save current URL for redirect after OAuth
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          "oauth_redirect_url",
+          window.location.pathname + window.location.search
+        );
+      }
+
       const deviceId = getDeviceId();
       const ipAddress = await getDeviceIpAddress();
 
-      // Get current selected country or default
-      const countryCode = formData.country?.code || countriesData[0].code;
-      const countryName = formData.country?.name || countriesData[0].name;
+      // Try to get country from location, otherwise use default
+      const locationCountryCode = getCountryCode();
+      const country =
+        countriesData.find((c) => c.code === locationCountryCode) ||
+        countriesData[0];
 
       // Build Google OAuth URL with query parameters
       const googleAuthUrl = `${
-        envConfig.baseUrl
-      }auth/google?device_id=${deviceId}&country_code=${countryCode}&country_name=${encodeURIComponent(
-        countryName
+        envConfig.webApiUrl
+      }/auth/google?device_id=${deviceId}&country_code=${
+        country.code
+      }&country_name=${encodeURIComponent(
+        country.name
       )}&ip_address=${ipAddress}`;
 
       // Redirect to Google OAuth

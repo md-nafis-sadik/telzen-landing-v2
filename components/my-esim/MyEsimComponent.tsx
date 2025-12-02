@@ -73,8 +73,8 @@ function MyEsimComponent() {
           {error && (
             <div className="w-full flex flex-col items-center justify-center py-12">
               <EmptyState
-                title="Error Loading Esims"
-                description="We couldn't load the esims. Please try again."
+                title={appStrings.errorLoadingEsims}
+                description={appStrings.errorLoadingEsimsDesc}
                 className="!py-0 !md:py-0 !lg:py-0 w-full"
                 isButton={false}
               />
@@ -97,7 +97,7 @@ function MyEsimComponent() {
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                Reload Page
+                {appStrings.reloadPage}
               </motion.button>
             </div>
           )}

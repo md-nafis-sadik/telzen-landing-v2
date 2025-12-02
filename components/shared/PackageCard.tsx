@@ -1,9 +1,9 @@
 "use client";
 
-import { StarPointSvg } from "@/service";
+import { StarPointSvg, appStrings } from "@/service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface PackageCardProps {
   packageId: string;
@@ -29,12 +29,32 @@ function PackageCard({
   formatDataSize,
 }: PackageCardProps) {
   const router = useRouter();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const hasPrefetched = useRef(false);
 
-  // Explicit prefetch on component mount
+  // Prefetch when card enters viewport using Intersection Observer
   useEffect(() => {
-    if (checkoutUrl) {
-      router.prefetch(checkoutUrl);
-    }
+    if (!checkoutUrl || !cardRef.current || hasPrefetched.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasPrefetched.current) {
+            router.prefetch(checkoutUrl);
+            hasPrefetched.current = true;
+          }
+        });
+      },
+      {
+        rootMargin: "50px", // Start prefetching 50px before entering viewport
+      }
+    );
+
+    observer.observe(cardRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [checkoutUrl, router]);
 
   // Prefetch on hover as backup
@@ -46,7 +66,7 @@ function PackageCard({
 
   const CardContent = (
     <div
-      className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full border border-text-100 hover:bg-primary-50 hover:border hover:border-primary-700 transition-all duration-500 select-none"
+      className="flex gap-3 cursor-pointer bg-text-100 p-4 rounded-2xl w-full border border-text-100 hover:bg-primary-50 hover:border hover:border-primary-700 transition-all duration-500 select-none active:scale-95"
       onMouseEnter={handleMouseEnter}
     >
       <div className="flex flex-col w-full gap-3">
@@ -62,7 +82,7 @@ function PackageCard({
               <StarPointSvg className="w-3.5 md:w-4.5 lg:w-6 h-3.5 md:h-4.5 lg:h-6" />
             </span>
             <span className="text-natural-500 text-xs md:text-sm lg:text-base">
-              {onPurchaseRewardPoint} Points
+              {onPurchaseRewardPoint} {appStrings.points}
             </span>
           </div>
         </div>
@@ -78,9 +98,11 @@ function PackageCard({
   // Wrap with Link for prefetching if we have a checkout URL
   if (checkoutUrl) {
     return (
-      <Link href={checkoutUrl} prefetch={true}>
-        {CardContent}
-      </Link>
+      <div ref={cardRef}>
+        <Link href={checkoutUrl} prefetch={false}>
+          {CardContent}
+        </Link>
+      </div>
     );
   }
 

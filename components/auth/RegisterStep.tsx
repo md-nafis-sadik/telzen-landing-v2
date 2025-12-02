@@ -119,7 +119,7 @@ const RegisterStep: React.FC = () => {
           </Button>
         </div>
 
-        {/* <Button
+        <Button
           variant="google"
           fullWidth
           onClick={handleGoogleRegister}
@@ -137,7 +137,7 @@ const RegisterStep: React.FC = () => {
           }
         >
           Login With Google
-        </Button> */}
+        </Button>
       </form>
     </div>
   );

@@ -44,6 +44,27 @@ export const appStrings = {
   recomended: "Recommended",
   headerButtonText: "Login/SignUp",
 
+  // Common UI Text
+  clickMe: "Click Me",
+  newZealand: "New Zealand",
+  startFrom: "Start from",
+  points: "Points",
+  seeMore: "See more",
+  reloadPage: "Reload Page",
+  
+  // Error Messages
+  failedToLoad: "Failed to Load",
+  failedToLoadDestinations: "Failed to Load Destinations",
+  failedToLoadRecommendations: "Failed to Load Recommendations",
+  failedToLoadDestinationsDesc: "We couldn't fetch the latest destinations. Please try again.",
+  failedToLoadRecommendationsDesc: "We couldn't fetch recommended destinations. Please try again.",
+  errorLoadingPackages: "Error Loading Packages",
+  errorLoadingPackagesDesc: "We couldn't load the packages. Please try again.",
+  errorLoadingEsims: "Error Loading Esims",
+  errorLoadingEsimsDesc: "We couldn't load the esims. Please try again.",
+  noPackagesFound: "No Packages Found",
+  noPackagesFoundDesc: "We couldn't find any packages for this destination.",
+
   // Auth & Forms
   login: "LOGIN",
   loginTitle: "Login",

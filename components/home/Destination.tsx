@@ -47,9 +47,9 @@ function Destination() {
             <>
               <div className="relative mt-6 md:mt-10 mb-6">
                 <ErrorOverlay
-                  title="Failed to Load Destinations"
-                  description="We couldn't fetch the latest destinations. Please try again."
-                  buttonText="Reload Page"
+                  title={appStrings.failedToLoadDestinations}
+                  description={appStrings.failedToLoadDestinationsDesc}
+                  buttonText={appStrings.reloadPage}
                   backgroundColor="bg-primary-black/60"
                 />
 
@@ -60,7 +60,7 @@ function Destination() {
                       key={`error-${index}`}
                       index={index}
                       destinationImage="/images/new-zealand.webp"
-                      destinationName="New Zealand"
+                      destinationName={appStrings.newZealand}
                       destinationPrice="5.00"
                     />
                   ))}
@@ -73,7 +73,7 @@ function Destination() {
                       key={`error-${index}`}
                       index={index}
                       destinationImage="/images/new-zealand.webp"
-                      destinationName="New Zealand"
+                      destinationName={appStrings.newZealand}
                       destinationPrice="5.00"
                     />
                   ))}

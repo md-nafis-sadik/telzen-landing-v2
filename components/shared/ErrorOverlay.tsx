@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { cn, ReloadSvg } from "@/service";
+import { cn, ReloadSvg, appStrings } from "@/service";
 
 interface ErrorOverlayProps {
   title?: string;
@@ -20,9 +20,9 @@ interface ErrorOverlayProps {
 }
 
 function ErrorOverlay({
-  title = "Failed to Load",
+  title = appStrings.failedToLoad,
   description = "We couldn't fetch the data. Please try again.",
-  buttonText = "Reload Page",
+  buttonText = appStrings.reloadPage,
   onButtonClick = () => window.location.reload(),
   className = "",
   overlayClassName = "",

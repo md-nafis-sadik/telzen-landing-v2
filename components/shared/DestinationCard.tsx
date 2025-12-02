@@ -1,10 +1,10 @@
 "use client";
 
-import { cn, images } from "@/service";
+import { cn, images, appStrings } from "@/service";
 import { Region, Country } from "@/store/modules/destination/destinationApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface DestinationCardProps {
   buttonText?: string;
@@ -20,7 +20,7 @@ interface DestinationCardProps {
 }
 
 function DestinationCard({
-  buttonText = "Click Me",
+  buttonText = appStrings.clickMe,
   className = "",
   index = 0,
   destinationImage,
@@ -33,10 +33,12 @@ function DestinationCard({
   ...props
 }: DestinationCardProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const router = useRouter();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const hasPrefetched = useRef(false);
 
   // Use data from API if available, otherwise fallback to props
   const displayImage = data?.image || destinationImage || images?.newZealand;
-  const displayName = data?.name || destinationName || "New Zealand";
+  const displayName = data?.name || destinationName || appStrings.newZealand;
   const displayPrice = data?.start_from || destinationPrice || 0;
 
   // Encode the image URL to handle spaces and special characters
@@ -66,11 +68,29 @@ function DestinationCard({
 
   const destinationUrl = getDestinationUrl();
 
-  // Explicit prefetch on component mount
+  // Prefetch when card enters viewport using Intersection Observer
   useEffect(() => {
-    if (destinationUrl) {
-      router.prefetch(destinationUrl);
-    }
+    if (!destinationUrl || !cardRef.current || hasPrefetched.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasPrefetched.current) {
+            router.prefetch(destinationUrl);
+            hasPrefetched.current = true;
+          }
+        });
+      },
+      {
+        rootMargin: "50px", // Start prefetching 50px before entering viewport
+      }
+    );
+
+    observer.observe(cardRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [destinationUrl, router]);
 
   // Prefetch on hover as backup
@@ -102,7 +122,7 @@ function DestinationCard({
 
       <div
         className={`
-                      sticker absolute bottom-2 left-1/2 -translate-x-1/2 
+                      sticker absolute bottom-[6px] sm:bottom-2 left-1/2 -translate-x-1/2 
                       w-[95%] max-w-full rounded-[9px] px-3 sm:px-[12.7px] pt-1 pb-2
                       transition-transform duration-300 ease-out group-hover:-translate-y-1
                       ${index % 2 === 0 ? "bg-primary-700" : "bg-secondary-200"}
@@ -112,7 +132,7 @@ function DestinationCard({
           {displayName}
         </div>
         <div className="text-xs sm:text-base md:text-lg text-[#FAFAFA]">
-          Start from {destinationPriceSymbol}
+          {appStrings.startFrom} {destinationPriceSymbol}
           {formattedPrice}
         </div>
       </div>
@@ -122,13 +142,15 @@ function DestinationCard({
   // Wrap with Link for prefetching if we have a destination URL
   if (destinationUrl) {
     return (
-      <Link
-        href={destinationUrl}
-        prefetch={true}
-        className="block"
-      >
-        {CardContent}
-      </Link>
+      <div ref={cardRef}>
+        <Link
+          href={destinationUrl}
+          prefetch={false}
+          className="block"
+        >
+          {CardContent}
+        </Link>
+      </div>
     );
   }
 
