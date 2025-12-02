@@ -23,7 +23,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Logo and Address */}
           <div className="md:col-span-2 lg:col-span-1 text-center lg:text-left">
-            <Link href={routes.home.path} className="inline-block mb-4">
+            <Link href={routes.home.path} className="inline-block mb-4" prefetch={true}>
               <Image
                 src={images.logo}
                 alt="Telzen"
@@ -42,24 +42,28 @@ function Footer() {
               <Link
                 href={socialMediaData[0].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
+                prefetch={false}
               >
                 <FacebookFooterIconSvg />
               </Link>
               <Link
                 href={socialMediaData[1].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
+                prefetch={false}
               >
                 <InstagramFooterIconSvg />
               </Link>
               <Link
                 href={socialMediaData[2].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
+                prefetch={false}
               >
                 <LinkedinFooterIconSvg />
               </Link>
               <Link
                 href={socialMediaData[3].link}
                 className="text-natural-500 hover:text-primary-700 transition-colors"
+                prefetch={false}
               >
                 <YoutubeFooterIconSvg />
               </Link>
@@ -75,6 +79,7 @@ function Footer() {
               <li>
                 <Link
                   href="/destinations"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   {appStrings.destinations}
@@ -83,6 +88,7 @@ function Footer() {
               <li>
                 <Link
                   href="/#howItWorks"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   {appStrings.howItWorks}
@@ -91,6 +97,7 @@ function Footer() {
               <li>
                 <Link
                   href="/#reviews"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Reviews
@@ -99,6 +106,7 @@ function Footer() {
               <li>
                 <Link
                   href={envConfig.googleAppUrl || "#"}
+                  prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Apple App Store
@@ -107,6 +115,7 @@ function Footer() {
               <li>
                 <Link
                   href={envConfig.playAppUrl || "#"}
+                  prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Google Play Store
@@ -124,6 +133,7 @@ function Footer() {
               <li>
                 <Link
                   href="/about"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   {appStrings.aboutUs}
@@ -132,6 +142,7 @@ function Footer() {
               <li>
                 <Link
                   href="/contact"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   {appStrings.contactUs}
@@ -140,6 +151,7 @@ function Footer() {
               <li>
                 <Link
                   href="/culture"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   {appStrings.culture}
@@ -148,6 +160,7 @@ function Footer() {
               <li>
                 <Link
                   href="/blog"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Blog
@@ -165,6 +178,7 @@ function Footer() {
               <li>
                 <Link
                   href="/contact"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Help center
@@ -173,6 +187,7 @@ function Footer() {
               <li>
                 <Link
                   href="/contact"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Report a bug
@@ -181,6 +196,7 @@ function Footer() {
               <li>
                 <Link
                   href="/contact"
+                  prefetch={true}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   Chat support
@@ -201,6 +217,7 @@ function Footer() {
                 </span>
                 <Link
                   href="mailto:hello@telzen.net"
+                  prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   hello@telzen.net
@@ -212,6 +229,7 @@ function Footer() {
                 </span>
                 <Link
                   href="tel:+15155064196"
+                  prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
                   +1 515 5064196
@@ -239,6 +257,7 @@ function Footer() {
             All Rights Reserved<span className="hidden md:block">{" | "}</span>
             <Link
               href="/terms-and-conditions"
+              prefetch={true}
               className="text-primary-700 underline transition-colors"
             >
               {appStrings.termsAndConditions}
@@ -246,6 +265,7 @@ function Footer() {
             <span className="hidden md:block">{" | "}</span>
             <Link
               href="/privacy-policy"
+              prefetch={true}
               className="text-primary-700 underline transition-colors"
             >
               {appStrings.privacyPolicy}

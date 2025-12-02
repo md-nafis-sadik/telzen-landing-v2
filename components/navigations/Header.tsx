@@ -19,7 +19,7 @@ function Header() {
     <header className="font-inter py-4 sticky top-0 bg-white/30 z-50 backdrop-blur-md">
       <div className="containerX">
         <nav className="flex items-center justify-between gap-4">
-          <Link href={routes.home.path}>
+          <Link href={routes.home.path} prefetch={true}>
             <Image
               src={images.logo}
               alt="logo"
@@ -34,6 +34,7 @@ function Header() {
                 <Link
                   className="text-base text-text-700 hover:text-primary-800"
                   href="/destinations"
+                  prefetch={true}
                   onClick={handleLinkClick}
                 >
                   {routes.buyPlans.name}
@@ -43,6 +44,7 @@ function Header() {
                 <Link
                   className="text-base text-text-700 hover:text-primary-800"
                   href="/contact"
+                  prefetch={true}
                   onClick={handleLinkClick}
                 >
                   {routes.contactUs.name}

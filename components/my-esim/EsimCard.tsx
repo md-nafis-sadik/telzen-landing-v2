@@ -55,7 +55,7 @@ function EsimCard({ esim }: EsimCardProps) {
           className="rounded-l-xl object-cover"
         />
       </div>
-      <div className="flex lg:hidden w-full h-[200px] md:h-[320px] relative">
+      <div className="flex lg:hidden w-full h-[160px] md:h-[320px] relative">
         <Image
           src={displayImage}
           alt="destination"
@@ -66,7 +66,7 @@ function EsimCard({ esim }: EsimCardProps) {
       </div>
 
       <div className="p-4 flex flex-col lg:flex-row justify-between items-center gap-3 md:gap-4 w-full">
-        <div className="flex flex-col gap-3 md:gap-4 text-center lg:text-left">
+        <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 text-center lg:text-left">
           <div className="flex flex-col gap-1">
             <div className="flex gap-1 justify-center lg:justify-start items-center">
               {esim?.associated_country?.flag ? (
@@ -97,20 +97,20 @@ function EsimCard({ esim }: EsimCardProps) {
               {esim?.iccid}
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-lg lg:text-xl font-semibold">
+          <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 md:gap-4 text-base md:text-lg lg:text-xl font-semibold">
             <div>
               {formatDataSize(esim?.data_package.total_data_plan_in_mb)} •{" "}
               {esim?.data_package.validity.amount}{" "}
               {esim.data_package.validity.type}s
             </div>
             <div>
-              <span className="font-normal text-base lg:text-lg text-text-700 mr-1">
+              <span className="font-normal text-sm md:text-base lg:text-lg text-text-700 mr-1">
                 Expires:
               </span>
               {formatDate(esim?.data_package.expired_at)}
             </div>
           </div>
-          <div className="text-xl md:text-[32px] font-extrabold text-primary-700 font-barlow uppercase">
+          <div className="text-lg md:text-xl lg:text-[32px] font-extrabold text-primary-700 font-barlow uppercase">
             BALANCE: {esim?.data_package?.total_data_plan_in_mb}MB
           </div>
         </div>
@@ -124,7 +124,7 @@ function EsimCard({ esim }: EsimCardProps) {
               rel="noopener noreferrer"
               className=" transition-colors"
             >
-              <div className="flex w-[136px] h-[136px] p-2 border border-natural-200 hover:bg-gray-50">
+              <div className="flex w-[100px] md:w-[136px] h-[100px] md:h-[136px] p-2 border border-natural-200 hover:bg-gray-50">
                 <Image
                   src={esim?.qr_code_url}
                   alt="destination"
@@ -198,7 +198,7 @@ function EsimCard({ esim }: EsimCardProps) {
 
                       <Link
                         href="/destinations"
-                        className="w-full flex pt-2 pb-3 gap-2 justify-start text-black hover:bg-natural-50 text-sm md:text-base font-normal rounded-none hover:text-primary-800"
+                        className="w-full flex pt-2 pb-3 gap-1 md:gap-2 justify-start text-black hover:bg-natural-50 text-sm md:text-base font-normal rounded-none hover:text-primary-800"
                       >
                         <span className="w-6 h-6">
                             <BuyBoxIconSvg />

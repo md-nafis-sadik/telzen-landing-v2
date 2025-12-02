@@ -150,7 +150,7 @@
 }
 
 .backTitle {
-  @apply text-2xl md:text-3xl lg:text-4xl 2xl:text-5xl font-barlow font-black uppercase leading-[88%];
+  @apply text-3xl lg:text-4xl 2xl:text-5xl font-barlow font-black uppercase leading-[88%];
 }
 
 .btn {

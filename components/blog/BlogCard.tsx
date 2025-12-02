@@ -49,6 +49,7 @@ const BlogCard = ({
 
       <Link
         href={link}
+        prefetch={true}
         className={cn("block pt-4 md:pt-6 w-full", contentContainerClassName)}
       >
         <p

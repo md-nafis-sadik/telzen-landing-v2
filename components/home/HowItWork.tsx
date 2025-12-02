@@ -21,7 +21,7 @@ function HowItWork() {
               translateX={[50, 0]}
               delay={index * 100}
             >
-              <div className="w-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-[1.015] duration-200">
+              <div className="w-full h-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-[1.015] duration-200">
                 <Image
                   src={step?.icon}
                   className="size-20"

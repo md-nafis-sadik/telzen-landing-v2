@@ -6,7 +6,7 @@ import { useSharedStore } from "@/store";
 
 export const useMyEsim = () => {
   const router = useRouter();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, authInitialized } = useAppSelector((state) => state.auth);
   const { setShowMenu } = useSharedStore();
   const [activeToggle, setActiveToggle] = useState<"myPlans" | "buyAnother">(
     "myPlans"
@@ -20,12 +20,12 @@ export const useMyEsim = () => {
     skip: !isAuthenticated,
   });
 
-  // Redirect to homepage if not authenticated
+  // Redirect to homepage if not authenticated (only after auth is initialized)
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (authInitialized && !isAuthenticated) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, authInitialized, router]);
 
   const handleToggleChange = (option: string) => {
     if (option === "My Plans") {

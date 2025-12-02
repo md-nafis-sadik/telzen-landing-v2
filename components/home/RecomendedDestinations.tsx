@@ -37,7 +37,7 @@ function RecomendedDestinations() {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {Array.from({ length: 4 }).map((_, index) => (
                 <DestinationCardSkeleton key={index} index={index} />
               ))}
@@ -57,7 +57,7 @@ function RecomendedDestinations() {
                 />
 
                 {/* Fallback cards below blur */}
-                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="hidden md:grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 4 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -69,7 +69,7 @@ function RecomendedDestinations() {
                   ))}
                 </div>
 
-                <div className="grid md:hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="grid md:hidden grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 2 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -86,7 +86,7 @@ function RecomendedDestinations() {
 
           {/* Data State */}
           {!isLoading && !error && popularCountries.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {popularCountries.map((item, index) => (
                 <DestinationCard
                   key={item._id}

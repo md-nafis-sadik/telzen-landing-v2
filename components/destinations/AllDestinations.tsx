@@ -70,7 +70,7 @@ function AllDestinations() {
 
       {/* Loading State */}
       {isLoading && currentPage === 1 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
           {Array.from({ length: itemsPerPage }).map((_, index) => (
             <DestinationCardSkeleton key={index} index={index} />
           ))}
@@ -80,7 +80,7 @@ function AllDestinations() {
       {/* Data State */}
       {!isLoading && !hasError && allDestinations.length > 0 && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
             {allDestinations.map((item, index) => (
               <DestinationCard
                 key={`${activeType}-${item._id}-${index}`}
@@ -93,7 +93,7 @@ function AllDestinations() {
 
           {/* Load More Loading */}
           {isFetching && currentPage > 1 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 w-full mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 lg:gap-4 mt-6 w-full mx-auto">
               {Array.from({ length: loadMoreCount }).map((_, index) => (
                 <DestinationCardSkeleton
                   key={`load-more-${index}`}

@@ -71,7 +71,14 @@ export const useEsimCard = (esim: Esim) => {
 
   const handleDownloadQR = () => {
     if (esim.qr_code_url) {
-      window.open(esim.qr_code_url, "_blank");
+      const link = document.createElement("a");
+      link.href = esim.qr_code_url;
+      link.download = `${getLocationName()}-QR-Code.png`;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
     setShowDropdown(false);
   };

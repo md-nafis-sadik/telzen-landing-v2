@@ -108,10 +108,10 @@ function DestinationCard({
                       ${index % 2 === 0 ? "bg-primary-700" : "bg-secondary-200"}
                     `}
       >
-        <div className="text-2xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-tight">
+        <div className="text-xl sm:text-[32px] font-extrabold font-barlow uppercase text-[#FAFAFA] leading-5.5 sm:leading-tight">
           {displayName}
         </div>
-        <div className="text-base sm:text-lg text-[#FAFAFA]">
+        <div className="text-xs sm:text-base md:text-lg text-[#FAFAFA]">
           Start from {destinationPriceSymbol}
           {formattedPrice}
         </div>

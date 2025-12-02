@@ -41,6 +41,7 @@ const OurBlog = ({ data }: any) => {
           <Link 
             className="mt-4 md:mt-8 flex items-center gap-2" 
             href="/blog"
+            prefetch={true}
           >
             <motion.span
               initial={{ x: 0 }}

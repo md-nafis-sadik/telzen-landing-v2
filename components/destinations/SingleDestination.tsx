@@ -110,11 +110,11 @@ function SingleDestination() {
                   <BlurText
                     text="Packages"
                     translateY={[50, 0]}
-                    className="text-xl md:text-[26px] lg:text-[32px]"
+                    className="text-2xl md:text-[28px] lg:text-[32px]"
                   />
                 </span>
 
-                <p className="text-text-700 mt-2 mb-6 max-w-lg tracking-tight text-xs md:text-sm lg:text-base">
+                <p className="text-text-700 mt-2 mb-6 max-w-lg tracking-tight text-sm lg:text-base">
                   Here is the list of packages. You can see details upon
                   selecting a package.
                 </p>

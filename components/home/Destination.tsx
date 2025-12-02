@@ -54,7 +54,7 @@ function Destination() {
                 />
 
                 {/* Fallback cards below blur */}
-                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="hidden md:grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 8 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -67,7 +67,7 @@ function Destination() {
                 </div>
 
                 {/* Fallback cards below blur */}
-                <div className="grid md:hidden grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
+                <div className="grid md:hidden grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 opacity-50 p-4">
                   {Array.from({ length: 2 }).map((_, index) => (
                     <DestinationCard
                       key={`error-${index}`}
@@ -84,7 +84,7 @@ function Destination() {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {Array.from({ length: 8 }).map((_, index) => (
                 <DestinationCardSkeleton key={index} index={index} />
               ))}
@@ -93,7 +93,7 @@ function Destination() {
 
           {/* Data State */}
           {!isLoading && !hasError && currentData.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 lg:gap-4 mt-6 md:mt-10 w-full mx-auto">
               {currentData.map((item, index) => (
                 <DestinationCard
                   key={item._id}
