@@ -58,6 +58,35 @@ function ScrollToTopContent() {
         scrollToTop();
         scrollLenis();
       }, 300),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 400),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 500),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 600),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 700),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 800),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 900),
+      setTimeout(() => {
+        scrollToTop();
+        scrollLenis();
+      }, 1000),
+
     ];
 
     return () => {
