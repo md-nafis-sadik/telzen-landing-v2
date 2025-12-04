@@ -1,5 +1,6 @@
 import { appStrings, workSteps } from "@/service";
 import Image from "next/image";
+import { memo } from "react";
 import AnimateCard from "../animation/AnimateCard";
 import BlurText from "../animation/BlurText";
 
@@ -28,6 +29,8 @@ function HowItWork() {
                   width={100}
                   height={100}
                   alt={step?.title}
+                  loading="lazy"
+                  sizes="80px"
                 />
                 <h3 className="mt-6 md:mt-8 lg:mt-10 text-3xl md:text-4xl lg:text-5xl font-bold lg:font-black font-barlow text-text-950">
                   {step?.title}
@@ -44,4 +47,4 @@ function HowItWork() {
   );
 }
 
-export default HowItWork;
+export default memo(HowItWork);

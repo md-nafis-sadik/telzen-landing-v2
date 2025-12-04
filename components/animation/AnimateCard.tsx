@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/service";
 import { motion } from "motion/react";
+import { memo, useMemo } from "react";
 
 function AnimateCard({
   text = "",
@@ -15,22 +16,29 @@ function AnimateCard({
   children: React.ReactNode;
   [key: string]: any;
 }) {
+  const animateProps = useMemo(
+    () => ({
+      ...rest,
+      opacity: 1,
+    }),
+    [rest]
+  );
+
+  const transition = useMemo(
+    () => ({
+      duration: 0.5,
+      delay: delay / 1000,
+    }),
+    [delay]
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{
-        ...rest,
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-        delay: delay / 1000,
-      }}
-      whileInView={{
-        ...rest,
-        opacity: 1,
-      }}
-      viewport={{ once: true }}
+      animate={animateProps}
+      transition={transition}
+      whileInView={animateProps}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
       className={cn(className, "relative")}
     >
       {children}
@@ -38,4 +46,4 @@ function AnimateCard({
   );
 }
 
-export default AnimateCard;
+export default memo(AnimateCard);

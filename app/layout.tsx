@@ -6,13 +6,20 @@ import LocationTracker from "@/components/shared/LocationTracker";
 import GoogleOAuthHandler from "@/components/shared/GoogleOAuthHandler";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import { ReduxProvider } from "@/components/providers";
-import { AuthModal, ProfileModal, LogoutModal, RemoveEsimModal, EsimSuccessModal } from "@/components/auth";
-import { ToastContainer } from 'react-toastify';
+import {
+  AuthModal,
+  ProfileModal,
+  LogoutModal,
+  RemoveEsimModal,
+  EsimSuccessModal,
+} from "@/components/auth";
+import { ToastContainer } from "react-toastify";
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter_Tight } from "next/font/google";
 import Script from "next/script";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter_Tight({
   weight: ["400", "500", "600", "700", "900"],
@@ -76,6 +83,17 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ReduxProvider>
+          <NextTopLoader
+            color="#00c896"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #00c896,0 0 5px #00c896"
+          />
           <ScrollToTop />
           <GoogleOAuthHandler />
           <Header />

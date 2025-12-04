@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useRouter } from "next/navigation";
 import {
   AppStoreSvg,
@@ -107,6 +107,7 @@ function Hero() {
               height={500}
               className="w-full"
               priority
+              sizes="(max-width: 768px) 384px, 500px"
             />
             <AnimateCard
               scale={[0.95, 1]}
@@ -118,6 +119,8 @@ function Hero() {
                 width={500}
                 height={500}
                 className="w-full z-10"
+                priority
+                sizes="(max-width: 768px) 192px, 250px"
               />
             </AnimateCard>
             <AnimateCard
@@ -131,6 +134,8 @@ function Hero() {
                 width={500}
                 height={500}
                 className="w-full  z-10"
+                priority
+                sizes="(max-width: 768px) 288px, 375px"
               />
             </AnimateCard>
           </div>
@@ -140,4 +145,4 @@ function Hero() {
   );
 }
 
-export default Hero;
+export default memo(Hero);

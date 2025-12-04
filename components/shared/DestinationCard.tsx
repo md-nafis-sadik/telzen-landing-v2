@@ -102,7 +102,7 @@ function DestinationCard({
 
   const CardContent = (
     <div
-      className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer group block transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-2"
+      className="relative rounded-[12.698px] aspect-[5/6] overflow-hidden cursor-pointer group block transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-2 will-change-transform"
       style={{
         backgroundImage: `url(${encodedImageUrl})`,
         backgroundSize: "cover",

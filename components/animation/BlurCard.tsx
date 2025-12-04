@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/service";
 import { motion } from "motion/react";
+import { memo, useMemo } from "react";
 
 function BlurCard({
   text = "",
@@ -15,23 +16,28 @@ function BlurCard({
   children: React.ReactNode;
   [key: string]: any;
 }) {
+  const animateProps = useMemo(
+    () => ({
+      ...rest,
+      opacity: [0, 1],
+    }),
+    [rest]
+  );
+
+  const transition = useMemo(
+    () => ({
+      duration: 0.5,
+      delay: delay / 1000,
+    }),
+    [delay]
+  );
+
   return (
     <motion.div
-      animate={{
-        ...rest,
-        opacity: [0, 1],
-        // filter: ["blur(10px)", "blur(0px)"],
-      }}
-      transition={{
-        duration: 0.5,
-        delay: delay / 1000,
-      }}
-      whileInView={{
-        ...rest,
-        opacity: [0, 1],
-        // filter: ["blur(10px)", "blur(0px)"],
-      }}
-      viewport={{ once: true }}
+      animate={animateProps}
+      transition={transition}
+      whileInView={animateProps}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
       className={cn(className, "relative")}
     >
       {children}
@@ -39,4 +45,4 @@ function BlurCard({
   );
 }
 
-export default BlurCard;
+export default memo(BlurCard);

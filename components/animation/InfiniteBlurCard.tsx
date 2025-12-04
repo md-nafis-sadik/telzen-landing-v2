@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/service";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, memo, useMemo, useCallback } from "react";
 
 interface Props {
   className?: string;
@@ -28,6 +28,15 @@ function InfiniteBlurCard({
 }: Props) {
   const [startYoyo, setStartYoyo] = useState(false);
 
+  const transition = useMemo(
+    () => ({ duration: duration, delay: delay / 1000 }),
+    [duration, delay]
+  );
+
+  const handleAnimationComplete = useCallback(() => {
+    setStartYoyo(true);
+  }, []);
+
   return (
     <motion.div
       initial={{
@@ -35,8 +44,8 @@ function InfiniteBlurCard({
         scale: 0.95,
       }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: duration, delay: delay / 1000 }}
-      onAnimationComplete={() => setStartYoyo(true)}
+      transition={transition}
+      onAnimationComplete={handleAnimationComplete}
       className={cn(className, "relative")}
       {...rest}
     >
@@ -51,4 +60,4 @@ function InfiniteBlurCard({
   );
 }
 
-export default InfiniteBlurCard;
+export default memo(InfiniteBlurCard);

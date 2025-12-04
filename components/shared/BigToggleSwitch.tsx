@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setDestinationType, DestinationType } from "@/store/modules/destination/destinationSlice";
@@ -35,7 +35,7 @@ function BigToggleSwitch({
     ? localActive === 'first' 
     : activeType === 'countries';
   
-  const handleToggle = (type: DestinationType, buttonText: string, position: 'first' | 'second') => {
+  const handleToggle = useCallback((type: DestinationType, buttonText: string, position: 'first' | 'second') => {
     if (useLocalState) {
       setLocalActive(position);
     } else {
@@ -43,7 +43,7 @@ function BigToggleSwitch({
     }
     // Pass button text for custom handlers (like MyEsim), or type for standard handlers
     onToggle?.(buttonText);
-  };
+  }, [useLocalState, dispatch, onToggle]);
 
   return (
     <div

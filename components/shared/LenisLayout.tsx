@@ -4,7 +4,17 @@ import React from "react";
 
 function LenisLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ReactLenis root options={{ lerp: 0.2, duration: 1.2, smoothWheel: true }}>
+    <ReactLenis 
+      root 
+      options={{ 
+        lerp: 0.1, 
+        duration: 1, 
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+      }}
+    >
       {children}
     </ReactLenis>
   );

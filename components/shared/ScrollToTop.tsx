@@ -13,15 +13,14 @@ function ScrollToTopContent() {
       history.scrollRestoration = "manual";
     }
 
-    // Force scroll to top immediately
-    const scrollToTop = () => {
+    // Single combined scroll function
+    const performScroll = () => {
+      // Native scroll
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-    };
 
-    // Scroll lenis if it exists
-    const scrollLenis = () => {
+      // Lenis scroll if available
       const lenis = (window as any).lenis;
       if (lenis) {
         lenis.scrollTo(0, { immediate: true, force: true, lock: true });
@@ -29,68 +28,19 @@ function ScrollToTopContent() {
     };
 
     // Immediate scroll
-    scrollToTop();
-    scrollLenis();
+    performScroll();
 
-    // Multiple retries to ensure scroll happens even if Lenis is delayed
-    const timers = [
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 0),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 10),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 50),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 100),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 200),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 300),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 400),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 500),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 600),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 700),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 800),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 900),
-      setTimeout(() => {
-        scrollToTop();
-        scrollLenis();
-      }, 1000),
-
-    ];
+    // Delayed retries to handle Lenis initialization and page-specific scroll logic
+    const timer1 = setTimeout(performScroll, 10);
+    const timer2 = setTimeout(performScroll, 100);
+    const timer3 = setTimeout(performScroll, 300);
+    const timer4 = setTimeout(performScroll, 500);
 
     return () => {
-      timers.forEach(timer => clearTimeout(timer));
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      clearTimeout(timer4);
     };
   }, [pathname, searchParams]);
 

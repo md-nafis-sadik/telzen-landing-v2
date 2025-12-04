@@ -1,5 +1,6 @@
 import { appStrings, images } from "@/service";
 import Image from "next/image";
+import { memo } from "react";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 
@@ -14,6 +15,8 @@ function Nationwide() {
             height={300}
             className="size-48 md:size-56 lg:size-72 object-contain mx-auto"
             alt="opera house"
+            loading="lazy"
+            sizes="(max-width: 768px) 192px, (max-width: 1024px) 224px, 288px"
           />
         </BlurCard>
         <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10 overflow-hidden">
@@ -35,4 +38,4 @@ function Nationwide() {
   );
 }
 
-export default Nationwide;
+export default memo(Nationwide);

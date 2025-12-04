@@ -3,6 +3,7 @@
 import { images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback } from "react";
 import ClientNavigation from "./ClientNavigation";
 import SelectLanguage from "./SelectLanguage";
 import { AuthButton } from "../auth";
@@ -11,9 +12,9 @@ import { useSharedStore } from "@/store";
 function Header() {
   const { setShowMenu } = useSharedStore();
   
-  const handleLinkClick = () => {
+  const handleLinkClick = useCallback(() => {
     setShowMenu(false);
-  };
+  }, [setShowMenu]);
 
   return (
     <header className="font-inter py-4 sticky top-0 bg-white/30 z-50 backdrop-blur-md">
@@ -26,6 +27,8 @@ function Header() {
               width={150}
               height={50}
               className="w-7xl"
+              priority
+              sizes="150px"
             />
           </Link>
           <ClientNavigation>

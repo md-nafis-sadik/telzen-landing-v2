@@ -1,5 +1,6 @@
 import { appStrings, envConfig, images } from "@/service";
 import Image from "next/image";
+import { memo } from "react";
 import BlurCard from "../animation/BlurCard";
 import BlurText from "../animation/BlurText";
 import Link from "next/link";
@@ -54,6 +55,8 @@ function Download() {
                     width={150}
                     height={50}
                     className="w-full h-full duration-200"
+                    loading="lazy"
+                    sizes="160px"
                   />
                 </Link>
               </BlurCard>
@@ -74,6 +77,8 @@ function Download() {
                     width={150}
                     height={50}
                     className="w-full h-full duration-200"
+                    loading="lazy"
+                    sizes="160px"
                   />
                 </Link>
               </BlurCard>
@@ -91,6 +96,8 @@ function Download() {
                   width={500}
                   height={260}
                   className="w-full rounded-xl"
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 480px"
                 />
               </BlurCard>
               <BlurCard scale={[0.8, 1]} delay={500}>
@@ -100,6 +107,8 @@ function Download() {
                   width={500}
                   height={260}
                   className="w-full max-w-2/3 absolute bottom-0 left-1/2 transform -translate-x-1/2"
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 480px"
                 />
               </BlurCard>
             </div>
@@ -110,4 +119,4 @@ function Download() {
   );
 }
 
-export default Download;
+export default memo(Download);

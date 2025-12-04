@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion } from "motion/react";
 
 interface SearchInputProps {
@@ -28,26 +28,26 @@ function SearchInput({
 
   const currentValue = value !== undefined ? value : internalValue;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     if (onChange) {
       onChange(newValue);
     } else {
       setInternalValue(newValue);
     }
-  };
+  }, [onChange]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     onSearch?.();
-  };
+  }, [onSearch]);
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       onSearch?.();
     }
-  };
+  }, [onSearch]);
 
   return (
     <motion.form

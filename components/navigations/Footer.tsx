@@ -14,6 +14,7 @@ import {
 } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
+import { memo } from "react";
 
 function Footer() {
   return (
@@ -30,6 +31,8 @@ function Footer() {
                 width={111}
                 height={32}
                 className="h-10 w-auto"
+                loading="lazy"
+                sizes="111px"
               />
             </Link>
             <address className="text-[#6F6C90] text-base md:text-lg leading-relaxed not-italic">
@@ -277,4 +280,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default memo(Footer);
