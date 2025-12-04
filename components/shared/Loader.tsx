@@ -1,24 +1,31 @@
 "use client";
 import { cn, images } from "@/service";
 import Image from "next/image";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 
 function Loader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // This runs when the page has fully loaded
-    const handleLoad = () => setLoading(false);
+    // Hide loader after a short delay or when page loads, whichever comes first
+    const timer = setTimeout(() => setLoading(false), 90);
+    
+    const handleLoad = () => {
+      setLoading(false);
+      clearTimeout(timer);
+    };
 
-    // Listen for window load event
     if (document.readyState === "complete") {
       setLoading(false);
+      clearTimeout(timer);
     } else {
       window.addEventListener("load", handleLoad);
     }
 
-    // Clean up listener
-    return () => window.removeEventListener("load", handleLoad);
+    return () => {
+      window.removeEventListener("load", handleLoad);
+      clearTimeout(timer);
+    };
   }, []);
 
   if (!loading) return null;
@@ -42,4 +49,4 @@ function Loader() {
   );
 }
 
-export default memo(Loader);
+export default Loader;
