@@ -43,15 +43,15 @@ const LocationTracker: React.FC = () => {
   }, [error]);
 
   // Optional: Log successful location retrieval for debugging
-  useEffect(() => {
-    if (location && process.env.NODE_ENV === 'development') {
-      console.log('Location detected:', {
-        city: location.city,
-        country: location.country,
-        coordinates: `${location.latitude}, ${location.longitude}`
-      });
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location && process.env.NODE_ENV === 'development') {
+  //     console.log('Location detected:', {
+  //       city: location.city,
+  //       country: location.country,
+  //       coordinates: `${location.latitude}, ${location.longitude}`
+  //     });
+  //   }
+  // }, [location]);
 
   // Completely invisible - no UI elements
   return null;
