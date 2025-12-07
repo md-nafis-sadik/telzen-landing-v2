@@ -38,7 +38,7 @@ function TermsAndConditions() {
     <main className="font-inter bg-white">
       <section className="py-10 md:py-16 lg:py-20 bg-white">
         <div className="containerX">
-          <h2 className="title text-primary-700 mb-6 md:mb-10 lg:mb-20 overflow-hidden text-center">
+          <h2 className="title text-primary-700 mb-6 md:mb-10 lg:mb-20 text-center">
             <BlurText
               text={appStrings.termsAndConditionsTitle}
               translateY={[50, 0]}

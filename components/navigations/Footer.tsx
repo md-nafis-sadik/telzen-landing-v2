@@ -19,12 +19,16 @@ import { memo } from "react";
 function Footer() {
   return (
     <footer className="bg-white ">
-      <div className="containerX py-12 md:py-16 lg:py-20">
+      <div className="containerX pt-10 pb-6 md:pb-16 md:pt-16 lg:py-20">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           {/* Logo and Address */}
           <div className="md:col-span-2 lg:col-span-1 text-center lg:text-left">
-            <Link href={routes.home.path} className="inline-block mb-4" prefetch={true}>
+            <Link
+              href={routes.home.path}
+              className="inline-block mb-4"
+              prefetch={true}
+            >
               <Image
                 src={images.logo}
                 alt="Telzen"
