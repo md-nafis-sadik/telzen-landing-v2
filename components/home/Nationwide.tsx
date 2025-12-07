@@ -19,7 +19,7 @@ function Nationwide() {
             sizes="(max-width: 768px) 192px, (max-width: 1024px) 224px, 288px"
           />
         </BlurCard>
-        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10 overflow-hidden">
+        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10">
           <BlurText
             text={appStrings.nationwideCoverage}
             translateY={[50, 0]}

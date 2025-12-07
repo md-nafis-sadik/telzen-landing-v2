@@ -19,7 +19,7 @@ function WhyChoose() {
                 className="size-60 mx-auto lg:mx-0"
               />
             </BlurCard>
-            <h2 className="title text-text-950 my-4 md:my-6 overflow-hidden">
+            <h2 className="title text-text-950 my-4 md:my-6">
               <BlurText
                 text={appStrings.whyChooseTelzen}
                 translateX={[-50, 0]}

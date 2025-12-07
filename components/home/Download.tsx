@@ -37,48 +37,38 @@ function Download() {
                 text={appStrings.onGooglePlayDesc}
               />
             </p>
-            <div className="flex justify-center lg:justify-start gap-3 md:gap-6 mt-4 flex-wrap">
-              <BlurCard
-                scale={[0.8, 1]}
-                delay={100}
-                className="w-32 sm:w-40 h-14"
-              >
+            <div className="flex justify-center lg:justify-start gap-2 mt-4 items-center w-full h-full">
+              <BlurCard scale={[0.8, 1]} delay={100} className="h-full sm:h-14">
                 <Link
                   href={envConfig.playAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full h-full"
+                  className="block h-full"
                 >
                   <Image
-                    src={images.appStore}
+                    src={images.appStoreDw}
                     alt="app store"
-                    width={150}
-                    height={50}
-                    className="w-full h-full duration-200"
+                    width={312}
+                    height={120}
+                    className="h-full w-auto duration-200"
                     loading="lazy"
-                    sizes="160px"
                   />
                 </Link>
               </BlurCard>
-              <BlurCard
-                scale={[0.8, 1]}
-                delay={300}
-                className="w-32 sm:w-40 h-14"
-              >
+              <BlurCard scale={[0.8, 1]} delay={300} className="h-full sm:h-14">
                 <Link
                   href={envConfig.googleAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full h-full"
+                  className="block h-full"
                 >
                   <Image
-                    src={images.googlePlay}
-                    alt="app store"
-                    width={150}
-                    height={50}
-                    className="w-full h-full duration-200"
+                    src={images.googlePlayDw}
+                    alt="google play"
+                    width={318}
+                    height={120}
+                    className="h-full w-auto duration-200"
                     loading="lazy"
-                    sizes="160px"
                   />
                 </Link>
               </BlurCard>

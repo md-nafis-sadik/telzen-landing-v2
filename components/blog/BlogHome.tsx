@@ -14,7 +14,7 @@ const OurBlog = ({ data }: any) => {
 
   return (
     <section className="bg-white flex_center flex-col my-20 w-full">
-      <h3 className="title text-text-950 mb-6 md:mb-8 lg:mb-10 overflow-hidden text-center">
+      <h3 className="title text-text-950 mb-6 md:mb-8 lg:mb-10 text-center">
         <BlurText
           text={appStrings.blogs}
           translateY={[50, 0]}

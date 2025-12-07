@@ -23,7 +23,7 @@ function Destination() {
       <div className="w-full">
         <div className="containerX">
           <div className="w-full max-w-[728px] mx-auto text-center">
-            <h2 className="title text-center text-primary-500 overflow-hidden">
+            <h2 className="title text-center text-primary-500">
               <BlurText
                 text={appStrings.destinations}
                 translateY={[50, 0]}

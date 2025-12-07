@@ -7,7 +7,7 @@ function CultureHero() {
   return (
     <section className="py-10 md:py-16 lg:py-20 bg-white">
       <div className="containerX text-center">
-        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10 overflow-hidden">
+        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
           <BlurText
             text={appStrings.culture}
             translateY={[50, 0]}

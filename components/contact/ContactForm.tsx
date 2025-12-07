@@ -15,7 +15,7 @@ function ContactForm() {
   return (
     <section className="pt-10 md:pt-16 lg:pt-20 pb-10 md:pb-20 lg:pb-28 min-h-screen bg-white">
       <div className="containerX text-center">
-        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10 overflow-hidden">
+        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
           <BlurText
             text={appStrings.contactUs}
             translateY={[50, 0]}

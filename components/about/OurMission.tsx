@@ -16,7 +16,7 @@ function OurMission() {
             alt="opera house"
           />
         </BlurCard>
-        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10 overflow-hidden">
+        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10">
           <BlurText
             text={appStrings.ourMission}
             translateY={[50, 0]}

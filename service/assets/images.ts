@@ -20,6 +20,8 @@ export const images = {
   germany: "/images/germany.png",
   appStore: "/images/app-store.png",
   googlePlay: "/images/google-play.png",
+  appStoreDw: "/images/app-store-dw.png",
+  googlePlayDw: "/images/google-play-dw.png",
   world: "/images/world.png",
   avatar: "/images/avatar.png",
   adebayo: "/images/adebayo.png",

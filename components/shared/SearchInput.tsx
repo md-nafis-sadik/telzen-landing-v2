@@ -75,7 +75,7 @@ function SearchInput({
 
         <motion.button
           type="submit"
-          className={`bg-[#00CD8E] text-white text-xs sm:text-sm lg:text-base font-medium px-3 sm:px-4 md:px-5 py-[7px] h-max rounded-full m-1.5 sm:m-2 cursor-pointer flex-shrink-0 ${buttonClassName}`}
+          className={`bg-[#00CD8E] text-white text-xs sm:text-sm lg:text-base font-medium px-4 md:px-5 py-[7px] h-max rounded-full m-1.5 sm:m-2 cursor-pointer flex-shrink-0 ${buttonClassName}`}
           whileHover={{
             scale: 1.05,
             backgroundColor: "#00B87A",

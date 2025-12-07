@@ -19,14 +19,14 @@ function RecomendedDestinations() {
       <div className="w-full">
         <div className="containerX">
           <div className="w-full max-w-[728px] mx-auto text-center">
-            <h2 className="title text-center text-primary-700 overflow-hidden">
+            <h2 className="title text-center text-primary-700">
               <BlurText
                 text={appStrings.recomended}
                 translateY={[50, 0]}
                 className="md:tracking-[-2px]"
               />
             </h2>
-            <p className="text-lg md:text-2xl lg:text-3xs text-text-700 mt-2 md:mt-4 overflow-hidden">
+            <p className="text-lg md:text-2xl lg:text-3xs text-text-700 mt-2 md:mt-4">
               <BlurText
                 delay={50}
                 translateX={[-30, 0]}

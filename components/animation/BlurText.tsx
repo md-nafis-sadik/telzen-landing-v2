@@ -8,6 +8,7 @@ function BlurText({
   delay = 200,
   className = "",
   animateBy = "words",
+  immediate = false,
   ...rest
 }) {
   const animateText = useMemo(
@@ -22,6 +23,10 @@ function BlurText({
     };
 
     const variants = {
+      hidden: {
+        opacity: 0,
+        ...rest,
+      },
       animate: {
         ...rest,
         opacity: 1,
@@ -31,11 +36,12 @@ function BlurText({
     return (
       <motion.span
         key={`${item}-${index}`}
-        initial="animate"
+        initial={immediate ? "hidden" : "animate"}
+        animate={immediate ? "animate" : undefined}
         variants={variants}
         transition={transition}
-        whileInView="animate"
-        viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+        whileInView={immediate ? undefined : "animate"}
+        viewport={immediate ? undefined : { once: true, margin: "0px 0px -100px 0px" }}
         className={cn(className, "inline-block")}
       >
         {item}

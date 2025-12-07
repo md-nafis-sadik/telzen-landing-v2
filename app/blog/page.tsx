@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const BlogPage = () => {
   return (
     <main className="relative mt-[60px]">
-      <h2 className="title text-text-950 mb-6 md:mb-10 lg:mb-20 overflow-hidden text-center">
+      <h2 className="title text-text-950 mb-6 md:mb-10 lg:mb-20 text-center">
         <BlurText
           text={appStrings.blogs}
           translateY={[50, 0]}

@@ -36,19 +36,20 @@ function Hero() {
     <section className="lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
       <div className="containerX py-16 lg:py-6">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-7">
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left sm:w-auto w-full">
             <div className="title text-black whitespace-nowrap">
-              <div className="overflow-hidden">
-                <BlurText text={appStrings.stayOnline} translateY={[50, 0]} />
+              <div className="">
+                <BlurText text={appStrings.stayOnline} translateY={[50, 0]} immediate />
               </div>
               {/* {appStrings.stayOnline} */}
               <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap">
-                <div className="overflow-hidden">
+                <div className="">
                   <BlurText
                     text={appStrings.anywhere}
                     // className="text-primary-700"
                     translateX={[-50, 0]}
                     delay={400}
+                    immediate
                   />
                 </div>
                 {/* <AnimateCard scale={[0.9, 1]} delay={600}>
@@ -64,7 +65,7 @@ function Hero() {
               </div>
             </div>
             <div>
-              <div className="w-full max-w-[360px] my-4 lg:my-8">
+              <div className="w-full sm:max-w-[360px] my-4 lg:my-8">
                 <SearchInput
                   placeholder="Search destinations..."
                   value={searchQuery}
@@ -79,23 +80,39 @@ function Hero() {
               </p>
             </div> */}
 
-            <p className="text-lg lg:text-xl text-text-700 mt-8">
+            <p className="text-lg lg:text-xl text-text-700 mt-6 md:mt-8">
               {appStrings.downloadNow}
             </p>
-            <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 flex-wrap">
+            <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 w-full h-full">
               <Link
                 href={envConfig.playAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="block h-full sm:h-10"
               >
-                <AppStoreSvg />
+                <Image
+                  src={images.appStore}
+                  alt="app store"
+                  width={240}
+                  height={80}
+                  className="h-full w-auto duration-200"
+                  loading="lazy"
+                />
               </Link>
               <Link
                 href={envConfig.googleAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="block h-full sm:h-10"
               >
-                <GooglePlaySvg />
+                <Image
+                  src={images.googlePlay}
+                  alt="google play"
+                  width={270}
+                  height={80}
+                  className="h-full w-auto duration-200"
+                  loading="lazy"
+                />
               </Link>
             </div>
           </div>

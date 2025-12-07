@@ -8,7 +8,7 @@ function HowItWork() {
   return (
     <section className="pt-10 pb-4 md:pt-16 md:pb-10 lg:pt-6 bg-red-900 lg:min-h-screen flex items-center justify-center" id="howItWorks">
       <div className="containerX">
-        <h2 className="title text-center text-red-700 overflow-hidden">
+        <h2 className="title text-center text-red-700">
           <BlurText
             text={appStrings.howItWorks}
             translateY={[50, 0]}
