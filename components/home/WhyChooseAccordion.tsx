@@ -20,7 +20,7 @@ export default function WhyChooseAccordion() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 lg:gap-8 overflow-hidden pb-4 px-2">
+    <div className="w-full flex flex-col gap-4 lg:gap-8 overflow-y-clip pb-4 px-2">
       {whyChooseList.map((item: IAccordion, index: number) => (
         <BlurCard key={item.id} translateY={[50, 0]} delay={index * 100}>
           <div

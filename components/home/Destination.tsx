@@ -23,20 +23,22 @@ function Destination() {
       <div className="w-full">
         <div className="containerX">
           <div className="w-full max-w-[728px] mx-auto text-center">
-            <h2 className="title text-center text-primary-500">
-              <BlurText
-                text={appStrings.destinations}
-                translateY={[50, 0]}
-                className="md:tracking-[-2px]"
-              />
-            </h2>
-            <p className="text-lg md:text-2xl lg:text-3xs text-text-200 mt-2 md:mt-4 overflow-hidden">
+            <div className="overflow-y-clip pb-2">
+              <h2 className="title text-center text-primary-500">
+                <BlurText
+                  text={appStrings.destinations}
+                  translateY={[50, 0]}
+                  className="md:tracking-[-2px]"
+                />
+              </h2>
+            </div>
+            <div className="overflow-y-clip pb-1 text-lg md:text-2xl lg:text-3xs text-text-200 mt-2 md:mt-4">
               <BlurText
                 delay={50}
                 translateX={[-30, 0]}
                 text={appStrings.discoverOurMostPopularDesc}
               />
-            </p>
+            </div>
             <div className="w-full flex justify-center mt-6">
               <BigToggleSwitch onToggle={handleToggle} />
             </div>

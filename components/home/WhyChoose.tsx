@@ -19,14 +19,23 @@ function WhyChoose() {
                 className="size-60 mx-auto lg:mx-0"
               />
             </BlurCard>
-            <h2 className="title text-text-950 my-4 md:my-6">
+            <div className="overflow-clip pb-2 px-2 sm:hidden block">
+              <h2 className="title text-text-950 my-4 md:my-6">
+                <BlurText
+                  text={appStrings.whyChooseTelzen}
+                  translateX={[-50, 0]}
+                  className="md:tracking-[-2px]"
+                />
+              </h2>
+            </div>
+            <h2 className="title text-text-950 my-4 md:my-6 hidden sm:block overflow-hidden">
               <BlurText
                 text={appStrings.whyChooseTelzen}
                 translateX={[-50, 0]}
                 className="md:tracking-[-2px]"
               />
             </h2>
-            <p className="text-2xl text-text-700 overflow-hidden">
+            <p className="text-lg md:text-xl lg:text-2xl text-text-700 overflow-hidden">
               <BlurText
                 text={appStrings.whySimly}
                 translateY={[30, 0]}

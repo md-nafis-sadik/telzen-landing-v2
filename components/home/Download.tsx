@@ -11,32 +11,46 @@ function Download() {
       <div className="containerX">
         <div className="flex flex-col-reverse lg:flex-row gap-6 text-center lg:text-left items-center bg-secondary-200 pb-10 md:pb-16 lg:pb-20 pt-28 px-6 md:px-10 rounded-3xl">
           <div className="w-full max-w-[600px]">
-            <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-text-950 uppercase font-barlow leading-[100%]">
-              {/* {appStrings.downloadTelzenApp} */}
-              <BlurText
-                text={appStrings.downloadTelzenApp}
-                translateX={[-50, 0]}
-                className="md:tracking-[-2px]"
-              />
-            </h2>
-            <p className="text-lg md:text-xl lg:text-2xl text-text-700 mt-3 md:mt-6">
-              <BlurText
-                translateX={[30, 0]}
-                delay={50}
-                text={appStrings.youCanGetDesc}
-              />{" "}
-              <BlurText
-                translateX={[30, 0]}
-                delay={50}
-                text={appStrings.telzen}
-                className="text-text-950 font-semibold"
-              />{" "}
-              <BlurText
-                translateX={[30, 0]}
-                delay={50}
-                text={appStrings.onGooglePlayDesc}
-              />
-            </p>
+            <div className="overflow-clip pb-2 px-2 block sm:hidden">
+              <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-text-950 uppercase font-barlow leading-[100%]">
+                {/* {appStrings.downloadTelzenApp} */}
+                <BlurText
+                  text={appStrings.downloadTelzenApp}
+                  translateX={[-50, 0]}
+                  className="md:tracking-[-2px]"
+                />
+              </h2>
+            </div>
+            
+              <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-text-950 uppercase font-barlow leading-[100%] hidden sm:block overflow-hidden">
+                {/* {appStrings.downloadTelzenApp} */}
+                <BlurText
+                  text={appStrings.downloadTelzenApp}
+                  translateX={[-50, 0]}
+                  className="md:tracking-[-2px]"
+                />
+              </h2>
+            
+            <div className="overflow-clip pb-1 px-2">
+              <p className="text-lg md:text-xl lg:text-2xl text-text-700 mt-3 md:mt-6">
+                <BlurText
+                  translateX={[30, 0]}
+                  delay={50}
+                  text={appStrings.youCanGetDesc}
+                />{" "}
+                <BlurText
+                  translateX={[30, 0]}
+                  delay={50}
+                  text={appStrings.telzen}
+                  className="text-text-950 font-semibold"
+                />{" "}
+                <BlurText
+                  translateX={[30, 0]}
+                  delay={50}
+                  text={appStrings.onGooglePlayDesc}
+                />
+              </p>
+            </div>
             <div className="flex justify-center lg:justify-start gap-2 mt-4 items-center w-full h-full">
               <BlurCard scale={[0.8, 1]} delay={100} className="h-full sm:h-14">
                 <Link

@@ -26,9 +26,11 @@ function MyEsimComponent() {
     >
       <div className="w-full">
         <div className="containerX">
-          <h2 className="backTitle text-text-950">
-            <BlurText text="my esim" translateY={[50, 0]} />
-          </h2>
+          <div className="overflow-y-clip pb-2">
+            <h2 className="backTitle text-text-950">
+              <BlurText text="my esim" translateY={[50, 0]} />
+            </h2>
+          </div>
           <div className="bg-secondary-100 flex items-center gap-3 px-8 md:px-14 py-3 md:py-5 rounded-full mt-8">
             <span>
               <MobileWithStarsSvg />

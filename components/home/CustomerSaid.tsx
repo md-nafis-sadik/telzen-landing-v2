@@ -8,9 +8,11 @@ function CustomerSaid() {
   return (
     <section className="py-10 md:py-16 lg:py-20 bg-primary-black text-white" id="reviews">
       <div className="containerX !max-w-[1030px] text-center">
-        <h2 className="title text-primary-500 mb-10 md:mb-12 lg:mb-16">
-          <BlurText text={appStrings.customerSaidAbout} translateY={[50, 0]} />
-        </h2>
+        <div className="overflow-y-clip pb-2 mb-10 md:mb-12 lg:mb-16">
+          <h2 className="title text-primary-500">
+            <BlurText text={appStrings.customerSaidAbout} translateY={[50, 0]} />
+          </h2>
+        </div>
       </div>
       <DynamicCarousel
         options={{

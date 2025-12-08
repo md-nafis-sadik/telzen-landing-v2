@@ -45,13 +45,15 @@ function PrivacyPolicy() {
     <main className="font-inter bg-white">
       <section className="py-10 md:py-16 lg:py-20 bg-white">
         <div className="containerX">
-          <h2 className="title text-primary-700 mb-6 md:mb-10 lg:mb-20 text-center">
-            <BlurText
-              text={appStrings.privacyPolicyTitle}
-              translateY={[50, 0]}
-              className="md:tracking-[-2px]"
-            />
-          </h2>
+          <div className="overflow-y-clip pb-2">
+            <h2 className="title text-primary-700 mb-6 md:mb-10 lg:mb-20 text-center">
+              <BlurText
+                text={appStrings.privacyPolicyTitle}
+                translateY={[50, 0]}
+                className="md:tracking-[-2px]"
+              />
+            </h2>
+          </div>
           <div className="flex flex-col gap-4 md:gap-5 lg:gap-6 text-sm md:text-base lg:text-lg leading-[160%] text-[#888]">
             <p>{appStrings.effectiveDate}</p>
 

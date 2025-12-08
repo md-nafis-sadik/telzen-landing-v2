@@ -18,9 +18,11 @@ function Faq() {
     <section className="py-10 md:py-16 lg:py-20 bg-red-900 text-white">
       <div className="containerX">
         <div className="w-full max-w-[776px] mx-auto">
-          <h2 className="title text-center md:tracking-[-2px]">
-            <BlurText text={appStrings.faq} translateY={[50, 0]} />
-          </h2>
+          <div className="overflow-y-clip pb-2">
+            <h2 className="title text-center md:tracking-[-2px]">
+              <BlurText text={appStrings.faq} translateY={[50, 0]} />
+            </h2>
+          </div>
           <div className="flex flex-col gap-6 sm:gap-8 mt-8 md:mt-12 lg:mt-16">
             {faqData.map((item, index) => (
               <BlurCard translateY={[50, 0]} delay={index * 100} key={index}>

@@ -38,12 +38,12 @@ function Hero() {
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-7">
           <div className="text-center md:text-left sm:w-auto w-full">
             <div className="title text-black whitespace-nowrap">
-              <div className="">
+              <div className="overflow-y-clip pb-2">
                 <BlurText text={appStrings.stayOnline} translateY={[50, 0]} immediate />
               </div>
               {/* {appStrings.stayOnline} */}
               <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap">
-                <div className="">
+                <div className="overflow-clip pb-2">
                   <BlurText
                     text={appStrings.anywhere}
                     // className="text-primary-700"

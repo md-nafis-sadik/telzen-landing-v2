@@ -9,14 +9,16 @@ function Refer() {
       <div className="containerX">
         <div className="flex flex-col lg:flex-row bg-white pr-0 pb-0 rounded-3xl overflow-hidden">
           <div className="w-full p-10 lg:p-5xl lg:pr-0 text-center lg:text-left">
-            <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-primary-950 uppercase font-barlow leading-[100%]">
-              <BlurText
-                text={appStrings.referFriend}
-                translateX={[-50, 0]}
-                className="md:tracking-[-2px]"
-                delay={100}
-              />
-            </h2>
+            <div className="overflow-clip pb-2 px-2">
+              <h2 className="text-5xl md:text-6xl xl:text-7xl font-black text-primary-950 uppercase font-barlow leading-[100%]">
+                <BlurText
+                  text={appStrings.referFriend}
+                  translateX={[-50, 0]}
+                  className="md:tracking-[-2px]"
+                  delay={100}
+                />
+              </h2>
+            </div>
             <p className="text-lg md:text-xl lg:text-2xl text-black mt-3 md:mt-6 overflow-hidden">
               <BlurText
                 translateY={[30, 0]}

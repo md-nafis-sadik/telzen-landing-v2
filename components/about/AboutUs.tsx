@@ -7,13 +7,15 @@ function AboutUs() {
   return (
     <section className="py-10 md:py-16 lg:py-20 bg-white">
       <div className="containerX text-center">
-        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
-          <BlurText
-            text={appStrings.aboutUs}
-            translateY={[50, 0]}
-            className="md:tracking-[-2px]"
-          />
-        </h2>
+        <div className="overflow-y-clip pb-2">
+          <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
+            <BlurText
+              text={appStrings.aboutUs}
+              translateY={[50, 0]}
+              className="md:tracking-[-2px]"
+            />
+          </h2>
+        </div>
         <div className="overflow-hidden">
           <BlurCard
             translateX={[30, 0]}

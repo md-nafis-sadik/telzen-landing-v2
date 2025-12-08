@@ -15,13 +15,15 @@ function ContactForm() {
   return (
     <section className="pt-10 md:pt-16 lg:pt-20 pb-10 md:pb-20 lg:pb-28 min-h-screen bg-white">
       <div className="containerX text-center">
-        <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
-          <BlurText
-            text={appStrings.contactUs}
-            translateY={[50, 0]}
-            className="md:tracking-[-2px]"
-          />
-        </h2>
+        <div className="overflow-y-clip pb-2">
+          <h2 className="title text-primary-700 mb-6 md:mb-8 lg:mb-10">
+            <BlurText
+              text={appStrings.contactUs}
+              translateY={[50, 0]}
+              className="md:tracking-[-2px]"
+            />
+          </h2>
+        </div>
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10 lg:mt-20">
           <div className="w-full flex justify-center items-center">
             <Image

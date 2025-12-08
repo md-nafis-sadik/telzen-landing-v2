@@ -6,15 +6,20 @@ import BlurText from "../animation/BlurText";
 
 function HowItWork() {
   return (
-    <section className="pt-10 pb-4 md:pt-16 md:pb-10 lg:pt-6 bg-red-900 lg:min-h-screen flex items-center justify-center" id="howItWorks">
+    <section
+      className="pt-10 pb-4 md:pt-16 md:pb-10 lg:pt-6 bg-red-900 lg:min-h-screen flex items-center justify-center"
+      id="howItWorks"
+    >
       <div className="containerX">
-        <h2 className="title text-center text-red-700">
-          <BlurText
-            text={appStrings.howItWorks}
-            translateY={[50, 0]}
-            className="md:tracking-[-2px]"
-          />
-        </h2>
+        <div className="overflow-y-clip pb-2">
+          <h2 className="title text-center text-red-700">
+            <BlurText
+              text={appStrings.howItWorks}
+              translateY={[50, 0]}
+              className="md:tracking-[-2px]"
+            />
+          </h2>
+        </div>
         <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12 lg:mt-16 pb-6">
           {workSteps.map((step, index) => (
             <AnimateCard
@@ -22,7 +27,7 @@ function HowItWork() {
               translateX={[50, 0]}
               delay={index * 100}
             >
-              <div className="w-full h-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 hover:scale-[1.015] duration-200">
+              <div className="w-full h-full bg-white rounded-3xl px-6 md:px-8 lg:px-10 py-4 md:py-6 transition-transform duration-200 hover:scale-[1.015]">
                 <Image
                   src={step?.icon}
                   className="size-20"

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 import useEmblaCarousel from "embla-carousel-react";
 import BlogCard from "./BlogCard";
 import Link from "next/link";
@@ -14,13 +14,15 @@ const OurBlog = ({ data }: any) => {
 
   return (
     <section className="bg-white flex_center flex-col my-20 w-full">
-      <h3 className="title text-text-950 mb-6 md:mb-8 lg:mb-10 text-center">
-        <BlurText
-          text={appStrings.blogs}
-          translateY={[50, 0]}
-          className="md:tracking-[-2px]"
-        />
-      </h3>
+      <div className="overflow-y-clip pb-2">
+        <h3 className="title text-text-950 mb-6 md:mb-8 lg:mb-10 text-center">
+          <BlurText
+            text={appStrings.blogs}
+            translateY={[50, 0]}
+            className="md:tracking-[-2px]"
+          />
+        </h3>
+      </div>
       <div className="containerX w-full overflow-hidden mt-5 md:mt-10">
         <div className="w-full" ref={emblaRef}>
           <div className="w-full min-h-fit flex flex-row gap-6 md:gap-10 py-5 md:py-10">
@@ -38,8 +40,8 @@ const OurBlog = ({ data }: any) => {
         </div>
 
         <div className="flex items-center justify-center w-full">
-          <Link 
-            className="mt-4 md:mt-8 flex items-center gap-2" 
+          <Link
+            className="mt-4 md:mt-8 flex items-center gap-2"
             href="/blog"
             prefetch={true}
           >

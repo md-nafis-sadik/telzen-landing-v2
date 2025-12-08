@@ -1,12 +1,13 @@
 "use client";
 import { handleCopy } from "@/lib/apiHandler";
+import { envConfig } from "@/service";
 import Link from "next/link";
 import { useState } from "react";
 
 const BlogDetailsShareSocials = ({ blog }: any) => {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const baseUrl = envConfig.frontendUrl;
   const [value, setValue] = useState(null);
-  const url = `${baseUrl}/blogs/${blog?.title}`;
+  const url = `${baseUrl}/blog/${blog?.title}`;
 
   return (
     <div className=" mt-14">

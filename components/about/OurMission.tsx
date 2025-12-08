@@ -16,13 +16,15 @@ function OurMission() {
             alt="opera house"
           />
         </BlurCard>
-        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10">
-          <BlurText
-            text={appStrings.ourMission}
-            translateY={[50, 0]}
-            className="md:tracking-[-2px]"
-          />
-        </h2>
+        <div className="overflow-y-clip pb-2">
+          <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10">
+            <BlurText
+              text={appStrings.ourMission}
+              translateY={[50, 0]}
+              className="md:tracking-[-2px]"
+            />
+          </h2>
+        </div>
         <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-100 max-w-[1030px] mx-auto">
           <BlurText
             translateX={[30, 0]}

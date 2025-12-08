@@ -19,7 +19,7 @@ function BlurCard({
   const animateProps = useMemo(
     () => ({
       ...rest,
-      opacity: [0, 1],
+      opacity: 1,
     }),
     [rest]
   );
@@ -34,10 +34,10 @@ function BlurCard({
 
   return (
     <motion.div
-      animate={animateProps}
-      transition={transition}
+      initial={{ opacity: 0, ...rest }}
       whileInView={animateProps}
-      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+      transition={transition}
+      viewport={{ once: true, margin: "0px 0px -100px 0px", amount: 0.3 }}
       className={cn(className, "relative")}
     >
       {children}

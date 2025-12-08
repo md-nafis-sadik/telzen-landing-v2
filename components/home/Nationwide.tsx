@@ -19,13 +19,15 @@ function Nationwide() {
             sizes="(max-width: 768px) 192px, (max-width: 1024px) 224px, 288px"
           />
         </BlurCard>
-        <h2 className="title text-primary-500 mb-6 md:mb-8 lg:mb-10">
-          <BlurText
-            text={appStrings.nationwideCoverage}
-            translateY={[50, 0]}
-            className="md:tracking-[-2px]"
-          />
-        </h2>
+        <div className="overflow-y-clip pb-2 mb-6 md:mb-8 lg:mb-10">
+          <h2 className="title text-primary-500">
+            <BlurText
+              text={appStrings.nationwideCoverage}
+              translateY={[50, 0]}
+              className="md:tracking-[-2px]"
+            />
+          </h2>
+        </div>
         <p className="text-xl md:text-2xl lg:text-[32px] leading-[125%] text-text-100 max-w-[712px] mx-auto">
           <BlurText
             translateX={[30, 0]}
