@@ -69,6 +69,9 @@ export const metadata: Metadata = {
       "Experience seamless global connectivity with Telzen's eSIM solutions. Stay connected wherever you go with our easy-to-use, reliable, and affordable eSIM plans designed for travelers worldwide.",
     images: ["/images/og-image.png"],
   },
+  verification: {
+    google: "_hwjGGLCL6RGN6mOixXpDVHyeZjBRxZvB2mnyeg3zyE",
+  },
 };
 
 export default function RootLayout({
@@ -78,10 +81,45 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google Site Verification */}
+        <meta name="google-site-verification" content="_hwjGGLCL6RGN6mOixXpDVHyeZjBRxZvB2mnyeg3zyE" />
+        {/* Initialize dataLayer before GTM - Critical for Facebook CAPI */}
+        <Script
+          id="datalayer-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];`,
+          }}
+        />
+        {/* Google Tag Manager */}
+        <Script
+          id="google-tag-manager"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-58VJHZWD');`,
+          }}
+        />
+        {/* End Google Tag Manager */}
+      </head>
       <body
         className={`${inter.variable} ${barlow.variable} antialiased`}
         suppressHydrationWarning
       >
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-58VJHZWD"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <ReduxProvider>
           <NextTopLoader
             color="#00c896"
