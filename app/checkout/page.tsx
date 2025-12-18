@@ -10,16 +10,19 @@ import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetSinglePackageQuery } from "@/store/modules/destination/destinationApi";
 import { useState, Suspense } from "react";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 function CheckOutContent() {
   const searchParams = useSearchParams();
-  const { isAuthenticated, authInitialized } = useAppSelector(
+  const { isAuthenticated, authInitialized, auth } = useAppSelector(
     (state) => state.auth
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [finalAmount, setFinalAmount] = useState<number>(0);
   const [appliedCouponId, setAppliedCouponId] = useState<string | undefined>();
   const [isCouponLoading, setIsCouponLoading] = useState(false);
+  const [successOrderId, setSuccessOrderId] = useState<string | null>(null);
 
   const packageId = searchParams.get("package_id");
   const countryId = searchParams.get("country_id");
@@ -40,8 +43,36 @@ function CheckOutContent() {
       skip: !packageId || !authInitialized,
     }
   );
+  const { packageDetails, grandTotal } = useSelector(
+    (state: RootState) => state.destination
+  );
 
-  // Show loading state for both auth initialization and package loading
+  const handleSuccess = (orderId: string) => {
+    setSuccessOrderId(orderId);
+    setShowSuccess(true);
+
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "purchase",
+        transaction_id: orderId,
+        value: packageDetails?.grand_total_selling_price || 0,
+        currency: packageDetails?.currency || "USD",
+        items: [
+          {
+            item_id: packageDetails?._id || "",
+            item_name: packageDetails?.name || "eSIM Package",
+            price: grandTotal || 0,
+            quantity: 1,
+          },
+        ],
+        email: auth?.email || "",
+        name: auth?.name || "",
+        country: auth?.country?.code || "",
+      });
+    }
+  };
+
   if (!authInitialized || (!packageId && !isLoading)) {
     return (
       <main className="font-inter bg-white">
@@ -224,7 +255,16 @@ function CheckOutContent() {
           <div className="containerX">
             {showSuccess ? (
               <div className="flex flex-col justify-center items-center h-full py-20">
-                <CheckoutSuccessful />
+                <CheckoutSuccessful
+                  orderId={successOrderId}
+                  packageName={packageData.data.name}
+                  amount={
+                    finalAmount > 0
+                      ? finalAmount
+                      : packageData.data.grand_total_selling_price
+                  }
+                  couponCode={appliedCouponId}
+                />
               </div>
             ) : (
               <>
@@ -236,11 +276,15 @@ function CheckOutContent() {
                     <StripeProvider>
                       <EmbeddedCheckoutForm
                         packageId={packageId}
-                        amount={finalAmount > 0 ? finalAmount : packageData?.data?.grand_total_selling_price || 0}
+                        amount={
+                          finalAmount > 0
+                            ? finalAmount
+                            : packageData?.data?.grand_total_selling_price || 0
+                        }
                         currency="USD"
                         couponId={appliedCouponId}
                         orderType={orderType as "new" | "topup"}
-                        onSuccess={() => setShowSuccess(true)}
+                        onSuccess={handleSuccess}
                         isCouponLoading={isCouponLoading}
                       />
                     </StripeProvider>

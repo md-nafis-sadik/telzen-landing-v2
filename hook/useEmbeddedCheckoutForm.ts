@@ -12,7 +12,7 @@ interface UseEmbeddedCheckoutFormProps {
   currency?: string;
   couponId?: string;
   orderType: "new" | "topup";
-  onSuccess?: () => void;
+  onSuccess?: (orderId: string) => void; 
 }
 
 export const useEmbeddedCheckoutForm = ({
@@ -102,7 +102,7 @@ export const useEmbeddedCheckoutForm = ({
         // Verify payment with backend
         const verifyResult = await verifyPayment(orderId, token);
         if (verifyResult?.success) {
-          if (onSuccess) onSuccess();
+          if (onSuccess) onSuccess(orderId);
         }
       }
     } catch (err: any) {
@@ -140,8 +140,11 @@ export const useEmbeddedCheckoutForm = ({
         throw new Error("Failed to activate free package");
       }
 
+      const { _id: orderId } = paymentResult.data;
+
       toast.success("Free package activated successfully!");
-      if (onSuccess) onSuccess();
+      // Pass orderId to onSuccess callback
+      if (onSuccess) onSuccess(orderId);
     } catch (err: any) {
       const errorMsg = err.message || "Activation failed. Please try again.";
       setError(errorMsg);

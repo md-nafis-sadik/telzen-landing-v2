@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   useGetRegionsQuery,
@@ -33,10 +33,14 @@ export const useAllDestinations = () => {
     Map<number, any[]>
   >(new Map());
 
-  // Use the appropriate page based on active type
+  const searchQueryRef = useRef(searchQuery);
+  
+  useEffect(() => {
+    searchQueryRef.current = searchQuery;
+  }, [searchQuery]);
+
   const currentPage = activeType === "regions" ? regionsPage : countriesPage;
 
-  // API queries for both regions and countries
   const {
     data: regionsData,
     isLoading: regionsLoading,
@@ -69,7 +73,6 @@ export const useAllDestinations = () => {
     }
   );
 
-  // Determine current state based on active type
   const isLoading =
     activeType === "regions" ? regionsLoading : countriesLoading;
   const isFetching =
@@ -78,7 +81,6 @@ export const useAllDestinations = () => {
   const hasError = activeType === "regions" ? regionsError : countriesError;
   const hasMore = currentData?.meta?.has_next_page ?? false;
 
-  // Compute allDestinations based on activeType
   const accumulatedData =
     activeType === "regions"
       ? regionsAccumulatedData
@@ -88,7 +90,6 @@ export const useAllDestinations = () => {
     (page) => accumulatedData.get(page) || []
   );
 
-  // Deduplicate by _id to prevent duplicate entries
   const seenIds = new Set<string>();
   const allDestinations = allData.filter((item: any) => {
     if (seenIds.has(item._id)) {
@@ -98,7 +99,6 @@ export const useAllDestinations = () => {
     return true;
   });
 
-  // Reset accumulated data and pages when search changes
   useEffect(() => {
     setRegionsAccumulatedData(new Map());
     setCountriesAccumulatedData(new Map());
@@ -106,15 +106,12 @@ export const useAllDestinations = () => {
     setCountriesPage(1);
   }, [apiSearchQuery]);
 
-  // Update regions accumulated data - only when data is fresh and matches current activeType
   useEffect(() => {
-    // Only process if we're actually viewing regions and data is available
     if (
       activeType === "regions" &&
       regionsData?.data &&
       regionsData.data.length > 0
     ) {
-      // Validate that this is actually region data (not cached country data)
       const isValidRegionData = regionsData.data.every(
         (item: any) => "region_id" in item
       );
@@ -122,7 +119,6 @@ export const useAllDestinations = () => {
       if (isValidRegionData) {
         setRegionsAccumulatedData((prev) => {
           const newMap = new Map(prev);
-          // Always set the data for current page (handles both new page and refresh)
           newMap.set(currentPage, regionsData.data);
           return newMap;
         });
@@ -130,15 +126,12 @@ export const useAllDestinations = () => {
     }
   }, [regionsData, currentPage, activeType]);
 
-  // Update countries accumulated data - only when data is fresh and matches current activeType
   useEffect(() => {
-    // Only process if we're actually viewing countries and data is available
     if (
       activeType === "countries" &&
       countriesData?.data &&
       countriesData.data.length > 0
     ) {
-      // Validate that this is actually country data (not cached region data)
       const isValidCountryData = countriesData.data.every(
         (item: any) => "country_id" in item
       );
@@ -146,7 +139,6 @@ export const useAllDestinations = () => {
       if (isValidCountryData) {
         setCountriesAccumulatedData((prev) => {
           const newMap = new Map(prev);
-          // Always set the data for current page (handles both new page and refresh)
           newMap.set(currentPage, countriesData.data);
           return newMap;
         });
@@ -155,7 +147,6 @@ export const useAllDestinations = () => {
   }, [countriesData, currentPage, activeType]);
 
   const handleToggle = (typeOrText: DestinationType | string) => {
-    // Convert button text to DestinationType if needed
     let type: DestinationType;
     if (typeOrText === "Countries" || typeOrText === "countries") {
       type = "countries";
@@ -167,7 +158,6 @@ export const useAllDestinations = () => {
 
     dispatch(setDestinationType(type));
     
-    // Reset search and accumulated data when toggling
     setSearchQuery("");
     setApiSearchQuery("");
     setRegionsAccumulatedData(new Map());
@@ -180,11 +170,11 @@ export const useAllDestinations = () => {
     setSearchQuery(value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     setRegionsPage(1);
     setCountriesPage(1);
-    setApiSearchQuery(searchQuery);
-  };
+    setApiSearchQuery(searchQueryRef.current);
+  }, []);
 
   const handleLoadMore = () => {
     if (hasMore && !isFetching) {

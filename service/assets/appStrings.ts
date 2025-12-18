@@ -7,6 +7,7 @@ export const appStrings = {
   aboutUs: "About Us",
   culture: "Culture",
   blogs: "Blogs",
+  blog: "Blogs",
   termsAndConditions: "Terms and Conditions",
   privacyPolicy: "Privacy Policy",
   ourMission: "Our Mission",

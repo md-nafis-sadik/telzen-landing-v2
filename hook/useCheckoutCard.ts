@@ -6,6 +6,8 @@ import {
   useLazyValidateCouponQuery,
 } from "@/store/modules/destination/destinationApi";
 import { formatFloatingNumber } from "@/service";
+import { setGrandTotal } from "@/store";
+import { useDispatch } from "react-redux";
 
 interface UseCheckoutCardProps {
   packageData?: Package;
@@ -29,12 +31,11 @@ export const useCheckoutCard = ({
   const prevGrandTotalRef = useRef<number | undefined>(undefined);
   const prevCouponIdRef = useRef<string | undefined>(undefined);
   const prevCouponLoadingRef = useRef<boolean | undefined>(undefined);
+  const dispatch = useDispatch();
 
-  // Get customer_id from auth state
   const authData = useAppSelector((state) => state.auth.auth);
   const customerId = authData?.customerId;
 
-  // Helper function to format data size
   const formatDataSize = (sizeInMB: number) => {
     if (sizeInMB >= 1024) {
       return `${(sizeInMB / 1024).toFixed(0)} GB`;
@@ -54,12 +55,11 @@ export const useCheckoutCard = ({
       packageData.coverage_countries &&
       packageData.coverage_countries.length > 0
     ) {
-      return packageData.coverage_countries[0]; // Show first country
+      return packageData.coverage_countries[0];
     }
     return "Global";
   };
 
-  // Coupon validation handler
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
       toast.error("Please enter a coupon code");
@@ -77,7 +77,6 @@ export const useCheckoutCard = ({
       if (result.success && result.data) {
         const coupon = result.data;
 
-        // Check minimum order amount (lower limit)
         if (subtotal < coupon.minimum_order_amount) {
           toast.error(
             `Minimum order amount is $${coupon.minimum_order_amount.toFixed(
@@ -87,7 +86,6 @@ export const useCheckoutCard = ({
           return;
         }
 
-        // Check maximum order amount (upper limit) - 0 means no limit
         if (
           coupon.maximum_order_amount > 0 &&
           subtotal > coupon.maximum_order_amount
@@ -100,7 +98,6 @@ export const useCheckoutCard = ({
           return;
         }
 
-        // If all checks pass, apply the coupon
         setAppliedCoupon(coupon);
         setShowCouponInput(false);
         toast.success("Coupon applied successfully!");
@@ -109,7 +106,6 @@ export const useCheckoutCard = ({
       }
     } catch (error: any) {
       console.log("Coupon validation error:", error);
-      // Check error_messages array first, then data.message, then fallback
       const errorMessage =
         error?.data?.error_messages?.[0]?.message ||
         error?.data?.message ||
@@ -118,12 +114,10 @@ export const useCheckoutCard = ({
     }
   };
 
-  // Calculate prices with coupon
   const subtotal = packageData?.grand_total_selling_price || 0;
   let discount = 0;
 
   if (appliedCoupon) {
-    // Check if price is within coupon limits
     const withinMinLimit = subtotal >= appliedCoupon.minimum_order_amount;
     const withinMaxLimit =
       appliedCoupon.maximum_order_amount === 0 ||
@@ -131,29 +125,25 @@ export const useCheckoutCard = ({
 
     if (withinMinLimit && withinMaxLimit) {
       if (appliedCoupon.discount.is_type_percentage) {
-        // Percentage discount
         discount = (subtotal * appliedCoupon.discount.amount) / 100;
       } else {
-        // Fixed amount discount
         discount = appliedCoupon.discount.amount;
       }
 
-      // Ensure discount doesn't exceed subtotal
       discount = Math.min(discount, subtotal);
     }
   }
 
   const grandTotal = formatFloatingNumber(Math.max(subtotal - discount, 0));
 
-  // Notify parent component when amount changes (only when value actually changes)
   useEffect(() => {
     if (prevGrandTotalRef.current !== grandTotal) {
       prevGrandTotalRef.current = grandTotal;
       onAmountChange?.(grandTotal);
+      dispatch(setGrandTotal(grandTotal));
     }
-  }, [grandTotal, onAmountChange]);
+  }, [grandTotal, onAmountChange, dispatch]);
 
-  // Notify parent when coupon changes (only when value actually changes)
   useEffect(() => {
     const couponId = appliedCoupon?._id;
     if (prevCouponIdRef.current !== couponId) {
@@ -162,7 +152,6 @@ export const useCheckoutCard = ({
     }
   }, [appliedCoupon, onCouponChange]);
 
-  // Notify parent when coupon loading state changes (only when value actually changes)
   useEffect(() => {
     if (prevCouponLoadingRef.current !== couponLoading) {
       prevCouponLoadingRef.current = couponLoading;

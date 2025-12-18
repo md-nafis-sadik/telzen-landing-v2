@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { destinationApi } from "./destinationApi";
+import { Package } from "./destinationApi";
 
-export type DestinationType = 'regions' | 'countries';
+export type DestinationType = "regions" | "countries";
 
 interface DestinationState {
   activeType: DestinationType;
@@ -18,28 +20,36 @@ interface DestinationState {
     hasMore: boolean;
     searchQuery: string;
   };
+  packageDetails: Package | null;
+  grandTotal: number;
+  packageLoading: boolean;
+  packageError: string | null;
 }
 
 const initialState: DestinationState = {
-  activeType: 'countries',
-  searchQuery: '',
+  activeType: "countries",
+  searchQuery: "",
   homeDestinations: {
-    type: 'countries',
+    type: "countries",
     data: [],
     loading: false,
   },
   destinationPage: {
-    type: 'countries',
+    type: "countries",
     data: [],
     loading: false,
     page: 1,
     hasMore: true,
-    searchQuery: '',
+    searchQuery: "",
   },
+  packageDetails: null,
+  packageLoading: false,
+  packageError: null,
+  grandTotal: 0,
 };
 
 const destinationSlice = createSlice({
-  name: 'destination',
+  name: "destination",
   initialState,
   reducers: {
     setDestinationType: (state, action: PayloadAction<DestinationType>) => {
@@ -50,11 +60,14 @@ const destinationSlice = createSlice({
       state.searchQuery = action.payload;
     },
 
-    setHomeDestinations: (state, action: PayloadAction<{
-      type: DestinationType;
-      data: any[];
-      loading: boolean;
-    }>) => {
+    setHomeDestinations: (
+      state,
+      action: PayloadAction<{
+        type: DestinationType;
+        data: any[];
+        loading: boolean;
+      }>
+    ) => {
       state.homeDestinations = action.payload;
     },
 
@@ -65,19 +78,22 @@ const destinationSlice = createSlice({
       state.destinationPage.hasMore = true;
     },
 
-    setDestinationPageData: (state, action: PayloadAction<{
-      data: any[];
-      append?: boolean;
-      hasMore: boolean;
-    }>) => {
+    setDestinationPageData: (
+      state,
+      action: PayloadAction<{
+        data: any[];
+        append?: boolean;
+        hasMore: boolean;
+      }>
+    ) => {
       const { data, append = false, hasMore } = action.payload;
-      
+
       if (append) {
         state.destinationPage.data = [...state.destinationPage.data, ...data];
       } else {
         state.destinationPage.data = data;
       }
-      
+
       state.destinationPage.hasMore = hasMore;
     },
 
@@ -98,6 +114,50 @@ const destinationSlice = createSlice({
     setDestinationPageSearch: (state, action: PayloadAction<string>) => {
       state.destinationPage.searchQuery = action.payload;
     },
+
+    setPackageData: (state, action: PayloadAction<Package>) => {
+      state.packageDetails = action.payload;
+      state.packageLoading = false;
+      state.packageError = null;
+    },
+
+    setPackageLoading: (state, action: PayloadAction<boolean>) => {
+      state.packageLoading = action.payload;
+    },
+
+    setPackageError: (state, action: PayloadAction<string>) => {
+      state.packageError = action.payload;
+      state.packageLoading = false;
+    },
+
+    clearPackageData: (state) => {
+      state.packageDetails = null;
+      state.packageLoading = false;
+      state.packageError = null;
+    },
+    setGrandTotal: (state, action: PayloadAction<number>) => {
+      state.grandTotal = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(
+        destinationApi.endpoints.getSinglePackage.matchFulfilled,
+        (state, action: PayloadAction<{ data: Package }>) => {
+          state.packageLoading = false;
+          state.packageError = null;
+          state.packageDetails = action.payload.data;
+          state.grandTotal = action.payload.data.grand_total_selling_price;
+        }
+      )
+      .addMatcher(
+        destinationApi.endpoints.getSinglePackage.matchRejected,
+        (state, action: { error: { message?: string } }) => {
+          state.packageLoading = false;
+          state.packageError =
+            action.error?.message || "Failed to fetch package";
+        }
+      );
   },
 });
 
@@ -111,6 +171,11 @@ export const {
   incrementDestinationPage,
   resetDestinationPage,
   setDestinationPageSearch,
+  setPackageData,
+  setPackageLoading,
+  setPackageError,
+  clearPackageData,
+  setGrandTotal,
 } = destinationSlice.actions;
 
 export default destinationSlice.reducer;

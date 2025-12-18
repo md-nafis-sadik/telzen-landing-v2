@@ -10,6 +10,10 @@ export const routes: IRoute = {
     name: appStrings.buyPlans,
     path: "/buy-plans",
   },
+  blog: {
+    name: appStrings.blog,
+    path: "/blog",
+  },
   contactUs: {
     name: appStrings.contactUs,
     path: "/contact-us",

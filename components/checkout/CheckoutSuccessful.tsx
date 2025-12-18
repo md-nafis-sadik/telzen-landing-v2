@@ -6,8 +6,22 @@ import { images, appStrings } from "@/service";
 import Button from "../shared/Button";
 import { useRouter } from "next/navigation";
 
-function CheckoutSuccessful() {
+// Add interface for props
+interface CheckoutSuccessfulProps {
+  orderId?: string | null;
+  packageName?: string;
+  amount?: number;
+  couponCode?: string;
+}
+
+function CheckoutSuccessful({
+  orderId,
+  packageName,
+  amount,
+  couponCode,
+}: CheckoutSuccessfulProps) {
   const router = useRouter();
+
   return (
     <div className="w-full max-w-[505px] mx-auto">
       <div className="mb-6 flex justify-center">
@@ -47,6 +61,9 @@ function CheckoutSuccessful() {
         className="text-text-700 mb-6 text-center"
       >
         You can continue using Telzen eSIM now.
+        {/* {orderId && (
+          <div className="mt-2 text-sm text-gray-600">Order ID: {orderId}</div>
+        )} */}
       </motion.p>
 
       <div className="flex gap-3 lg:gap-6 w-full">

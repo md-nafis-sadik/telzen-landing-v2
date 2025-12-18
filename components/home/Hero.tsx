@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useState, memo } from "react";
+import { useState, memo, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
-  AppStoreSvg,
   appStrings,
   envConfig,
-  GooglePlaySvg,
   images,
 } from "@/service";
 import Image from "next/image";
@@ -19,19 +17,42 @@ function Hero() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      router.push(
-        `/destinations?search=${encodeURIComponent(searchQuery.trim())}`
-      );
-    } else {
-      router.push("/destinations");
-    }
-  };
+  const searchQueryRef = useRef(searchQuery);
 
-  const handleSearchChange = (value: string) => {
+  useEffect(() => {
+    searchQueryRef.current = searchQuery;
+  }, [searchQuery]);
+
+  const handleSearch = useCallback(
+    (searchTerm?: string) => {
+      const termToSearch = searchTerm || searchQueryRef.current;
+
+      if (termToSearch.trim()) {
+        router.push(
+          `/destinations?search=${encodeURIComponent(termToSearch.trim())}`
+        );
+      } else {
+        router.push("/destinations");
+      }
+    },
+    [router]
+  );
+
+  const handleSearchChange = useCallback((value: string) => {
     setSearchQuery(value);
-  };
+  }, []);
+
+  const handleSelect = useCallback(
+    (item: any) => {
+      const selectedName = item.name;
+      setSearchQuery(selectedName);
+
+      setTimeout(() => {
+        handleSearch(selectedName);
+      }, 50);
+    },
+    [handleSearch]
+  );
   return (
     <section className="lg:min-h-[calc(100vh-73px)] flex items-center justify-center">
       <div className="containerX py-16 lg:py-6">
@@ -39,7 +60,11 @@ function Hero() {
           <div className="text-center md:text-left sm:w-auto w-full">
             <div className="title text-black whitespace-nowrap">
               <div className="overflow-y-clip pb-2">
-                <BlurText text={appStrings.stayOnline} translateY={[50, 0]} immediate />
+                <BlurText
+                  text={appStrings.stayOnline}
+                  translateY={[50, 0]}
+                  immediate
+                />
               </div>
               {/* {appStrings.stayOnline} */}
               <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap md:flex-nowrap">
@@ -71,6 +96,7 @@ function Hero() {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onSearch={handleSearch}
+                  onSelect={handleSelect}
                 />
               </div>
             </div>

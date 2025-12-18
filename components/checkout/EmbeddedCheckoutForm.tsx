@@ -18,7 +18,7 @@ interface EmbeddedCheckoutFormProps {
   currency?: string;
   couponId?: string;
   orderType: "new" | "topup";
-  onSuccess?: () => void;
+  onSuccess?: (orderId: string) => void;
   isCouponLoading?: boolean;
 }
 

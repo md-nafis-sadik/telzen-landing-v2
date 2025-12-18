@@ -20,6 +20,10 @@ interface IRoute {
     name: string;
     path: string;
   };
+  blog: {
+    name: string;
+    path: string;
+  };
   destinations: {
     name: string;
     path: string;

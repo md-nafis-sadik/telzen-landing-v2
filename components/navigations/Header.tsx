@@ -1,6 +1,6 @@
 "use client";
 
-import { images, routes } from "@/service";
+import { appStrings, images, routes } from "@/service";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback } from "react";
@@ -11,7 +11,7 @@ import { useSharedStore } from "@/store";
 
 function Header() {
   const { setShowMenu } = useSharedStore();
-  
+
   const handleLinkClick = useCallback(() => {
     setShowMenu(false);
   }, [setShowMenu]);
@@ -41,6 +41,16 @@ function Header() {
                   onClick={handleLinkClick}
                 >
                   {routes.buyPlans.name}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-base text-text-700 hover:text-primary-800"
+                  href="/blog"
+                  prefetch={true}
+                  onClick={handleLinkClick}
+                >
+                  {routes.blog.name}
                 </Link>
               </li>
               <li>

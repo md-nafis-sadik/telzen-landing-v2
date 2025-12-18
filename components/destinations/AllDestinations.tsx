@@ -43,6 +43,7 @@ function AllDestinations() {
             value={searchQuery}
             onChange={handleSearchChange}
             onSearch={handleSearch}
+            isFetching={isLoading || isFetching}
           />
         </div>
       </div>
@@ -120,14 +121,17 @@ function AllDestinations() {
       )}
 
       {/* Empty State */}
-      {!isLoading && !hasError && allDestinations.length === 0 && (
-        <EmptyState
-          searchQuery={apiSearchQuery}
-          title="No Destinations Found"
-          description="We couldn't find any destinations. Please try again later."
-          isButton={false}
-        />
-      )}
+      {!isLoading &&
+        !isFetching &&
+        !hasError &&
+        allDestinations.length === 0 && (
+          <EmptyState
+            searchQuery={apiSearchQuery}
+            title="No Destinations Found"
+            description="We couldn't find any destinations. Please try again later."
+            isButton={false}
+          />
+        )}
     </>
   );
 }
