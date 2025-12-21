@@ -19,12 +19,24 @@ export const metadata: Metadata = {
 function PrivacyPolicy() {
   const { sections } = appStrings.privacyPolicyContent;
 
+  // Function to process HTML strings and convert email text to mailto links
+  const processEmailLinks = (htmlString: string) => {
+    return htmlString.replace(
+      /<b>Email:<\/b>\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/gi,
+      '<b>Email:</b> <a href="mailto:$1" class="text-primary-600 hover:text-primary-700 underline">$1</a>'
+    );
+  };
+
   const renderContent = (content: any, index: number) => {
     if (content.type === "paragraph") {
       return (
-        <p key={index} className={content.className || "mt-2"}>
-          {content.text}
-        </p>
+        <p
+          key={index}
+          className={content.className || "mt-2"}
+          dangerouslySetInnerHTML={{
+            __html: processEmailLinks(content.text),
+          }}
+        />
       );
     }
 
@@ -32,13 +44,54 @@ function PrivacyPolicy() {
       return (
         <ul key={index} className="list-disc list-inside space-y-1 mt-2">
           {content.items.map((item: string, i: number) => (
-            <li key={i}>{item}</li>
+            <li
+              key={i}
+              dangerouslySetInnerHTML={{
+                __html: processEmailLinks(item),
+              }}
+            />
           ))}
         </ul>
       );
     }
 
     return null;
+  };
+
+  const renderList = (list: any, isNested = false) => {
+    const listClass = isNested
+      ? "list-[circle] list-inside space-y-1 mt-2 ml-6"
+      : "list-disc list-inside space-y-1 mt-2";
+
+    return (
+      <ul className={listClass}>
+        {list.items.map((item: any, itemIndex: number) => {
+          // Handle nested list structure
+          if (typeof item === "object" && item.sublist) {
+            return (
+              <li key={itemIndex}>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: processEmailLinks(item.text),
+                  }}
+                />
+                {renderList(item.sublist, true)}
+              </li>
+            );
+          }
+
+          // Handle simple string items
+          return (
+            <li
+              key={itemIndex}
+              dangerouslySetInnerHTML={{
+                __html: processEmailLinks(item),
+              }}
+            />
+          );
+        })}
+      </ul>
+    );
   };
 
   return (
@@ -55,7 +108,18 @@ function PrivacyPolicy() {
             </h2>
           </div>
           <div className="flex flex-col gap-4 md:gap-5 lg:gap-6 text-sm md:text-base lg:text-lg leading-[160%] text-[#888]">
-            <p>{appStrings.effectiveDate}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: processEmailLinks(appStrings.effectiveDate),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: processEmailLinks(
+                  appStrings.privacyPolicyContent.intro[0]
+                ),
+              }}
+            />
 
             {/* Sections */}
             {sections.map((section: any, sectionIndex: number) => (
@@ -67,22 +131,18 @@ function PrivacyPolicy() {
                 {/* Section Paragraphs */}
                 {section.paragraphs?.map(
                   (paragraph: string, pIndex: number) => (
-                    <p key={pIndex} className={pIndex > 0 ? "mt-2" : ""}>
-                      {paragraph}
-                    </p>
+                    <p
+                      key={pIndex}
+                      className={pIndex > 0 ? "mt-2" : ""}
+                      dangerouslySetInnerHTML={{
+                        __html: processEmailLinks(paragraph),
+                      }}
+                    />
                   )
                 )}
 
-                {/* Section List */}
-                {section.list && (
-                  <ul className="list-disc list-inside space-y-1 mt-2">
-                    {section.list.items.map(
-                      (item: string, itemIndex: number) => (
-                        <li key={itemIndex}>{item}</li>
-                      )
-                    )}
-                  </ul>
-                )}
+                {/* Section List - Now with nested support */}
+                {section.list && renderList(section.list)}
 
                 {/* Additional Content (mixed paragraphs and lists) */}
                 {section.additionalContent?.map(
@@ -94,25 +154,21 @@ function PrivacyPolicy() {
                 {section.subsections?.map(
                   (subsection: any, subIndex: number) => (
                     <div key={subIndex} className="mt-4">
-                      <p className="font-bold ">{subsection.title}</p>
+                      <p className="font-bold">{subsection.title}</p>
 
                       {subsection.paragraphs?.map(
                         (paragraph: string, pIndex: number) => (
-                          <p key={pIndex} className="mt-2">
-                            {paragraph}
-                          </p>
+                          <p
+                            key={pIndex}
+                            className="mt-2"
+                            dangerouslySetInnerHTML={{
+                              __html: processEmailLinks(paragraph),
+                            }}
+                          />
                         )
                       )}
 
-                      {subsection.list && (
-                        <ul className="list-disc list-inside space-y-1 mt-2">
-                          {subsection.list.items.map(
-                            (item: string, itemIndex: number) => (
-                              <li key={itemIndex}>{item}</li>
-                            )
-                          )}
-                        </ul>
-                      )}
+                      {subsection.list && renderList(subsection.list)}
 
                       {subsection.additionalContent?.map(
                         (content: any, contentIndex: number) =>

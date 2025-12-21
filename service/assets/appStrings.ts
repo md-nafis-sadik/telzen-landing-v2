@@ -52,13 +52,15 @@ export const appStrings = {
   points: "Points",
   seeMore: "See more",
   reloadPage: "Reload Page",
-  
+
   // Error Messages
   failedToLoad: "Failed to Load",
   failedToLoadDestinations: "Failed to Load Destinations",
   failedToLoadRecommendations: "Failed to Load Recommendations",
-  failedToLoadDestinationsDesc: "We couldn't fetch the latest destinations. Please try again.",
-  failedToLoadRecommendationsDesc: "We couldn't fetch recommended destinations. Please try again.",
+  failedToLoadDestinationsDesc:
+    "We couldn't fetch the latest destinations. Please try again.",
+  failedToLoadRecommendationsDesc:
+    "We couldn't fetch recommended destinations. Please try again.",
   errorLoadingPackages: "Error Loading Packages",
   errorLoadingPackagesDesc: "We couldn't load the packages. Please try again.",
   errorLoadingEsims: "Error Loading Esims",
@@ -164,204 +166,325 @@ export const appStrings = {
   lastUpdated: "Last Updated:",
   privacyPolicyTitle: "Privacy Policy",
   termsAndConditionsTitle: "Terms and Conditions",
-  effectiveDate: "Effective Date: 28th November, 2025",
+  effectiveDate: "<b>Effective Date:</b> 28th October, 2025",
 
   // Privacy Policy Content Structure
   privacyPolicyContent: {
     intro: [
-      'This Privacy Policy describes how Telzen ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
-      "By using our App, you agree to the collection and use of information in accordance with this policy.",
+      'These Terms & Conditions ("Terms") govern your use of Telzen\'s eSIM services ("Services"). By purchasing or using Telzen Services, you agree to these Terms.',
     ],
     sections: [
       {
         type: "section",
         number: 1,
-        title: "Introduction",
+        title: "About Telzen and Paddle",
         paragraphs: [
-          'This Privacy Policy describes how Telzen ("we", "us", "our") collects, uses, and shares information in connection with your use of our mobile application, Telzen ("App"), and its related services ("Services"). This policy is intended to inform you about our practices and to comply with the Google Play Store\'s requirements.',
-          "By using our App, you agree to the collection and use of information in accordance with this policy.",
+          "Telzen is a digital eSIM service operated by <b>Netro Systems Limited</b> (“Telzen”, “we”, “us”, “our”). <b>Payments for Telzen Services are processed and resold by Paddle</b>, which acts as the <b>Merchant of Record</b>. Depending on your location, Paddle acts through Paddle.com Inc. or Paddle Payments Limited (together, “Paddle”). When you complete a purchase, you are purchasing Telzen Services <b>from Paddle</b>, and your transaction is also governed by Paddle’s applicable <b>Checkout Buyer Terms</b> or <b>Invoicing Terms</b>.",
         ],
       },
       {
         type: "section",
         number: 2,
-        title: "Information We Collect",
-        paragraphs: [
-          "We collect several types of information to provide and improve our Services.",
-        ],
-        subsections: [
-          {
-            type: "subsection",
-            title: "A. Information You Provide to Us",
-            list: {
-              type: "ul",
-              items: [
-                "Account Information: When you register, we collect personal information such as your email address and/or phone number (for OTP verification). You may also provide a password and other profile details.",
-                "Payment Information: To process payments for packages, we use a third-party payment processor (Stripe). We do not store your full credit card details. We may collect billing information, such as your name and billing address, which is passed securely to Stripe.",
-                "Third-Party Login: If you register using Google Login, we receive information from Google, such as your name, email address, and profile picture, as permitted by your Google profile settings.",
-                "Gifting Information: If you choose to gift a package, we will collect information about the recipient, such as their Telzen account identifier (e.g., email or phone number), to fulfill the request.",
-                "Profile Data: Information you provide when you update your profile.",
-                "Communications: If you contact us for support, we may collect your name, email address, and the contents of your message.",
-              ],
-            },
-          },
-          {
-            type: "subsection",
-            title: "B. Information Collected Automatically",
-            list: {
-              type: "ul",
-              items: [
-                "Usage Data: We collect information about your interactions with the App, such as the packages you view, your remaining data balance, countries you browse, and features you use.",
-                "Device and eSIM Information: To provide eSIM services, we may need to collect specific information about your device, such as its model, operating system, and potentially device-unique identifiers (e.g., EID) required for eSIM provisioning.",
-                "Location Information: We may infer your general region or country from your IP address to provide relevant content, such as recommended countries and regional package availability.",
-                "Log Data: Our servers may automatically log information, including your IP address, device type, app version, and crash data, for analytical and troubleshooting purposes.",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        type: "section",
-        number: 3,
-        title: "How We Use Your Information",
-        paragraphs: [
-          "We use the information we collect for the following purposes:",
-        ],
+        title: "Eligibility",
+        paragraphs: ["You must:"],
         list: {
           type: "ul",
           items: [
-            "To Provide and Maintain the Service: To create your account, authenticate you, provide access to your purchased eSIMs, and display your data usage.",
-            "To Process Transactions: To process payments for packages and apply coupons using our third-party payment processor, Stripe.",
-            "To Personalize Your Experience: To show you recommended countries and relevant packages based on your region or usage.",
-            "To Enable App Features: To allow you to gift packages to other users.",
-            "To Communicate With You: To send you OTPs for verification, transactional emails, service announcements, and respond to support requests.",
-            "To Improve Our App: To analyze usage patterns, identify bugs, and develop new features.",
-            "For Security and Compliance: To prevent fraud, enforce our terms, and comply with legal obligations.",
+            "Be at least 12 years old (or the minimum legal age in your jurisdiction)",
+            "Have the legal capacity to enter into binding contracts",
+            "Use the Services for lawful purposes only",
           ],
         },
       },
       {
         type: "section",
-        number: 4,
-        title: "How We Share Your Information",
-        paragraphs: [
-          "We do not sell your personal information. We may share your information in the following limited circumstances:",
-        ],
-        subsections: [
-          {
-            type: "subsection",
-            title: "Service Providers",
-            paragraphs: [
-              "We share information with third-party vendors who perform services on our behalf. This includes:",
-            ],
-            list: {
-              type: "ul",
-              items: [
-                "Payment Processing: With Stripe, to process your payments.",
-                "Authentication: With Google (for Google Login) and our OTP provider (to send verification codes).",
-                "eSIM Provisioning: With our telecommunications partners and carriers to activate and manage your eSIMs.",
-                "Hosting and Infrastructure: With cloud service providers who host our data and backend systems.",
-              ],
-            },
-          },
-          {
-            type: "subsection",
-            title: "With Other Users",
-            paragraphs: [
-              "When you gift a package, the recipient may be notified that the gift is from you (e.g., using your profile name or email).",
-            ],
-          },
-          {
-            type: "subsection",
-            title: "Legal Requirements",
-            paragraphs: [
-              "We may disclose your information if required by law, subpoena, or other legal process, or if we have a good faith belief that such action is necessary to comply with the law.",
-            ],
-          },
-          {
-            type: "subsection",
-            title: "Business Transfers",
-            paragraphs: [
-              "In connection with a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred as part of that transaction.",
-            ],
-          },
-        ],
-      },
-      {
-        type: "section",
-        number: 5,
-        title: "Third-Party Services",
-        paragraphs: ["Our App relies on third-party services, most notably:"],
+        number: 3,
+        title: "Description of Services",
+        paragraphs: ["Telzen provides:"],
         list: {
           type: "ul",
           items: [
-            "Google (for Login): Your use of Google Login is subject to Google's Privacy Policy.",
-            "Stripe (for Payments): All payment processing is handled by Stripe. Your payment information is provided directly to Stripe, and its use is governed by Stripe's Privacy Policy.",
+            "Digital eSIMs and mobile data plans",
+            "Optional features such as VPN access, loyalty points, and customer tools",
           ],
         },
         additionalContent: [
           {
             type: "paragraph",
-            text: "This policy does not apply to the practices of third parties that we do not own or control.",
+            text: "Service availability, coverage, speed, and performance vary based on:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Network partners",
+              "Device compatibility",
+              "Geographic location",
+              "Local regulations",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Telzen does not guarantee uninterrupted service, specific speeds, or universal coverage.",
+          },
+        ],
+      },
+      {
+        type: "section",
+        number: 4,
+        title: "eSIM Activation & Device Compatibility",
+        list: {
+          type: "ul",
+          items: [
+            "eSIM activation requires a compatible and unlocked device",
+            "Installation instructions must be followed exactly",
+            {
+              text: "Telzen is not responsible for failures caused by:",
+              sublist: {
+                type: "ul",
+                items: [
+                  "Incompatible devices",
+                  "Incorrect installation",
+                  "Network restrictions or government regulations",
+                  "User error",
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        type: "section",
+        number: 5,
+        title: "Pricing, Payments & Taxes",
+        list: {
+          type: "ul",
+          items: [
+            "Prices are displayed at checkout and set by Paddle as Merchant of Record",
+            "All payments are collected by Paddle",
+            "Paddle handles applicable sales tax, VAT, or similar charges",
+            "Telzen does not store or process your payment details",
+          ],
+        },
+        additionalContent: [
+          {
+            type: "paragraph",
+            text: "Currency conversion and bank fees may be applied by your payment provider or Paddle.",
           },
         ],
       },
       {
         type: "section",
         number: 6,
-        title: "Data Security",
-        paragraphs: [
-          "We implement reasonable administrative, technical, and physical security measures to protect your information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee its absolute security.",
-        ],
+        title: "Data Plans & Usage",
+        list: {
+          type: "ul",
+          items: [
+            "All plans are <b>prepaid</b>",
+            "Data allowances expire as stated at purchase",
+            "Unused data does not roll over unless explicitly stated",
+
+            {
+              text: "Speeds may be throttled or reduced due to:",
+              sublist: {
+                type: "ul",
+                items: [
+                  "Fair use policies",
+                  "Network congestion",
+                  "Operator limitations",
+                ],
+              },
+            },
+          ],
+        },
       },
+
       {
         type: "section",
         number: 7,
-        title: "Data Retention",
-        paragraphs: [
-          "We retain your personal information for as long as your account is active or as needed to provide you with our Services. We will also retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements. When you request account deletion, we will process your request in accordance with the section below.",
+        title: "Refunds, Cancellations & Chargebacks",
+        paragraphs: ["Because Paddle is the Merchant of Record:"],
+        list: {
+          type: "ul",
+          items: [
+            "<b>All refund requests are processed by Paddle</b>",
+
+            {
+              text: "Refund eligibility is determined in accordance with:",
+              sublist: {
+                type: "ul",
+                items: [
+                  "Paddle's Buyer Terms",
+                  "Applicable consumer protection laws",
+                ],
+              },
+            },
+          ],
+        },
+        additionalContent: [
+          {
+            type: "paragraph",
+            text: "Refunds may be granted if:",
+          },
+          {
+            type: "ul",
+            items: [
+              "The eSIM cannot be activated due to a verified technical fault attributable to Telzen",
+              "No data has been used",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Refunds will <b>not</b> be granted for:",
+          },
+          {
+            type: "ul",
+            items: [
+              "Incompatible devices",
+              "User installation errors",
+              "Used or partially used data plans",
+              "Changes in travel plans",
+              "Network limitations beyond Telzen's control",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Chargebacks are handled by Paddle, and excessive chargebacks may result in service suspension.",
+          },
         ],
       },
       {
         type: "section",
         number: 8,
-        title: "Your Rights and Choices (Account Deletion)",
-        paragraphs: [
-          "You have certain rights regarding your personal information.",
-        ],
+        title: "Acceptable Use",
+        paragraphs: ["You agree not to:"],
         list: {
           type: "ul",
           items: [
-            "Profile Updates: You can access and update your profile information directly within the App's account settings.",
-            'Account Deletion: You may request the deletion of your account and associated personal data at any time. You can find the option to delete your account within the App\'s "Account" or "Profile" settings. You may also contact us directly at hello@telzen.net to request deletion.',
-            "Consequences of Deletion: Please note that requesting deletion will permanently remove your account, profile, and all associated data, including any active eSIMs or remaining data packages. This action cannot be reversed. We may retain certain anonymous or aggregated data for analytical purposes, and we may retain some information as required by law.",
+            "Use the Services for illegal, fraudulent, or abusive activities",
+            "Attempt to bypass network restrictions",
+            "Resell or redistribute eSIMs without authorization",
+            "Reverse-engineer or interfere with Telzen systems",
           ],
         },
+        additionalContent: [
+          {
+            type: "paragraph",
+            text: "Violations may result in suspension or termination of Services.",
+          },
+        ],
       },
       {
         type: "section",
         number: 9,
-        title: "Children's Privacy",
+        title: "VPN & Security Features",
         paragraphs: [
-          "Our Services are not directed to individuals under the age of 13 (or a higher age if required by local law). We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information.",
+          '<b>VPN</b> and security features are provided "as is" without guarantees. Telzen does not warrant that these features will:',
+        ],
+        list: {
+          type: "ul",
+          items: [
+            "Prevent all cyber threats",
+            "Bypass geo-restrictions",
+            "Operate without interruption",
+          ],
+        },
+        additionalContent: [
+          {
+            type: "paragraph",
+            text: "Users remain responsible for device security.",
+          },
         ],
       },
       {
         type: "section",
         number: 10,
-        title: "Changes to This Privacy Policy",
-        paragraphs: [
-          'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the App and updating the "Effective Date" at the top. You are advised to review this Privacy Policy periodically for any changes.',
-        ],
+        title: "Loyalty Points & Promotions",
+        list: {
+          type: "ul",
+          items: [
+            "Telzen Points have no cash value",
+            "Points may expire or be modified at any time",
+            "Telzen may discontinue loyalty programs without notice",
+          ],
+        },
       },
       {
         type: "section",
         number: 11,
-        title: "Contact Us",
+        title: "Intellectual Property",
         paragraphs: [
-          "If you have any questions about this Privacy Policy, please contact us at:",
-          "290/737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
-          "Email: hello@telzen.net",
+          "All Telzen software, branding, and content are owned by <b>Netro Systems Limited</b>. You may not copy, distribute, or misuse Telzen intellectual property without permission.",
+        ],
+      },
+      {
+        type: "section",
+        number: 12,
+        title: "Limitation of Liability",
+        paragraphs: ["To the maximum extent permitted by law:"],
+        list: {
+          type: "ul",
+          items: [
+            "Telzen is not liable for indirect, incidental, or consequential damages",
+            "Total liability shall not exceed the amount paid for the affected Service",
+            'Services are provided "as is" and "as available"',
+          ],
+        },
+      },
+      {
+        type: "section",
+        number: 13,
+        title: "Indemnification",
+        paragraphs: [
+          "You agree to indemnify and hold harmless Telzen and Paddle from claims arising from:",
+        ],
+        list: {
+          type: "ul",
+          items: [
+            "Misuse of the Services",
+            "Violation of these Terms",
+            "Breach of applicable laws or regulations",
+          ],
+        },
+      },
+      {
+        type: "section",
+        number: 14,
+        title: "Privacy & Data Protection",
+        paragraphs: ["Personal data is processed in accordance with:"],
+        list: {
+          type: "ul",
+          items: ["Telzen's Privacy Policy", "Paddle's Privacy Policy"],
+        },
+        additionalContent: [
+          {
+            type: "paragraph",
+            text: "Telzen and Paddle act as independent data controllers in accordance with applicable data protection laws.",
+          },
+        ],
+      },
+      {
+        type: "section",
+        number: 15,
+        title: "Changes to These Terms",
+        paragraphs: [
+          "We may update these Terms at any time. Continued use of the Services constitutes acceptance of the updated Terms.",
+        ],
+      },
+      {
+        type: "section",
+        number: 16,
+        title: "Governing Law",
+        paragraphs: [
+          "These Terms are governed by the laws of London, United Kingdom without regard to conflict-of-law principles.",
+        ],
+      },
+      {
+        type: "section",
+        number: 17,
+        title: "Contact Information",
+        paragraphs: [
+          "<b>Email:</b> hello@telzen.net",
+          "<b>Address:</b> Netro Systems Limited, 290737 York House Green Lane West, Garstang, Preston, Lancashire, England, PR3 1NJ",
         ],
       },
     ],
