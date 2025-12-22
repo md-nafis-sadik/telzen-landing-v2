@@ -19,6 +19,13 @@ export const metadata: Metadata = {
 function PrivacyPolicy() {
   const { sections } = appStrings.privacyPolicyContent;
 
+  const processEmailLinks = (htmlString: string) => {
+    return htmlString.replace(
+      /<b>Email:<\/b>\s*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/gi,
+      '<b>Email:</b> <a href="mailto:$1" class="text-primary-600 hover:text-primary-700 underline">$1</a>'
+    );
+  };
+
   const renderContent = (content: any, index: number) => {
     if (content.type === "paragraph") {
       return (
@@ -53,7 +60,11 @@ function PrivacyPolicy() {
             />
           </h2>
           <div className="flex flex-col gap-4 md:gap-5 lg:gap-6 text-sm md:text-base lg:text-lg leading-[160%] text-[#888]">
-            <p>{appStrings.effectiveDate}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: processEmailLinks(appStrings.effectiveDate),
+              }}
+            />
 
             {/* Sections */}
             {sections.map((section: any, sectionIndex: number) => (

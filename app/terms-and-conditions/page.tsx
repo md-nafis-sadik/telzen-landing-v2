@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 function TermsAndConditions() {
-  const { sections } = appStrings.privacyPolicyContent;
+  const { sections } = appStrings.termsAndConditionsContent;
 
   // Function to process HTML strings and convert email text to mailto links
   const processEmailLinks = (htmlString: string) => {
@@ -101,7 +101,7 @@ function TermsAndConditions() {
           <div className="overflow-y-clip pb-2">
             <h2 className="title text-primary-700 mb-6 md:mb-10 lg:mb-20 text-center">
               <BlurText
-                text={appStrings.privacyPolicyTitle}
+                text={appStrings.termsAndConditions}
                 translateY={[50, 0]}
                 className="md:tracking-[-2px]"
               />
