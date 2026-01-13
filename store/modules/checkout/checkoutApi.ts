@@ -15,16 +15,19 @@ export interface CreatePaymentResponse {
   message: string;
   meta: null;
   data: {
-    _id: string;
-    package: string;
+    _id?: string;
+    order_id?: string;
+    package?: string;
     payment_id: string;
     payment_status: string;
-    payment_amount: {
+    order_type?: string;
+    is_free_purchase?: boolean;
+    payment_amount?: {
       USD: number;
     };
     created_at: number;
-    client_secret: string;
-    is_free_purchase: boolean;
+    client_secret?: string;
+    approve_link?: string;
   };
 }
 
@@ -63,7 +66,7 @@ export const checkoutApi = apiSlice.injectEndpoints({
         }
 
         return {
-          url: `/checkout/create-payment?order_type=${params.order_type}`,
+          url: `/checkout-v2/create-payment?order_type=${params.order_type}&is_web=true`,
           method: "POST",
           body: requestBody,
         };

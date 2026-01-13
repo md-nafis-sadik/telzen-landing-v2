@@ -3,9 +3,10 @@
 import CheckoutCard from "@/components/checkout/CheckoutCard";
 import CheckoutLoginForm from "@/components/checkout/CheckoutLoginForm";
 import CheckoutSuccessful from "@/components/checkout/CheckoutSuccessful";
-import EmbeddedCheckoutForm from "@/components/checkout/EmbeddedCheckoutForm";
+// import EmbeddedCheckoutForm from "@/components/checkout/EmbeddedCheckoutForm";
+// import PayPalCheckoutForm from "@/components/checkout/PayPalCheckoutForm";
 import HeaderPrev from "@/components/shared/HeaderPrev";
-import { StripeProvider } from "@/components/providers";
+// import { StripeProvider } from "@/components/providers";
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { useGetSinglePackageQuery } from "@/store/modules/destination/destinationApi";
@@ -269,10 +270,11 @@ function CheckOutContent() {
             ) : (
               <>
                 <HeaderPrev text="Check out" />
-                <div className="flex flex-col-reverse lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10">
-                  {!isAuthenticated ? (
-                    <CheckoutLoginForm />
-                  ) : (
+                <div className={`flex flex-col-reverse lg:flex-row gap-6 md:gap-8 lg:gap-12 mt-10 ${isAuthenticated ? 'justify-center' : ''}`}>
+                  {!isAuthenticated && <CheckoutLoginForm />}
+                  
+                  {/* Stripe form commented out for PayPal integration
+                  {isAuthenticated && (
                     <StripeProvider>
                       <EmbeddedCheckoutForm
                         packageId={packageId}
@@ -289,12 +291,21 @@ function CheckOutContent() {
                       />
                     </StripeProvider>
                   )}
-                  <CheckoutCard
-                    packageData={packageData.data}
-                    onAmountChange={setFinalAmount}
-                    onCouponChange={setAppliedCouponId}
-                    onCouponLoadingChange={setIsCouponLoading}
-                  />
+                  */}
+                  
+                  <div className={isAuthenticated ? 'w-full lg:w-1/2' : 'w-full lg:w-1/2'}>
+                    <CheckoutCard
+                      packageData={packageData.data}
+                      onAmountChange={setFinalAmount}
+                      onCouponChange={setAppliedCouponId}
+                      onCouponLoadingChange={setIsCouponLoading}
+                      packageId={packageId}
+                      currency="USD"
+                      orderType={orderType as "new" | "topup"}
+                      onSuccess={handleSuccess}
+                      showPaymentButton={isAuthenticated}
+                    />
+                  </div>
                 </div>
               </>
             )}

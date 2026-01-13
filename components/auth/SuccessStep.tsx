@@ -53,7 +53,7 @@ const SuccessStep: React.FC = () => {
         transition={{ delay: 0.4, duration: 0.5 }}
         className="text-text-50 mb-6"
       >
-        Your account has been created.
+        You are successfully logged in.
       </motion.p>
 
       <motion.div

@@ -59,11 +59,11 @@ const BlogDetailsClient = ({ id }: { id: string }) => {
         titleClassName="text-[#1D1D1D] text-[48px] md:text-[64px] lg:text-[96px]"
       />
 
-      <div className="containerX relative overflow-hidden w-full">
+      <div className="containerX relative overflow-hidden w-full mb-4">
         <Image
           src={blogData?.featuredImage || images.blog1}
           alt={blogData?.title || "Blog image 1"}
-          className="h-auto md:h-[420px] lg:h-[550px] min-w-full object-cover"
+          className="w-full h-auto max-w-full object-cover"
           loading="lazy"
           height={1280}
           width={1920}

@@ -162,6 +162,15 @@ export interface Esim {
     };
     expired_at: number;
   };
+  total_stats: {
+    total_data: number;
+    remaining_data: number;
+    total_data_usages: number;
+    total_data_usages_in_percentage: number;
+    expire_at: number;
+    total_duration: number;
+    duration_unit: string;
+  };
   created_at: number;
 }
 

@@ -17,7 +17,7 @@ function CheckoutLoginForm() {
   } = useCheckoutLogin();
 
   return (
-    <div className="w-full flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
+    <div className="w-full lg:w-1/2 flex flex-col justify-center bg-white rounded-3xl px-6 py-8">
       <div>
         {/* Title */}
         <h2 className="text-4xl md:text-[56px] font-extrabold text-text-950 font-barlow text-center">

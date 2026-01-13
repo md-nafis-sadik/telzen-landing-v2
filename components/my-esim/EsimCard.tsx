@@ -99,19 +99,19 @@ function EsimCard({ esim }: EsimCardProps) {
           </div>
           <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 md:gap-4 text-base md:text-lg lg:text-xl font-semibold">
             <div>
-              {formatDataSize(esim?.data_package.total_data_plan_in_mb)} •{" "}
-              {esim?.data_package.validity.amount}{" "}
-              {esim.data_package.validity.type}s
+              {formatDataSize(esim?.total_stats?.total_data)} •{" "}
+              {esim?.total_stats?.total_duration}{" "}
+              {esim.total_stats?.duration_unit}s
             </div>
             <div>
               <span className="font-normal text-sm md:text-base lg:text-lg text-text-700 mr-1">
                 Expires:
               </span>
-              {formatDate(esim?.data_package.expired_at)}
+              {formatDate(esim?.total_stats?.expire_at)}
             </div>
           </div>
           <div className="text-lg md:text-xl lg:text-[32px] font-extrabold text-primary-700 font-barlow uppercase">
-            BALANCE: {esim?.data_package?.total_data_plan_in_mb}MB
+            BALANCE: {esim?.total_stats?.remaining_data}MB
           </div>
         </div>
 
@@ -201,8 +201,8 @@ function EsimCard({ esim }: EsimCardProps) {
                         className="w-full flex pt-2 pb-3 gap-1 md:gap-2 justify-start text-black hover:bg-natural-50 text-sm md:text-base font-normal rounded-none hover:text-primary-800"
                       >
                         <span className="w-6 h-6">
-                            <BuyBoxIconSvg />
-                          </span>
+                          <BuyBoxIconSvg />
+                        </span>
                         {appStrings.buyAnotherPlan}
                       </Link>
                     </motion.div>

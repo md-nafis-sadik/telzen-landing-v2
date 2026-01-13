@@ -11,13 +11,20 @@ import Image from "next/image";
 import { Package } from "@/store/modules/destination/destinationApi";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
-import { useCheckoutCard } from "@/hook";
+import { useCheckoutCard, usePayPalCheckoutForm } from "@/hook";
+import { useAppSelector } from "@/store/hooks";
+import Link from "next/link";
 
 interface CheckoutCardProps {
   packageData?: Package;
   onAmountChange?: (amount: number) => void;
   onCouponChange?: (couponId: string | undefined) => void;
   onCouponLoadingChange?: (isLoading: boolean) => void;
+  packageId?: string;
+  currency?: string;
+  orderType?: "new" | "topup";
+  onSuccess?: (orderId: string) => void;
+  showPaymentButton?: boolean;
 }
 
 function CheckoutCard({
@@ -25,7 +32,14 @@ function CheckoutCard({
   onAmountChange,
   onCouponChange,
   onCouponLoadingChange,
+  packageId,
+  currency = "USD",
+  orderType = "new",
+  onSuccess,
+  showPaymentButton = false,
 }: CheckoutCardProps) {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
   const {
     couponCode,
     setCouponCode,
@@ -45,6 +59,16 @@ function CheckoutCard({
     onCouponChange,
     onCouponLoadingChange,
   });
+
+  const { isProcessing, error, handlePayPalPayment, handleFreePackage } =
+    usePayPalCheckoutForm({
+      packageId: packageId || "",
+      amount: grandTotal,
+      currency,
+      couponId: appliedCoupon?._id,
+      orderType,
+      onSuccess,
+    });
 
   return (
     <div className="bg-white rounded-3xl p-6 w-full h-max">
@@ -159,7 +183,7 @@ function CheckoutCard({
                   placeholder={appStrings.enterCouponCode}
                   className="flex-1 text-sm"
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       handleApplyCoupon();
                     }
@@ -188,6 +212,44 @@ function CheckoutCard({
           </div>
         </div>
       </div>
+
+      {/* PayPal Payment Section - Only show when authenticated and payment button is enabled */}
+      {showPaymentButton && isAuthenticated && (
+        <div className="border-t border-natural-200 mt-4 pt-6 relative">
+
+          <Button
+            onClick={grandTotal === 0 ? handleFreePackage : handlePayPalPayment}
+            variant="primary"
+            size="md"
+            fullWidth
+            disabled={isProcessing || couponLoading }
+            isLoading={isProcessing || couponLoading }
+            loadingText={grandTotal === 0 ? "Activating..." : "Processing..."}
+            className="font-semibold !rounded-full !py-4"
+          >
+            {grandTotal === 0 ? "Activate Free Package" : "Proceed to Payment"}
+          </Button>
+
+          <p className="text-xs md:text-sm text-text-700 text-center mt-4">
+            Your input data is always safe and we never store your any sensitive
+            data. You can also check our{" "}
+            <Link
+              href="/terms-and-conditions"
+              className="underline font-bold text-text-950"
+            >
+              Terms of Use
+            </Link>{" "}
+            &{" "}
+            <Link
+              href="/privacy-policy"
+              className="underline font-bold text-text-950"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        </div>
+      )}
     </div>
   );
 }
