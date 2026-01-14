@@ -7,6 +7,7 @@ const envConfig = {
   appApiUrl: process.env.NEXT_PUBLIC_APP_API_URL,
   blogUrl: process.env.NEXT_PUBLIC_BLOG_URL,
   stripePublishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+  businessPortalUrl: process.env.NEXT_PUBLIC_BUSINESS_PORTAL_URL,
 };
 
 export { envConfig };

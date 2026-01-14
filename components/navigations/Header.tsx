@@ -8,13 +8,21 @@ import ClientNavigation from "./ClientNavigation";
 import SelectLanguage from "./SelectLanguage";
 import { AuthButton } from "../auth";
 import { useSharedStore } from "@/store";
+import { motion } from "motion/react";
+import { useAppDispatch } from "@/store/hooks";
+import { openBusinessAuthModal } from "@/store/modules/ui/uiSlice";
 
 function Header() {
   const { setShowMenu } = useSharedStore();
+  const dispatch = useAppDispatch();
 
   const handleLinkClick = useCallback(() => {
     setShowMenu(false);
   }, [setShowMenu]);
+
+  const handleBusinessClick = useCallback(() => {
+    dispatch(openBusinessAuthModal({ step: "login" }));
+  }, [dispatch]);
 
   return (
     <header className="font-inter py-4 sticky top-0 bg-white/30 z-50 backdrop-blur-md">
@@ -66,8 +74,16 @@ function Header() {
               {/* <li>
                 <SelectLanguage />
               </li> */}
-              <li>
+              <li className="flex items-center gap-2 p-[1px]">
                 <AuthButton />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleBusinessClick}
+                  className="px-4 py-2 bg-secondary-200 text-white rounded-full cursor-pointer hover:bg-secondary-500 transition z-[1000] font-semibold"
+                >
+                  Business
+                </motion.button>
               </li>
               {/* <li className="hidden sm:block">
                 <button

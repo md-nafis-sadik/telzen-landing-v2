@@ -7,6 +7,12 @@ export interface UiState {
     email: string;
     otpType: "signin" | "signup";
   };
+  businessAuthModal: {
+    isOpen: boolean;
+    step: "login" | "register" | "otp";
+    email: string;
+    otpType: "login" | "register";
+  };
   profileModal: {
     isOpen: boolean;
   };
@@ -31,6 +37,12 @@ const initialState: UiState = {
     step: "login",
     email: "soumikdev03@gmail.com",
     otpType: "signin",
+  },
+  businessAuthModal: {
+    isOpen: false,
+    step: "login",
+    email: "",
+    otpType: "login",
   },
   profileModal: {
     isOpen: false,
@@ -76,6 +88,34 @@ const uiSlice = createSlice({
     ) => {
       state.authModal.step = action.payload;
     },
+    openBusinessAuthModal: (
+      state,
+      action: PayloadAction<{ step?: "login" | "register" | "otp"; email?: string }>
+    ) => {
+      state.businessAuthModal.isOpen = true;
+      state.businessAuthModal.step = action.payload?.step || "login";
+      if (action.payload?.email) {
+        state.businessAuthModal.email = action.payload.email;
+      }
+    },
+    closeBusinessAuthModal: (state) => {
+      state.businessAuthModal.isOpen = false;
+      state.businessAuthModal.step = "login";
+      state.businessAuthModal.email = "";
+      state.businessAuthModal.otpType = "login";
+    },
+    setBusinessAuthModalStep: (
+      state,
+      action: PayloadAction<"login" | "register" | "otp">
+    ) => {
+      state.businessAuthModal.step = action.payload;
+    },
+    setBusinessAuthModalEmail: (state, action: PayloadAction<string>) => {
+      state.businessAuthModal.email = action.payload;
+    },
+    setBusinessAuthModalOtpType: (state, action: PayloadAction<"login" | "register">) => {
+      state.businessAuthModal.otpType = action.payload;
+    },
     setAuthModalEmail: (state, action: PayloadAction<string>) => {
       state.authModal.email = action.payload;
     },
@@ -120,6 +160,11 @@ export const {
   setAuthModalStep,
   setAuthModalEmail,
   setAuthModalOtpType,
+  openBusinessAuthModal,
+  closeBusinessAuthModal,
+  setBusinessAuthModalStep,
+  setBusinessAuthModalEmail,
+  setBusinessAuthModalOtpType,
   setGlobalLoading,
   openProfileModal,
   closeProfileModal,

@@ -2,6 +2,7 @@ import moment from "moment";
 import { apiSlice } from "../api/apiSlice";
 import { saveAuthData, setLoading, setError, updateAuth, AuthCountry } from "./authSlice";
 import { closeAuthModal } from "../ui/uiSlice";
+import { envConfig } from "@/service";
 
 export interface SignupData {
   name: string;
@@ -216,6 +217,122 @@ export const authApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Auth"],
     }),
+
+    // Business Login mutation (dummy endpoint)
+    businessLogin: builder.mutation<any, { email: string }>({
+      query: (formData) => ({
+        url: "/business/auth/login", // Dummy endpoint
+        method: "POST",
+        body: formData,
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        dispatch(setLoading(true));
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setLoading(false));
+          dispatch(updateAuth({ email: _arg.email }));
+        } catch (error: any) {
+          dispatch(setError(error?.data?.message || "Business login failed"));
+        }
+      },
+    }),
+
+    // Business Register mutation (dummy endpoint)
+    businessRegister: builder.mutation<any, {
+      name: string;
+      businessName: string;
+      email: string;
+      country: AuthCountry;
+      document?: File | null;
+    }>({
+      query: (formData) => {
+        // For file upload, use FormData
+        const body = new FormData();
+        body.append("name", formData.name);
+        body.append("business_name", formData.businessName);
+        body.append("email", formData.email);
+        body.append("country_code", formData.country.code);
+        body.append("country_name", formData.country.name);
+        if (formData.document) {
+          body.append("document", formData.document);
+        }
+
+        return {
+          url: "/business/auth/register", // Dummy endpoint
+          method: "POST",
+          body,
+        };
+      },
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        dispatch(setLoading(true));
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setLoading(false));
+          dispatch(updateAuth({ email: _arg.email }));
+        } catch (error: any) {
+          dispatch(setError(error?.data?.message || "Business registration failed"));
+        }
+      },
+    }),
+
+    // Business OTP verification mutation (dummy endpoint)
+    businessOtpVerify: builder.mutation<any, {
+      email: string;
+      otp: string;
+      type: "login" | "register";
+    }>({
+      query: (formData) => ({
+        url: "/business/auth/otp-verify", // Dummy endpoint
+        method: "POST",
+        body: formData,
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        dispatch(setLoading(true));
+        try {
+          const { data } = await queryFulfilled;
+
+          if (data?.data?.access_token) {
+            // Save token and user info to localStorage
+            const businessAuthData = {
+              token: data.data.access_token,
+              email: data.data.email || _arg.email,
+              name: data.data.name,
+              businessName: data.data.business_name,
+              country: data.data.country,
+            };
+            
+            localStorage.setItem("telzen_business_auth", JSON.stringify(businessAuthData));
+            
+            // Redirect to business portal with token
+            const redirectUrl = `${envConfig.businessPortalUrl}?token=${encodeURIComponent(data.data.access_token)}`;
+            
+            window.location.href = redirectUrl;
+          }
+
+          dispatch(setLoading(false));
+        } catch (error: any) {
+          dispatch(setError(error?.data?.message || "Business OTP verification failed"));
+        }
+      },
+    }),
+
+    // Business Resend OTP mutation (dummy endpoint)
+    businessResendOtp: builder.mutation<any, { email: string }>({
+      query: (formData) => ({
+        url: "/business/auth/resend-otp", // Dummy endpoint
+        method: "POST",
+        body: formData,
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        dispatch(setLoading(true));
+        try {
+          await queryFulfilled;
+          dispatch(setLoading(false));
+        } catch (error: any) {
+          dispatch(setError(error?.data?.message || "Failed to resend OTP"));
+        }
+      },
+    }),
   }),
 });
 
@@ -226,4 +343,8 @@ export const {
   useResendOtpMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
+  useBusinessLoginMutation,
+  useBusinessRegisterMutation,
+  useBusinessOtpVerifyMutation,
+  useBusinessResendOtpMutation,
 } = authApi;

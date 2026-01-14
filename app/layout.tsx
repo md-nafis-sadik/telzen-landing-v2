@@ -12,6 +12,7 @@ import {
   LogoutModal,
   RemoveEsimModal,
   EsimSuccessModal,
+  BusinessAuthModal,
 } from "@/components/auth";
 import { ToastContainer } from "react-toastify";
 import type { Metadata } from "next";
@@ -139,6 +140,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <Footer />
           <Loader />
           <AuthModal />
+          <BusinessAuthModal />
           <ProfileModal />
           <LogoutModal />
           <RemoveEsimModal />
