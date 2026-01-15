@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { images, countriesData } from "@/service";
+import { images, countriesData, getDialCode } from "@/service";
 import { useBusinessRegister } from "@/hook";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
@@ -81,7 +81,11 @@ const BusinessRegisterStep: React.FC = () => {
           onChange={(value, option) => {
             setFormData({
               ...formData,
-              country: { code: value, name: option.label },
+              country: { 
+                code: value, 
+                name: option.label,
+                dial_code: getDialCode(value)
+              },
             });
           }}
           placeholder="Select your country"

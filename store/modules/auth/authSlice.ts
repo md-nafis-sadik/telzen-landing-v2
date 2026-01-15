@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface AuthCountry {
   code: string;
   name: string;
+  dial_code?: string;
 }
 
 export interface User {

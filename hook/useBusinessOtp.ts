@@ -55,7 +55,7 @@ export const useBusinessOtp = () => {
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").slice(0, 4);
-    
+
     if (!/^\d+$/.test(pastedData)) {
       return;
     }
@@ -83,8 +83,7 @@ export const useBusinessOtp = () => {
     try {
       await businessOtpVerify({
         email: businessAuthModal.email,
-        otp: otpCode,
-        type: businessAuthModal.otpType,
+        code: otpCode,
       }).unwrap();
 
       // The redirect will be handled in the API onQueryStarted
@@ -101,7 +100,7 @@ export const useBusinessOtp = () => {
       await businessResendOtp({
         email: businessAuthModal.email,
       }).unwrap();
-      
+
       toast.success("OTP resent successfully");
       setCountdown(60);
       setOtp(["", "", "", ""]);

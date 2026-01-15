@@ -218,12 +218,13 @@ export const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
 
-    // Business Login mutation (dummy endpoint)
+    // Business Login mutation
     businessLogin: builder.mutation<any, { email: string }>({
       query: (formData) => ({
-        url: "/business/auth/login", // Dummy endpoint
+        url: "/auth/signin",
         method: "POST",
         body: formData,
+        baseUrl: envConfig.businessApiUrl,
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         dispatch(setLoading(true));
@@ -237,7 +238,7 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // Business Register mutation (dummy endpoint)
+    // Business Register mutation
     businessRegister: builder.mutation<any, {
       name: string;
       businessName: string;
@@ -248,19 +249,28 @@ export const authApi = apiSlice.injectEndpoints({
       query: (formData) => {
         // For file upload, use FormData
         const body = new FormData();
-        body.append("name", formData.name);
+        
+        // Create country object with dial_code
+        const countryData = {
+          code: formData.country.code,
+          dial_code: formData.country.dial_code || "+1",
+          name: formData.country.name
+        };
+        
+        body.append("contact_person_name", formData.name);
         body.append("business_name", formData.businessName);
         body.append("email", formData.email);
-        body.append("country_code", formData.country.code);
-        body.append("country_name", formData.country.name);
+        body.append("country", JSON.stringify(countryData));
+        
         if (formData.document) {
-          body.append("document", formData.document);
+          body.append("image", formData.document);
         }
 
         return {
-          url: "/business/auth/register", // Dummy endpoint
+          url: "/auth/signup",
           method: "POST",
           body,
+          baseUrl: envConfig.businessApiUrl,
         };
       },
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -275,16 +285,19 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // Business OTP verification mutation (dummy endpoint)
+    // Business OTP verification mutation
     businessOtpVerify: builder.mutation<any, {
       email: string;
-      otp: string;
-      type: "login" | "register";
+      code: string;
     }>({
       query: (formData) => ({
-        url: "/business/auth/otp-verify", // Dummy endpoint
+        url: "/auth/verify",
         method: "POST",
-        body: formData,
+        body: {
+          email: formData.email,
+          code: parseInt(formData.code)
+        },
+        baseUrl: envConfig.businessApiUrl,
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         dispatch(setLoading(true));
@@ -297,15 +310,17 @@ export const authApi = apiSlice.injectEndpoints({
               token: data.data.access_token,
               email: data.data.email || _arg.email,
               name: data.data.name,
-              businessName: data.data.business_name,
+              uid: data.data.uid,
+              role: data.data.role,
               country: data.data.country,
+              image: data.data.image,
+              static_business: data.data.static_business,
             };
             
             localStorage.setItem("telzen_business_auth", JSON.stringify(businessAuthData));
             
             // Redirect to business portal with token
-            const redirectUrl = `${envConfig.businessPortalUrl}?token=${encodeURIComponent(data.data.access_token)}`;
-            
+            const redirectUrl = `${envConfig.businessRedirectUrl}?token=${encodeURIComponent(data.data.access_token)}`;
             window.location.href = redirectUrl;
           }
 
@@ -316,12 +331,13 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-    // Business Resend OTP mutation (dummy endpoint)
+    // Business Resend OTP mutation
     businessResendOtp: builder.mutation<any, { email: string }>({
       query: (formData) => ({
-        url: "/business/auth/resend-otp", // Dummy endpoint
+        url: "/business/auth/resend-otp",
         method: "POST",
         body: formData,
+        baseUrl: envConfig.businessApiUrl,
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         dispatch(setLoading(true));

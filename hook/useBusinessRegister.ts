@@ -17,7 +17,7 @@ export const useBusinessRegister = () => {
     name: "",
     businessName: "",
     email: "",
-    country: { code: "AU", name: "Australia" } as AuthCountry,
+    country: { code: "AU", name: "Australia", dial_code: "+61" } as AuthCountry,
     document: null as File | null,
     agreeToTerms: false,
   });
