@@ -14,6 +14,7 @@ const RegisterStep: React.FC = () => {
     formData,
     setFormData,
     loading,
+    googleLoading,
     error,
     handleSubmit,
     handleGoogleRegister,
@@ -123,17 +124,21 @@ const RegisterStep: React.FC = () => {
           variant="google"
           fullWidth
           onClick={handleGoogleRegister}
-          className="py-3"
+          disabled={googleLoading}
+          isLoading={googleLoading}
+          loadingText="Redirecting..."
           leftIcon={
-            <div className="relative w-5 md:w-6 h-5 md:h-6">
-              <Image
-                src={images?.googleLogo}
-                alt="google"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+            !googleLoading ? (
+              <div className="relative w-5 md:w-6 h-5 md:h-6">
+                <Image
+                  src={images?.googleLogo}
+                  alt="google"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            ) : undefined
           }
         >
           Login With Google

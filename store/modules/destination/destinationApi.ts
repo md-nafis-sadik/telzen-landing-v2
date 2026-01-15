@@ -245,7 +245,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/region?${params.toString()}`,
-          baseUrl: envConfig.webApiUrl,
+          baseUrl: envConfig.baseUrl,
         };
       },
       providesTags: ["Destination"],
@@ -264,7 +264,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/country?${params.toString()}`,
-          baseUrl: envConfig.webApiUrl,
+          baseUrl: envConfig.baseUrl,
         };
       },
       providesTags: ["Destination"],
@@ -280,12 +280,12 @@ export const destinationApi = apiSlice.injectEndpoints({
         if (country_code) {
           return {
             url: `/country/popular?country_code=${country_code}`,
-            baseUrl: envConfig.webApiUrl,
+            baseUrl: envConfig.baseUrl,
           };
         } else {
           return {
             url: `/country/popular`,
-            baseUrl: envConfig.webApiUrl,
+            baseUrl: envConfig.baseUrl,
           };
         }
       },
@@ -309,7 +309,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         return {
           url: `/package?${params.toString()}`,
-          baseUrl: envConfig.webApiUrl,
+          baseUrl: envConfig.baseUrl,
         };
       },
       providesTags: ["Package"],
@@ -332,7 +332,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
           return {
             url: `/package/single?${params.toString()}`,
-            baseUrl: envConfig.webApiUrl,
+            baseUrl: envConfig.baseUrl,
           };
         },
         providesTags: ["Package"],
@@ -342,7 +342,7 @@ export const destinationApi = apiSlice.injectEndpoints({
     getPersonalEsims: builder.query<ApiResponse<Esim>, void>({
       query: () => ({
         url: "/esim/personal",
-        baseUrl: envConfig.webApiUrl,
+        baseUrl: envConfig.baseUrl,
       }),
       providesTags: ["Esim"],
     }),
@@ -351,7 +351,7 @@ export const destinationApi = apiSlice.injectEndpoints({
       query: ({ esim_id }) => ({
         url: `/esim/delete?esim_id=${esim_id}`,
         method: "DELETE",
-        baseUrl: envConfig.webApiUrl,
+        baseUrl: envConfig.baseUrl,
       }),
       invalidatesTags: ["Esim"],
     }),
@@ -373,7 +373,7 @@ export const destinationApi = apiSlice.injectEndpoints({
         return {
           url: `/coupon/is-valid?${params.toString()}`,
           method: "GET",
-          baseUrl: envConfig.webApiUrl,
+          baseUrl: envConfig.baseUrl,
         };
       },
     }),
@@ -387,7 +387,7 @@ export const destinationApi = apiSlice.injectEndpoints({
         url: "/contact-support/create",
         method: "POST",
         body: data,
-        baseUrl: envConfig.webApiUrl,
+        baseUrl: envConfig.baseUrl,
       }),
     }),
   }),

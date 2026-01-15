@@ -2,7 +2,7 @@
 
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { envConfig, EsimIconSvg, LogoutGreyIconSvg, PersonIconSvg } from "@/service";
+import { appStrings, EsimIconSvg, LogoutGreyIconSvg, PersonIconSvg } from "@/service";
 import Link from "next/link";
 import Image from "next/image";
 import { useUserDropdown } from "@/hook";
@@ -250,7 +250,7 @@ function UserDropdown({ onProfileClick, onLogoutClick }: UserDropdownProps) {
                   {/* Install App Link */}
                   <div className="px-5 md:px-6 py-3 md:py-4 border-t border-gray-100">
                     <Link
-                      href={envConfig.playAppUrl || "#"}
+                      href={appStrings.playAppUrl || "#"}
                       className="text-primary-700 text-sm md:text-base font-medium underline"
                     >
                       Install Telzen App

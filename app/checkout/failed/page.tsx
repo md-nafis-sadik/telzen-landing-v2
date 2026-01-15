@@ -30,7 +30,7 @@ function FailedContent() {
           >
             <Image
               src={images?.removeIcon}
-              alt="successful"
+              alt="unsuccessful"
               width={200}
               height={200}
               priority

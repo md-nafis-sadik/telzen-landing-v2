@@ -168,6 +168,11 @@ export const appStrings = {
   termsAndConditionsTitle: "Terms and Conditions",
   effectiveDate: "<b>Effective Date:</b> 20th April, 2025",
 
+  googleAppUrl:
+    "https://play.google.com/store/apps/details?id=com.netro.telzenapp",
+  playAppUrl:
+    "https://apps.apple.com/gb/app/telzen-esim-for-travellers/id6754873759",
+
   // Privacy Policy Content Structure
   termsAndConditionsContent: {
     intro: [

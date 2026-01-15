@@ -108,7 +108,7 @@ export const useCheckoutForm = ({
         return;
       }
 
-      const createdOrderId = paymentResult.data._id;
+      const createdOrderId = paymentResult.data._id as string;
       const isFree = paymentResult.data.is_free_purchase;
       const secret = paymentResult.data.client_secret;
 

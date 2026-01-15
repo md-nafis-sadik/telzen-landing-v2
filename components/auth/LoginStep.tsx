@@ -15,6 +15,7 @@ const LoginStep: React.FC = () => {
     email,
     setEmail,
     loading,
+    googleLoading,
     handleSubmit,
     handleGoogleLogin,
     handleRegisterClick,
@@ -101,7 +102,10 @@ const LoginStep: React.FC = () => {
       </p>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 max-w-[360px] mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 md:space-y-6 max-w-[360px] mx-auto"
+      >
         <Input
           type="email"
           id="email"
@@ -127,10 +131,7 @@ const LoginStep: React.FC = () => {
 
           <div className="text-center text-sm md:text-base text-text-950 tracking-tight">
             {appStrings.dontHaveAccount}{" "}
-            <Button
-              variant="link"
-              onClick={handleRegisterClick}
-            >
+            <Button variant="link" onClick={handleRegisterClick}>
               {appStrings.registerNow}
             </Button>
           </div>
@@ -140,17 +141,21 @@ const LoginStep: React.FC = () => {
           variant="google"
           fullWidth
           onClick={handleGoogleLogin}
-          className="py-3"
+          disabled={googleLoading}
+          isLoading={googleLoading}
+          loadingText="Redirecting..."
           leftIcon={
-            <div className="relative w-5 md:w-6 h-5 md:h-6">
-              <Image
-                src={images?.googleLogo}
-                alt="google"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+            !googleLoading ? (
+              <div className="relative w-5 md:w-6 h-5 md:h-6">
+                <Image
+                  src={images?.googleLogo}
+                  alt="google"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            ) : undefined
           }
         >
           {appStrings.loginWithGoogle}

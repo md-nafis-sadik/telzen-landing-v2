@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setAuthModalStep,
@@ -20,6 +20,7 @@ export const countries = countriesData;
 export const useRegister = () => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.auth);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,6 +28,15 @@ export const useRegister = () => {
     agreeToTerms: false,
   });
   const [signup] = useSignupMutation();
+
+  useEffect(() => {
+    setGoogleLoading(false);
+    
+    const handlePageShow = () => setGoogleLoading(false);
+    window.addEventListener("pageshow", handlePageShow);
+    
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,6 +74,8 @@ export const useRegister = () => {
 
   const handleGoogleRegister = async () => {
     try {
+      setGoogleLoading(true);
+      
       // Save current URL for redirect after OAuth
       if (typeof window !== "undefined") {
         sessionStorage.setItem(
@@ -83,7 +95,7 @@ export const useRegister = () => {
 
       // Build Google OAuth URL with query parameters
       const googleAuthUrl = `${
-        envConfig.webApiUrl
+        envConfig.baseUrl
       }/auth/google?device_id=${deviceId}&country_code=${
         country.code
       }&country_name=${encodeURIComponent(
@@ -93,6 +105,7 @@ export const useRegister = () => {
       // Redirect to Google OAuth
       window.location.href = googleAuthUrl;
     } catch (error) {
+      setGoogleLoading(false);
       console.log("Google login error:", error);
       toast.error("Failed to initiate Google login. Please try again.");
     }
@@ -113,6 +126,7 @@ export const useRegister = () => {
     formData,
     setFormData,
     loading,
+    googleLoading,
     error,
     handleSubmit,
     handleGoogleRegister,

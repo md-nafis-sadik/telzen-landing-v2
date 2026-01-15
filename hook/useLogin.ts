@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setAuthModalStep,
@@ -17,8 +17,18 @@ import { toast } from "react-toastify";
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.auth);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [signin] = useSigninMutation();
+
+  useEffect(() => {
+    setGoogleLoading(false);
+
+    const handlePageShow = () => setGoogleLoading(false);
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,9 +60,14 @@ export const useLogin = () => {
 
   const handleGoogleLogin = async () => {
     try {
+      setGoogleLoading(true);
+
       // Save current URL for redirect after OAuth
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("oauth_redirect_url", window.location.pathname + window.location.search);
+        sessionStorage.setItem(
+          "oauth_redirect_url",
+          window.location.pathname + window.location.search
+        );
       }
 
       const deviceId = getDeviceId();
@@ -66,7 +81,7 @@ export const useLogin = () => {
 
       // Build Google OAuth URL with query parameters
       const googleAuthUrl = `${
-        envConfig.webApiUrl
+        envConfig.baseUrl
       }/auth/google?device_id=${deviceId}&country_code=${
         country.code
       }&country_name=${encodeURIComponent(
@@ -76,6 +91,7 @@ export const useLogin = () => {
       // Redirect to Google OAuth
       window.location.href = googleAuthUrl;
     } catch (error) {
+      setGoogleLoading(false);
       console.log("Google login error:", error);
       toast.error("Failed to initiate Google login. Please try again.");
     }
@@ -89,6 +105,7 @@ export const useLogin = () => {
     email,
     setEmail,
     loading,
+    googleLoading,
     error,
     handleSubmit,
     handleGoogleLogin,

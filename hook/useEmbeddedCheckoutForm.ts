@@ -1,6 +1,10 @@
 import { FormEvent, useState } from "react";
 import type { StripeCardNumberElementChangeEvent } from "@stripe/stripe-js";
-import { useStripe, useElements, CardNumberElement } from "@stripe/react-stripe-js";
+import {
+  useStripe,
+  useElements,
+  CardNumberElement,
+} from "@stripe/react-stripe-js";
 import { useAppSelector } from "@/store/hooks";
 import { toast } from "react-toastify";
 import { useCheckout } from "@/hook";
@@ -12,7 +16,7 @@ interface UseEmbeddedCheckoutFormProps {
   currency?: string;
   couponId?: string;
   orderType: "new" | "topup";
-  onSuccess?: (orderId: string) => void; 
+  onSuccess?: (orderId: string) => void;
 }
 
 export const useEmbeddedCheckoutForm = ({
@@ -83,6 +87,10 @@ export const useEmbeddedCheckoutForm = ({
         is_free_purchase,
       } = paymentResult.data;
 
+      if (!client_secret) {
+        throw new Error("Payment initialization failed. Please try again.");
+      }
+
       // Confirm card payment with Stripe
       const { error: stripeError, paymentIntent } =
         await stripe.confirmCardPayment(client_secret, {
@@ -100,9 +108,13 @@ export const useEmbeddedCheckoutForm = ({
 
       if (paymentIntent?.status === "succeeded") {
         // Verify payment with backend
+        if (!orderId) {
+          throw new Error("Order ID not found");
+        }
+
         const verifyResult = await verifyPayment(orderId, token);
         if (verifyResult?.success) {
-          if (onSuccess) onSuccess(orderId);
+          if (onSuccess && orderId) onSuccess(orderId);
         }
       }
     } catch (err: any) {
@@ -141,6 +153,10 @@ export const useEmbeddedCheckoutForm = ({
       }
 
       const { _id: orderId } = paymentResult.data;
+
+      if (!orderId) {
+        throw new Error("Order ID not found");
+      }
 
       toast.success("Free package activated successfully!");
       // Pass orderId to onSuccess callback

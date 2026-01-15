@@ -54,7 +54,7 @@ function Download() {
             <div className="flex justify-center lg:justify-start gap-2 mt-4 items-center w-full h-full">
               <BlurCard scale={[0.8, 1]} delay={100} className="h-full sm:h-14">
                 <Link
-                  href={envConfig.playAppUrl || ""}
+                  href={appStrings.playAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block h-full"
@@ -71,7 +71,7 @@ function Download() {
               </BlurCard>
               <BlurCard scale={[0.8, 1]} delay={300} className="h-full sm:h-14">
                 <Link
-                  href={envConfig.googleAppUrl || ""}
+                  href={appStrings.googleAppUrl || ""}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block h-full"

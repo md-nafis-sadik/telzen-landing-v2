@@ -28,7 +28,7 @@ const baseQueryWithDynamicUrl = async (
     url = `${args.baseUrl}${args.url}`;
   } else {
     // Use default web API base URL from environment
-    url = `${envConfig.webApiUrl}${args.url}`;
+    url = `${envConfig.baseUrl}${args.url}`;
   }
 
   // Create new args with the full URL

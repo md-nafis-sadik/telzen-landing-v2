@@ -24,7 +24,12 @@ const GoogleOAuthHandlerContent = () => {
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
-      if (!token) {
+      const isOAuthCallback =
+        typeof window !== "undefined" &&
+        window.location.pathname === "/" &&
+        sessionStorage.getItem("oauth_redirect_url");
+
+      if (!token || !isOAuthCallback) {
         setIsLoading(false);
         return;
       }
@@ -36,7 +41,7 @@ const GoogleOAuthHandlerContent = () => {
         const expireAt = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60;
 
         // Manually fetch profile using fetch API with the token
-        const response = await fetch(`${envConfig.webApiUrl}/auth/profile`, {
+        const response = await fetch(`${envConfig.baseUrl}/auth/profile`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,9 +84,9 @@ const GoogleOAuthHandlerContent = () => {
             response.status,
             await response.text()
           );
-          // Still save the token even if profile fetch fails
-          dispatch(saveAuthData({ token, expireAt }));
-          //   toast.success("Successfully logged in!");
+          // Don't save token if profile fetch fails
+          toast.error("Failed to fetch profile. Please try logging in again.");
+          throw new Error("Profile fetch failed");
         }
 
         // Get redirect URL and clean up

@@ -111,7 +111,7 @@ function Hero() {
             </p>
             <div className="flex justify-center md:justify-start gap-3 md:gap-6 mt-2 w-full h-full">
               <Link
-                href={envConfig.playAppUrl || ""}
+                href={appStrings.playAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block h-full sm:h-10"
@@ -126,7 +126,7 @@ function Hero() {
                 />
               </Link>
               <Link
-                href={envConfig.googleAppUrl || ""}
+                href={appStrings.googleAppUrl || ""}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block h-full sm:h-10"

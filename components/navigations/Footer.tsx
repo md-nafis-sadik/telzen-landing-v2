@@ -112,7 +112,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  href={envConfig.googleAppUrl || "#"}
+                  href={appStrings.googleAppUrl || "#"}
                   prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >
@@ -121,7 +121,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  href={envConfig.playAppUrl || "#"}
+                  href={appStrings.playAppUrl || "#"}
                   prefetch={false}
                   className="text-natural-500 hover:text-primary-700 transition-colors"
                 >

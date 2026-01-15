@@ -13,7 +13,9 @@ import UserDropdown from "../shared/UserDropdown";
 
 const AuthButton: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, authInitialized } = useAppSelector(
+    (state) => state.auth
+  );
 
   const handleLoginClick = () => {
     dispatch(openAuthModal({ step: "login" }));
@@ -26,6 +28,10 @@ const AuthButton: React.FC = () => {
   const handleLogoutClick = () => {
     dispatch(openLogoutModal());
   };
+
+  if (!authInitialized) {
+    return null;
+  }
 
   if (isAuthenticated) {
     return (

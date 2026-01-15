@@ -44,7 +44,7 @@ export const useCheckoutLogin = () => {
       // Store email and set OTP type
       dispatch(setAuthModalEmail(email.trim()));
       dispatch(setAuthModalOtpType("signin"));
-      
+
       // Open the auth modal at OTP step
       dispatch(openAuthModal({ step: "otp", email: email.trim() }));
     } catch (error: any) {
@@ -61,7 +61,10 @@ export const useCheckoutLogin = () => {
     try {
       // Save current URL for redirect after OAuth
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("oauth_redirect_url", window.location.pathname + window.location.search);
+        sessionStorage.setItem(
+          "oauth_redirect_url",
+          window.location.pathname + window.location.search
+        );
       }
 
       const deviceId = getDeviceId();
@@ -75,7 +78,7 @@ export const useCheckoutLogin = () => {
 
       // Build Google OAuth URL with query parameters
       const googleAuthUrl = `${
-        envConfig.webApiUrl
+        envConfig.baseUrl
       }/auth/google?device_id=${deviceId}&country_code=${
         country.code
       }&country_name=${encodeURIComponent(

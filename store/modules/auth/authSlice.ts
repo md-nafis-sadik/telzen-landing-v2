@@ -88,6 +88,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.auth = {};
       state.isAuthenticated = false;
+      state.authInitialized = true;
       state.loading = false;
       state.error = null;
       localStorage.removeItem("telzen_auth");
@@ -95,6 +96,7 @@ const authSlice = createSlice({
     clearAuthState: (state) => {
       state.auth = {};
       state.isAuthenticated = false;
+      state.authInitialized = true;
       state.loading = false;
       state.error = null;
       localStorage.removeItem("telzen_auth");
