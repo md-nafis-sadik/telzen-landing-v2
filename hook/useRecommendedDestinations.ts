@@ -1,9 +1,11 @@
 import { useAppSelector } from "@/store/hooks";
 import { useGetPopularCountriesQuery } from "@/store/modules/destination/destinationApi";
 import { getCountryCode as getStoredCountryCode } from "./useLocation";
+import { useCurrency } from "./useCurrency";
 
 export const useRecommendedDestinations = () => {
   const { isAuthenticated, auth } = useAppSelector((state) => state.auth);
+  const { currencyCode } = useCurrency();
 
   const getApiCountryCode = (): string | undefined => {
     if (isAuthenticated && auth.country?.code) {
@@ -29,7 +31,12 @@ export const useRecommendedDestinations = () => {
     isLoading,
     error,
   } = useGetPopularCountriesQuery(
-    countryCode ? { country_code: countryCode } : {}
+    countryCode 
+      ? { country_code: countryCode, currency_code: currencyCode } 
+      : { currency_code: currencyCode },
+    {
+      refetchOnMountOrArgChange: true,
+    }
   );
 
   const popularCountries = popularCountriesData?.data?.slice(0, 4) || [];

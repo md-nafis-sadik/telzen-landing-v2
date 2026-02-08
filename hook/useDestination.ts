@@ -7,10 +7,12 @@ import {
   setDestinationType,
   DestinationType,
 } from "@/store/modules/destination/destinationSlice";
+import { useCurrency } from "./useCurrency";
 
 export const useDestination = () => {
   const dispatch = useAppDispatch();
   const { activeType } = useAppSelector((state) => state.destination);
+  const { currencyCode } = useCurrency();
 
   // API queries
   const {
@@ -21,9 +23,11 @@ export const useDestination = () => {
     {
       page: 1,
       limit: 8,
+      currency_code: currencyCode,
     },
     {
       skip: activeType !== "regions",
+      refetchOnMountOrArgChange: true,
     }
   );
 
@@ -35,9 +39,11 @@ export const useDestination = () => {
     {
       page: 1,
       limit: 8,
+      currency_code: currencyCode,
     },
     {
       skip: activeType !== "countries",
+      refetchOnMountOrArgChange: true,
     }
   );
 

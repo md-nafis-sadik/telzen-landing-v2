@@ -13,10 +13,12 @@ import {
   GroupGreenSvg,
   Icon1GreenSvg,
 } from "@/service";
+import { useCurrency } from "./useCurrency";
 
 export const useDestinationDetails = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { currencyCode } = useCurrency();
 
   const countryId = searchParams.get("country_id");
   const regionId = searchParams.get("region_id");
@@ -42,12 +44,18 @@ export const useDestinationDetails = () => {
     data: packagesData,
     isLoading,
     error,
-  } = useGetPackagesQuery({
-    country_id: countryId || undefined,
-    region_id: regionId || undefined,
-    page: 1,
-    limit: 999999,
-  });
+  } = useGetPackagesQuery(
+    {
+      country_id: countryId || undefined,
+      region_id: regionId || undefined,
+      page: 1,
+      limit: 999999,
+      currency_code: currencyCode,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   // Get display name and image from API response
   const displayName =

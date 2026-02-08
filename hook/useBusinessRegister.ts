@@ -17,9 +17,14 @@ export const useBusinessRegister = () => {
     name: "",
     businessName: "",
     email: "",
-    country: { code: "AU", name: "Australia", dial_code: "+61" } as AuthCountry,
+    country: {
+      code: "US",
+      name: "United States",
+      dial_code: "+1",
+    } as AuthCountry,
     document: null as File | null,
     agreeToTerms: false,
+    type: "vendor",
   });
 
   const [businessRegister] = useBusinessRegisterMutation();
@@ -27,7 +32,11 @@ export const useBusinessRegister = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.businessName.trim() || !formData.email.trim()) {
+    if (
+      !formData.name.trim() ||
+      !formData.businessName.trim() ||
+      !formData.email.trim()
+    ) {
       toast.error("Please fill all required fields");
       return;
     }
@@ -38,17 +47,23 @@ export const useBusinessRegister = () => {
     }
 
     try {
-      await businessRegister({
+      const response = await businessRegister({
         name: formData.name.trim(),
         businessName: formData.businessName.trim(),
         email: formData.email.trim(),
         country: formData.country,
         document: formData.document,
+        type: formData.type,
       }).unwrap();
 
       dispatch(setBusinessAuthModalEmail(formData.email.trim()));
-      dispatch(setBusinessAuthModalOtpType("register"));
-      dispatch(setBusinessAuthModalStep("otp"));
+      dispatch(setBusinessAuthModalOtpType("login"));
+      dispatch(setBusinessAuthModalStep("login"));
+
+      toast.success(
+        response?.message ||
+          "Registration successful! Please verify your email.",
+      );
     } catch (error: any) {
       console.log("Business registration error:", error);
       const errorMessage =

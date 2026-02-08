@@ -7,6 +7,7 @@ import {
   appStrings,
   formatFloatingNumber,
 } from "@/service";
+import { getCurrencySymbol } from "@/service/helpers/currencyUtils";
 import Image from "next/image";
 import { Package } from "@/store/modules/destination/destinationApi";
 import Input from "../shared/Input";
@@ -39,6 +40,9 @@ function CheckoutCard({
   showPaymentButton = false,
 }: CheckoutCardProps) {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  
+  // Get currency symbol
+  const currencySymbol = getCurrencySymbol(currency);
 
   const {
     couponCode,
@@ -148,7 +152,7 @@ function CheckoutCard({
             <div className="flex items-center gap-2">
               <span>Sub total</span>
             </div>
-            <div className="font-bold">${formatFloatingNumber(subtotal)}</div>
+            <div className="font-bold">{currencySymbol}{formatFloatingNumber(subtotal)}</div>
           </div>
 
           {/* Show discount if coupon applied */}
@@ -157,7 +161,7 @@ function CheckoutCard({
               <div className="flex items-center gap-2">
                 <span>Coupon Applied “{appliedCoupon.code}”</span>
               </div>
-              <div className="font-bold">${formatFloatingNumber(discount)}</div>
+              <div className="font-bold">{currencySymbol}{formatFloatingNumber(discount)}</div>
             </div>
           )}
 
@@ -165,7 +169,7 @@ function CheckoutCard({
             <div className="flex items-center gap-2">
               <span>Grand Total</span>
             </div>
-            <div className="font-bold">${formatFloatingNumber(grandTotal)}</div>
+            <div className="font-bold">{currencySymbol}{formatFloatingNumber(grandTotal)}</div>
           </div>
 
           {/* Coupon section */}

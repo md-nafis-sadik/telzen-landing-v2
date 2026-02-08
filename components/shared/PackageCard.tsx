@@ -1,6 +1,7 @@
 "use client";
 
 import { StarPointSvg, appStrings } from "@/service";
+import { getCurrencySymbol } from "@/service/helpers/currencyUtils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
@@ -11,6 +12,7 @@ interface PackageCardProps {
   validity: string;
   onPurchaseRewardPoint?: number;
   grandTotalSellingPrice: number;
+  currency?: string;
   IconComponent: React.ComponentType<{ className?: string }>;
   onClick?: () => void;
   checkoutUrl?: string;
@@ -23,6 +25,7 @@ function PackageCard({
   validity,
   onPurchaseRewardPoint = 0,
   grandTotalSellingPrice,
+  currency = "USD",
   IconComponent,
   onClick,
   checkoutUrl,
@@ -31,6 +34,9 @@ function PackageCard({
   const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
   const hasPrefetched = useRef(false);
+
+  // Get currency symbol based on currency code
+  const currencySymbol = getCurrencySymbol(currency);
 
   // Prefetch when card enters viewport using Intersection Observer
   useEffect(() => {
@@ -89,7 +95,7 @@ function PackageCard({
       </div>
       <div className="flex flex-col items-end justify-end">
         <div className="text-lg md:text-xl lg:text-2xl xl:text-[28px] justify-end font-semibold">
-          ${grandTotalSellingPrice.toFixed(2)}
+          {currencySymbol}{grandTotalSellingPrice.toFixed(2)}
         </div>
       </div>
     </div>

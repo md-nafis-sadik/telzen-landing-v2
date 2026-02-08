@@ -10,6 +10,7 @@ export interface Region {
   status: string;
   created_at: number;
   start_from: number;
+  currency: string;
   is_free_package_available: boolean;
   highest_discount: {
     amount: number;
@@ -34,6 +35,7 @@ export interface Country {
   is_popular: boolean;
   created_at: number;
   start_from: number;
+  currency: string;
   total_packages: number;
   is_free_package_available: boolean;
   highest_discount: {
@@ -61,16 +63,19 @@ export interface RegionParams {
   page?: number;
   limit?: number;
   search?: string;
+  currency_code?: string;
 }
 
 export interface CountryParams {
   page?: number;
   limit?: number;
   search?: string;
+  currency_code?: string;
 }
 
 export interface PopularCountryParams {
   country_code?: string;
+  currency_code?: string;
 }
 
 export interface Package {
@@ -95,6 +100,7 @@ export interface PackageParams {
   country_id?: string;
   page?: number;
   limit?: number;
+  currency_code?: string;
 }
 
 export interface PackagesResponse {
@@ -120,6 +126,7 @@ export interface SinglePackageParams {
   country_id?: string;
   region_id?: string;
   package_id: string;
+  currency_code?: string;
 }
 
 export interface SinglePackageResponse {
@@ -233,7 +240,7 @@ export interface ContactSupportResponse {
 export const destinationApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRegions: builder.query<ApiResponse<Region>, RegionParams>({
-      query: ({ page = 1, limit = 8, search = "" }) => {
+      query: ({ page = 1, limit = 8, search = "", currency_code }) => {
         const params = new URLSearchParams({
           page: page.toString(),
           limit: limit.toString(),
@@ -241,6 +248,10 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         if (search.trim()) {
           params.append("search", search.trim());
+        }
+
+        if (currency_code) {
+          params.append("currency_code", currency_code);
         }
 
         return {
@@ -252,7 +263,7 @@ export const destinationApi = apiSlice.injectEndpoints({
     }),
 
     getCountries: builder.query<ApiResponse<Country>, CountryParams>({
-      query: ({ page = 1, limit = 8, search = "" }) => {
+      query: ({ page = 1, limit = 8, search = "", currency_code }) => {
         const params = new URLSearchParams({
           page: page.toString(),
           limit: limit.toString(),
@@ -260,6 +271,10 @@ export const destinationApi = apiSlice.injectEndpoints({
 
         if (search.trim()) {
           params.append("search", search.trim());
+        }
+
+        if (currency_code) {
+          params.append("currency_code", currency_code);
         }
 
         return {
@@ -274,26 +289,28 @@ export const destinationApi = apiSlice.injectEndpoints({
       ApiResponse<Country>,
       PopularCountryParams
     >({
-      query: ({ country_code } = {}) => {
-        // If country_code is provided, include it in the query
-        // If not provided, call the API without country_code parameter
+      query: ({ country_code, currency_code } = {}) => {
+        const params = new URLSearchParams();
+
         if (country_code) {
-          return {
-            url: `/country/popular?country_code=${country_code}`,
-            baseUrl: envConfig.baseUrl,
-          };
-        } else {
-          return {
-            url: `/country/popular`,
-            baseUrl: envConfig.baseUrl,
-          };
+          params.append("country_code", country_code);
         }
+
+        if (currency_code) {
+          params.append("currency_code", currency_code);
+        }
+
+        const queryString = params.toString();
+        return {
+          url: queryString ? `/country/popular?${queryString}` : `/country/popular`,
+          baseUrl: envConfig.baseUrl,
+        };
       },
       providesTags: ["Destination"],
     }),
 
     getPackages: builder.query<PackagesResponse, PackageParams>({
-      query: ({ region_id, country_id, page = 1, limit = 10 }) => {
+      query: ({ region_id, country_id, page = 1, limit = 10, currency_code }) => {
         const params = new URLSearchParams({
           page: page.toString(),
           limit: limit.toString(),
@@ -307,6 +324,10 @@ export const destinationApi = apiSlice.injectEndpoints({
           params.append("country_id", country_id);
         }
 
+        if (currency_code) {
+          params.append("currency_code", currency_code);
+        }
+
         return {
           url: `/package?${params.toString()}`,
           baseUrl: envConfig.baseUrl,
@@ -317,7 +338,7 @@ export const destinationApi = apiSlice.injectEndpoints({
 
     getSinglePackage: builder.query<SinglePackageResponse, SinglePackageParams>(
       {
-        query: ({ country_id, region_id, package_id }) => {
+        query: ({ country_id, region_id, package_id, currency_code }) => {
           const params = new URLSearchParams({
             package_id,
           });
@@ -328,6 +349,10 @@ export const destinationApi = apiSlice.injectEndpoints({
 
           if (region_id) {
             params.append("region_id", region_id);
+          }
+
+          if (currency_code) {
+            params.append("currency_code", currency_code);
           }
 
           return {

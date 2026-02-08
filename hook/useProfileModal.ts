@@ -15,12 +15,20 @@ export const useProfileModal = () => {
   const { profileModal } = useAppSelector((state) => state.ui);
   const isOpen = profileModal.isOpen;
 
-  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery(
+  const { data: profileData, isLoading: profileLoading, refetch } = useGetProfileQuery(
     undefined,
     {
       skip: !auth.token || !isOpen,
+      refetchOnMountOrArgChange: true,
     }
   );
+
+  // Refetch profile when modal opens
+  useEffect(() => {
+    if (isOpen && auth.token) {
+      refetch();
+    }
+  }, [isOpen, auth.token, refetch]);
 
   const [updateProfile, { isLoading: updateLoading }] =
     useUpdateProfileMutation();

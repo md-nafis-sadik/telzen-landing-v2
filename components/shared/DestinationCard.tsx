@@ -1,6 +1,7 @@
 "use client";
 
 import { cn, images, appStrings } from "@/service";
+import { getCurrencySymbol } from "@/service/helpers/currencyUtils";
 import { Region, Country } from "@/store/modules/destination/destinationApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -40,6 +41,11 @@ function DestinationCard({
   const displayImage = data?.image || destinationImage || images?.newZealand;
   const displayName = data?.name || destinationName || appStrings.newZealand;
   const displayPrice = data?.start_from || destinationPrice || 0;
+  
+  // Get currency symbol from data or use the provided symbol
+  const currencySymbol = data?.currency 
+    ? getCurrencySymbol(data.currency) 
+    : destinationPriceSymbol;
 
   // Encode the image URL to handle spaces and special characters
   const encodedImageUrl = displayImage ? encodeURI(displayImage) : displayImage;
@@ -132,7 +138,7 @@ function DestinationCard({
           {displayName}
         </div>
         <div className="text-xs sm:text-base md:text-lg text-[#FAFAFA]">
-          {appStrings.startFrom} {destinationPriceSymbol}
+          {appStrings.startFrom} {currencySymbol}
           {formattedPrice}
         </div>
       </div>

@@ -151,6 +151,11 @@ export const useLocation = (): UseLocationReturn => {
           setLocation(locationData);
           saveLocationToStorage(locationData);
           setError(null);
+          
+          // Dispatch custom event to notify other components
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new Event("locationUpdated"));
+          }
         } catch (err) {
           console.log("Error processing location:", err);
           setError({

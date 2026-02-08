@@ -13,12 +13,14 @@ import { useGetSinglePackageQuery } from "@/store/modules/destination/destinatio
 import { useState, Suspense } from "react";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { useCurrency } from "@/hook/useCurrency";
 
 function CheckOutContent() {
   const searchParams = useSearchParams();
   const { isAuthenticated, authInitialized, auth } = useAppSelector(
     (state) => state.auth
   );
+  const { currencyCode } = useCurrency();
   const [showSuccess, setShowSuccess] = useState(false);
   const [finalAmount, setFinalAmount] = useState<number>(0);
   const [appliedCouponId, setAppliedCouponId] = useState<string | undefined>();
@@ -39,9 +41,11 @@ function CheckOutContent() {
       package_id: packageId || "",
       country_id: countryId || undefined,
       region_id: regionId || undefined,
+      currency_code: currencyCode,
     },
     {
       skip: !packageId || !authInitialized,
+      refetchOnMountOrArgChange: true,
     }
   );
   const { packageDetails, grandTotal } = useSelector(
@@ -300,7 +304,7 @@ function CheckOutContent() {
                       onCouponChange={setAppliedCouponId}
                       onCouponLoadingChange={setIsCouponLoading}
                       packageId={packageId}
-                      currency="USD"
+                      currency={packageData.data.currency}
                       orderType={orderType as "new" | "topup"}
                       onSuccess={handleSuccess}
                       showPaymentButton={isAuthenticated}

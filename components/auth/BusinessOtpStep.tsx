@@ -74,7 +74,7 @@ const BusinessOtpStep: React.FC = () => {
           Verify and Login
         </Button>
 
-        <div className="text-center text-sm md:text-base text-text-950 tracking-tight">
+        {/* <div className="text-center text-sm md:text-base text-text-950 tracking-tight">
           Didn&apos;t receive an OTP?{" "}
           {countdown === 0 ? (
             <Button variant="link" onClick={handleResendOtp}>
@@ -83,7 +83,7 @@ const BusinessOtpStep: React.FC = () => {
           ) : (
             <span className="text-gray-400">Resend Code</span>
           )}
-        </div>
+        </div> */}
       </form>
     </div>
   );

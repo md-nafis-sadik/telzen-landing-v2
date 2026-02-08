@@ -9,11 +9,13 @@ import {
   DestinationType,
 } from "@/store/modules/destination/destinationSlice";
 import { useSearchParams } from "next/navigation";
+import { useCurrency } from "./useCurrency";
 
 export const useAllDestinations = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const { activeType } = useAppSelector((state) => state.destination);
+  const { currencyCode } = useCurrency();
 
   const itemsPerPage = 15;
   const loadMoreCount = 15;
@@ -51,9 +53,11 @@ export const useAllDestinations = () => {
       page: currentPage,
       limit: itemsPerPage,
       search: apiSearchQuery,
+      currency_code: currencyCode,
     },
     {
       skip: activeType !== "regions",
+      refetchOnMountOrArgChange: true,
     }
   );
 
@@ -67,9 +71,11 @@ export const useAllDestinations = () => {
       page: currentPage,
       limit: itemsPerPage,
       search: apiSearchQuery,
+      currency_code: currencyCode,
     },
     {
       skip: activeType !== "countries",
+      refetchOnMountOrArgChange: true,
     }
   );
 
@@ -105,6 +111,14 @@ export const useAllDestinations = () => {
     setRegionsPage(1);
     setCountriesPage(1);
   }, [apiSearchQuery]);
+
+  // Reset accumulated data when currency changes
+  useEffect(() => {
+    setRegionsAccumulatedData(new Map());
+    setCountriesAccumulatedData(new Map());
+    setRegionsPage(1);
+    setCountriesPage(1);
+  }, [currencyCode]);
 
   useEffect(() => {
     if (

@@ -11,17 +11,25 @@ export const useUserDropdown = (
   const [buttonRect, setButtonRect] = useState<DOMRect | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { auth } = useAppSelector((state) => state.auth);
+  const { auth, isAuthenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
-  const { data: profileData } = useGetProfileQuery(undefined, {
+  const { data: profileData, refetch } = useGetProfileQuery(undefined, {
     skip: !auth.token,
+    refetchOnMountOrArgChange: true,
   });
 
   // Prefetch my-esim page on component mount
   useEffect(() => {
     router.prefetch("/my-esim");
   }, [router]);
+
+  // Refetch profile whenever authentication state changes
+  useEffect(() => {
+    if (isAuthenticated && auth.token) {
+      refetch();
+    }
+  }, [isAuthenticated, auth.token, refetch]);
 
   const profile = profileData?.data;
 

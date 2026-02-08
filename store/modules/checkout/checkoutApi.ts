@@ -24,7 +24,9 @@ export interface CreatePaymentResponse {
     is_free_purchase?: boolean;
     payment_amount?: {
       USD: number;
+      BDT?: number;
     };
+    payment_currency?: string;
     created_at: number;
     client_secret?: string;
     approve_link?: string;
@@ -65,8 +67,13 @@ export const checkoutApi = apiSlice.injectEndpoints({
           requestBody.coupon = params.coupon_id;
         }
 
+        // Use v3 endpoint for BDT currency, v2 for others
+        const endpoint = params.currency === "BDT" 
+          ? `/checkout-v3/create-payment?order_type=${params.order_type}`
+          : `/checkout-v2/create-payment?order_type=${params.order_type}&is_web=true`;
+
         return {
-          url: `/checkout-v2/create-payment?order_type=${params.order_type}&is_web=true`,
+          url: endpoint,
           method: "POST",
           body: requestBody,
         };

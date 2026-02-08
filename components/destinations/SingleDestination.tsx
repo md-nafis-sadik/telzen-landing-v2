@@ -136,6 +136,7 @@ function SingleDestination() {
                         validity={packageItem.validity}
                         onPurchaseRewardPoint={packageItem.on_purchase_reward_point}
                         grandTotalSellingPrice={packageItem.grand_total_selling_price}
+                        currency={packageItem.currency}
                         IconComponent={IconComponent}
                         checkoutUrl={getCheckoutUrl(packageItem._id)}
                         onClick={() => handlePackageClick(packageItem._id)}

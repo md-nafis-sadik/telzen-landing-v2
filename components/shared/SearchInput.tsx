@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { useGetCountriesQuery } from "@/store/modules/destination/destinationApi";
 import Image from "next/image";
+import { useCurrency } from "@/hook/useCurrency";
 
 interface SearchInputProps {
   placeholder?: string;
@@ -45,6 +46,7 @@ function SearchInput({
   const [mounted, setMounted] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const { currencyCode } = useCurrency();
 
   const currentValue = value !== undefined ? value : internalValue;
 
@@ -57,6 +59,7 @@ function SearchInput({
       page: 1,
       limit: 999,
       search: currentValue,
+      currency_code: currencyCode,
     },
     {
       skip: !isFocused && !showDropdown,
@@ -234,7 +237,7 @@ const handleItemClick = (item: any) => {
             onWheel={(e) => e.stopPropagation()}
           >
             {isLoading ? (
-              <div className="p-4 text-center text-gray-500">
+              <div className="p-4 text-center text-gray-500 test-sm">
                 Loading destinations...
               </div>
             ) : filteredCountries.length > 0 ? (

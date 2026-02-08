@@ -1,6 +1,12 @@
 import moment from "moment";
 import { apiSlice } from "../api/apiSlice";
-import { saveAuthData, setLoading, setError, updateAuth, AuthCountry } from "./authSlice";
+import {
+  saveAuthData,
+  setLoading,
+  setError,
+  updateAuth,
+  AuthCountry,
+} from "./authSlice";
 import { closeAuthModal } from "../ui/uiSlice";
 import { envConfig } from "@/service";
 
@@ -128,7 +134,7 @@ export const authApi = apiSlice.injectEndpoints({
                 token: data.data.access_token, // Normalize the token field
                 expireAt,
                 customerId: data.data._id, // Save customer_id for coupon validation
-              })
+              }),
             );
 
             // Don't close modal here - let the success step handle it
@@ -140,6 +146,7 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(setError(error?.data?.message || "OTP verification failed"));
         }
       },
+      invalidatesTags: ["Auth"],
     }),
 
     // Resend OTP mutation
@@ -179,7 +186,7 @@ export const authApi = apiSlice.injectEndpoints({
                 country: data.data.country,
                 image: data.data.image,
                 customerId: data.data._id, // Save customer_id for coupon validation
-              })
+              }),
             );
           }
         } catch (error) {
@@ -206,12 +213,12 @@ export const authApi = apiSlice.injectEndpoints({
               name: _arg.name,
               email: _arg.email,
               country: _arg.country,
-            })
+            }),
           );
           dispatch(setLoading(false));
         } catch (error: any) {
           dispatch(
-            setError(error?.data?.message || "Failed to update profile")
+            setError(error?.data?.message || "Failed to update profile"),
           );
         }
       },
@@ -239,31 +246,36 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
     // Business Register mutation
-    businessRegister: builder.mutation<any, {
-      name: string;
-      businessName: string;
-      email: string;
-      country: AuthCountry;
-      document?: File | null;
-    }>({
+    businessRegister: builder.mutation<
+      any,
+      {
+        name: string;
+        businessName: string;
+        email: string;
+        country: AuthCountry;
+        document?: File | null;
+        type: string;
+      }
+    >({
       query: (formData) => {
         // For file upload, use FormData
         const body = new FormData();
-        
-        // Create country object with dial_code
-        const countryData = {
-          code: formData.country.code,
-          dial_code: formData.country.dial_code || "+1",
-          name: formData.country.name
+        // Send country as JSON string for proper object parsing
+        const datatoSend = {
+          contact_person_name: formData.name,
+          business_name: formData.businessName,
+          email: formData.email,
+          country: {
+            code: formData.country.code,
+            dial_code: formData.country.dial_code || "+1",
+            name: formData.country.name,
+          },
+          type: formData.type,
         };
-        
-        body.append("contact_person_name", formData.name);
-        body.append("business_name", formData.businessName);
-        body.append("email", formData.email);
-        body.append("country", JSON.stringify(countryData));
-        
+        body.append("data", JSON.stringify(datatoSend));
+
         if (formData.document) {
-          body.append("image", formData.document);
+          body.append("single", formData.document);
         }
 
         return {
@@ -280,22 +292,27 @@ export const authApi = apiSlice.injectEndpoints({
           dispatch(setLoading(false));
           dispatch(updateAuth({ email: _arg.email }));
         } catch (error: any) {
-          dispatch(setError(error?.data?.message || "Business registration failed"));
+          dispatch(
+            setError(error?.data?.message || "Business registration failed"),
+          );
         }
       },
     }),
 
     // Business OTP verification mutation
-    businessOtpVerify: builder.mutation<any, {
-      email: string;
-      code: string;
-    }>({
+    businessOtpVerify: builder.mutation<
+      any,
+      {
+        email: string;
+        code: string;
+      }
+    >({
       query: (formData) => ({
         url: "/auth/verify",
         method: "POST",
         body: {
           email: formData.email,
-          code: parseInt(formData.code)
+          code: parseInt(formData.code),
         },
         baseUrl: envConfig.businessApiUrl,
       }),
@@ -316,9 +333,12 @@ export const authApi = apiSlice.injectEndpoints({
               image: data.data.image,
               static_business: data.data.static_business,
             };
-            
-            localStorage.setItem("telzen_business_auth", JSON.stringify(businessAuthData));
-            
+
+            localStorage.setItem(
+              "telzen_business_auth",
+              JSON.stringify(businessAuthData),
+            );
+
             // Redirect to business portal with token
             const redirectUrl = `${envConfig.businessRedirectUrl}?token=${encodeURIComponent(data.data.access_token)}`;
             window.location.href = redirectUrl;
@@ -326,7 +346,11 @@ export const authApi = apiSlice.injectEndpoints({
 
           dispatch(setLoading(false));
         } catch (error: any) {
-          dispatch(setError(error?.data?.message || "Business OTP verification failed"));
+          dispatch(
+            setError(
+              error?.data?.message || "Business OTP verification failed",
+            ),
+          );
         }
       },
     }),

@@ -1,4 +1,5 @@
 export { useLocation, getStoredLocationData } from "./useLocation";
+export { useCurrency } from "./useCurrency";
 export { useLogin } from "./useLogin";
 export { useCheckoutLogin } from "./useCheckoutLogin";
 export { useRegister, countries } from "./useRegister";

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/modules/auth/authSlice";
 import { closeLogoutModal } from "@/store/modules/ui/uiSlice";
+import { apiSlice } from "@/store/modules/api/apiSlice";
 import Image from "next/image";
 import { CloseIcon, images, appStrings } from "@/service";
 import Button from "../shared/Button";
@@ -32,6 +33,7 @@ function LogoutModal() {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(apiSlice.util.resetApiState());
     handleClose();
   };
 
