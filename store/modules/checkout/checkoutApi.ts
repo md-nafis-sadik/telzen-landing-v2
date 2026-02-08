@@ -69,7 +69,7 @@ export const checkoutApi = apiSlice.injectEndpoints({
 
         // Use v3 endpoint for BDT currency, v2 for others
         const endpoint = params.currency === "BDT" 
-          ? `/checkout-v3/create-payment?order_type=${params.order_type}`
+          ? `/checkout-v3/create-payment?order_type=${params.order_type}&is_web=true`
           : `/checkout-v2/create-payment?order_type=${params.order_type}&is_web=true`;
 
         return {
