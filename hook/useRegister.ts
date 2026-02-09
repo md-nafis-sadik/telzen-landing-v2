@@ -24,7 +24,7 @@ export const useRegister = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    country: countriesData[0],
+    country: countriesData[234],
     agreeToTerms: false,
   });
   const [signup] = useSignupMutation();
